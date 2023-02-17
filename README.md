@@ -1,21 +1,21 @@
-<a href="https://github.com/camaraproject/§repo_name§/commits/" title="Last Commit"><img src="https://img.shields.io/github/last-commit/camaraproject/§repo_name§?style=plastic"></a>
-<a href="https://github.com/camaraproject/§repo_name§/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/camaraproject/§repo_name§?style=plastic"></a>
-<a href="https://github.com/camaraproject/§repo_name§/pulls" title="Open Pull Requests"><img src="https://img.shields.io/github/issues-pr/camaraproject/§repo_name§?style=plastic"></a>
-<a href="https://github.com/camaraproject/§repo_name§/graphs/contributors" title="Contributors"><img src="https://img.shields.io/github/contributors/camaraproject/§repo_name§?style=plastic"></a>
-<a href="https://github.com/camaraproject/§repo_name§" title="Repo Size"><img src="https://img.shields.io/github/repo-size/camaraproject/§repo_name§?style=plastic"></a>
-<a href="https://github.com/camaraproject/§repo_name§/blob/main/LICENSE" title="License"><img src="https://img.shields.io/badge/License-Apache%202.0-green.svg?style=plastic"></a>
+<a href="https://github.com/camaraproject/IdentityAndConsentManagement/commits/" title="Last Commit"><img src="https://img.shields.io/github/last-commit/camaraproject/IdentityAndConsentManagement?style=plastic"></a>
+<a href="https://github.com/camaraproject/IdentityAndConsentManagement/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/camaraproject/IdentityAndConsentManagement?style=plastic"></a>
+<a href="https://github.com/camaraproject/IdentityAndConsentManagement/pulls" title="Open Pull Requests"><img src="https://img.shields.io/github/issues-pr/camaraproject/IdentityAndConsentManagement?style=plastic"></a>
+<a href="https://github.com/camaraproject/IdentityAndConsentManagement/graphs/contributors" title="Contributors"><img src="https://img.shields.io/github/contributors/camaraproject/IdentityAndConsentManagement?style=plastic"></a>
+<a href="https://github.com/camaraproject/IdentityAndConsentManagement" title="Repo Size"><img src="https://img.shields.io/github/repo-size/camaraproject/IdentityAndConsentManagement?style=plastic"></a>
+<a href="https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/LICENSE" title="License"><img src="https://img.shields.io/badge/License-Apache%202.0-green.svg?style=plastic"></a>
 
-# §repo_name§
-Repository to describe, develop, document and test the §repo_name§ API family
+# IdentityAndConsentManagement
+Repository to describe, develop, document and test the Identity And Consent Management API family
 
 ## Scope
-* Service APIs for “§repo_name§” (see APIBacklog.md)  
+* Service APIs for “IdentityAndConsentManagement” (see APIBacklog.md)  
 * It provides the customer with the ability to:  
-  * §API family description§.
+  * Operator (NaaS) platform implementing CAMARA APIs should be built with a privacy-by-default approach to fully comply with data protection regulations like the GDPR regulation in Europe, which emphasises on user's privacy. These regulations note that some CAMARA APIs may require user consent to be accessed. This forces the operators to provide means and appropriate solutions to capture, store and manage this consent through its lifecycle. Otherwise, the scoped CAMARA APIs cannot be rolled out in production networks. Building such a solution also means bringing in scope the identity of the end user and/or the subscriber (as both could be different) and making sure that end user experience of using the API is not compromised while doing so.
   * NOTE: The scope of this API family should be limited (at least at a first stage) to 4G and 5G.  
 * Describe, develop, document and test the APIs (with 1-2 Telcos)  
-* Started: §start date§
-* Location: virtually  
+* Started: February 2023
+* Location: virtually
 
 ## Meetings
 * Meetings are held virtually
