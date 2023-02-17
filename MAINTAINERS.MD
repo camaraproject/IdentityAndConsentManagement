@@ -1,3 +1,4 @@
 | Org                    | Name                                                |
 | -----------------------| ----------------------------------------------------|
-| §company§ | $name§ |
+| Deutsche Telekom | Shilpa Padgaonkar |
+| Telefonica | Jose Antonio Ordonez Lucena |
