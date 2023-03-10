@@ -1,5 +1,6 @@
 | Org                    | Name                                                |
 | -----------------------| ----------------------------------------------------|
 | Deutsche Telekom | Shilpa Padgaonkar |
-| Telefonica | Jose Antonio Ordonez Lucena |
+| Telefonica | Jose A Ordonez Lucena |
+| Telefonica | Diego Gonzalez |
 | Vodafone | Eric Murray |
