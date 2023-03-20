@@ -8,3 +8,4 @@
 | Vodafone | Eric Murray |
 | Verizon | Syed Rehman |
 | Vonage | Chris Howell |
+| Ericson | Jan Friman |
