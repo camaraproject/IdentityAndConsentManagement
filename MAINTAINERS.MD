@@ -9,3 +9,4 @@
 | Verizon | Syed Rehman |
 | Vonage | Chris Howell |
 | Ericson | Jan Friman |
+| Vodafone | Sachin Kumar |
