@@ -1,6 +1,6 @@
 # User Consent Management
 
-This document captures guidelines for Operator NaaS platform to handle user consents.
+This document captures guidelines for Operator platform to handle user consents.
 
 ## Table of Contents
 
@@ -29,9 +29,9 @@ This document captures guidelines for Operator NaaS platform to handle user cons
 
 ## Introduction
 
-Operator NaaS platform implementing CAMARA should be built with a privacy-by-design approach to fully comply with data protection regulations like the [GDPR regulation](https://gdpr-info.eu/) in Europe, which provides a great level of protection for user's privacy. This means that an API that processes Personal Information needs a user consent. Consents are given by users to legal entities to process personal data under a specific purpose.
+Operator platform implementing CAMARA should be built with a privacy-by-design approach to fully comply with data protection regulations like the [GDPR regulation](https://gdpr-info.eu/) in Europe, which provides a great level of protection for user's privacy. This means that an API that processes Personal Information needs a user consent. Consents are given by users to legal entities to process personal data under a specific purpose.
 
-This document captures guidelines for Operator NaaS platform to handle user consents to comply with GDPR or equivalent requirements in an easy way, introducing the concept of purpose in OpenID Connect. Even being defined based on concepts that maps to GDPR regulation, proposed solution and concepts are generic enough to be used by Operators on any country.
+This document captures guidelines for Operator platform to handle user consents to comply with GDPR or equivalent requirements in an easy way, introducing the concept of purpose in OpenID Connect. Even being defined based on concepts that maps to GDPR regulation, proposed solution and concepts are generic enough to be used by Operators on any country.
 
 >[TO BE EDITED/COMPLETED]
 
@@ -39,7 +39,6 @@ This document captures guidelines for Operator NaaS platform to handle user cons
 
 The list below introduces several key concepts:
 
--	`NaaS`: Network-as-a-Service model where Telco Network capabilities are exposed to third parties through APIs. And some of those APIs are likely to require user consent to be accessed. 
 -	`Application`: client system that requires access to protected resources. Application must use the appropriate access token to access those resources (e.g. CAMARA Network APIs).
 -	`User`: the human participant which is identified in Telco Operator by a unique user identifier (e.g. Subject identifier sub in OpenID Connect terminology). The user is the resource owner.
 -	`Auth Server`: authorization server which receives requests from applications to issue an access token upon successful authentication and consent of the user. The OpenID Connect Provider is able to authenticate the user validating user identity against the corresponding Identity Provider. The authorization server exposes two endpoints: the Authorization endpoint and the Token endpoint.
