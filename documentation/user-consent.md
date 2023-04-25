@@ -33,6 +33,13 @@ Operator platform implementing CAMARA should be built with a privacy-by-design a
 
 This document captures guidelines for Operator platform to handle user consents to comply with GDPR or equivalent requirements in an easy way, introducing the concept of purpose in OpenID Connect. Even being defined based on concepts that maps to GDPR regulation, proposed solution and concepts are generic enough to be used by Operators on any country.
 
+The document details aspects regarding the Consent Management, which includes following concepts:
+- CRUD operations for a Consent, i.e.: Create, Read, Update or Delete a Consent Record. Specific details will be handled as for example in fact Consents may not be deleted but Revoked instead.
+- What information is relevant in the managed Consent record, e.g.: end User Identifier to which the Consent is associated, expiration/validity, etc.
+- Policy enforcement to validate existence and validity of Consent before Authorizing access to a (set of) scopes.
+- Allow end Users to view and update their Consents.
+- Flows detailing how Consent can be collected from the User without degrading the user experience while using a third-party service in an Application.
+
 >[TO BE EDITED/COMPLETED]
 
 ## Glossary of Terms and Concepts
