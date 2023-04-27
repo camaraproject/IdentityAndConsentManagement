@@ -2,7 +2,6 @@
 #### What type of PR is this?
 
 Add one of the following kinds:
-* bug
 * correction
 * enhancement/feature
 * cleanup
