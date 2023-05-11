@@ -9,7 +9,7 @@
 
 ### Added
 
-* Initial documentation is on going.
+* [2023.5.10]- [v0.1.0] - Add .gitignore and changelog file, update meeting info, add version control in main readme and Changelog. 
 
 ### Changed
 
@@ -21,4 +21,4 @@
 
 ### Removed
 
-* TBD
+
