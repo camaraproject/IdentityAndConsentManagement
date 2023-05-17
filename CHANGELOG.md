@@ -1,13 +1,13 @@
-# Changelog QualityOnDemand
+# Changelog IdentityAndConsentManagement
 
 ## Table of Contents
 
-- [v0.1.0] WIP
+- Release v0.1.0 WIP
 
 ## Version Details
 **Note Meeting Minutes commit histories are not included in ChangeLogs here.**
 
-# v0.1.0 WIP
+# Release v0.1.0 WIP
 
 - API [definition](code/API_definitions)
 - API [documentation](documentation/API_documentation)
@@ -24,6 +24,8 @@
 
 ### Removed
 * None
+
+### Deprecation(if any)
 
 ### New Contributors
 * @rartych made their first contribution in https://github.com/camaraproject/IdentityAndConsentManagement/pull/19
