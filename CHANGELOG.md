@@ -2,12 +2,12 @@
 
 ## Table of Contents
 
-- [v0.1.0]
+- [v0.1.0] WIP
 
 ## Version Details
 **Note Meeting Minutes commit histories are not included in ChangeLogs here.**
 
-# v0.1.0
+# v0.1.0 WIP
 
 - API [definition](code/API_definitions)
 - API [documentation](documentation/API_documentation)
