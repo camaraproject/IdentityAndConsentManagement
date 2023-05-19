@@ -1,6 +1,6 @@
 # User Consent Management
 
-This document captures guidelines for Operator platform to handle user consents.
+This document defines guidelines for Telco Operator Exposure platforms to manage CAMARA API access and user consent (when applicable).
 
 ## Table of Contents
 
@@ -12,7 +12,7 @@ This document captures guidelines for Operator platform to handle user consents.
     - [Purpose levels](#purpose-levels)
     - [Purpose relationship with other key concepts](#purpose-relationship-with-other-key-concepts)
     - [Purpose definition](#purpose-definition)
-    - [Using purpose parameter in the authorization request](#using-purpose-parameter-in-the-authorization-request)
+    - [Applying purpose concenpt in the authorization request](#applying-purpose-concenpt-in-the-authorization-request)
   - [User Identity](#user-identity)
   - [User Authentication/Authorization \& Consent Management](#user-authenticationauthorization--consent-management)
     - [Authentication mechanism/s](#authentication-mechanisms)
@@ -29,11 +29,12 @@ This document captures guidelines for Operator platform to handle user consents.
 
 ## Introduction
 
-Operator platform implementing CAMARA should be built with a privacy-by-design approach to fully comply with data protection regulations like the [GDPR regulation](https://gdpr-info.eu/) in Europe, which provides a great level of protection for user's privacy. This means that an API that processes Personal Information needs a user consent. Consents are given by users to legal entities to process personal data under a specific purpose.
+Some APIs process personal information and require a “legal basis” to do so (e.g. “legitimate interest”, “contract”, “consent”, etc). Telco Operator Exposure platforms implementing CAMARA should be built with a privacy-by-design approach to fully comply with data protection regulations, such as the [GDPR regulation](https://gdpr-info.eu/) in Europe, to protect user privacy. This means that a CAMARA API exposed to Capability Consumers that processes personal data may require user consent (explicit user opt-in), depending on the "legal basis" for processing that data. This consent is given by users to legal entities to process personal data under a specific purpose.
 
-This document captures guidelines for Operator platform to handle user consents to comply with GDPR or equivalent requirements in an easy way, introducing the concept of purpose in OpenID Connect. Even being defined based on concepts that maps to GDPR regulation, proposed solution and concepts are generic enough to be used by Operators on any country.
+As per CAMARA Commonalities ["Authentication and Authorization Concept for Service APIs"](https://github.com/camaraproject/WorkingGroups/blob/main/Commonalities/documentation/CAMARA-AuthN-AuthZ-Concept.md), CAMARA API access will be securitized using [OpenID Connect](https://openid.net/connect/) on top of OAuth 2.0 protocol. This document captures guidelines for Operator Exposure platform to manage CAMARA API access and user consent to comply with GDPR or equivalent requirements in an easy way, introducing the concept of purpose in OpenID Connect. Even being defined based on concepts that maps to GDPR regulation, proposed solution and concepts are generic enough to be used by Operators on any country.
 
 The document details aspects regarding the Consent Management, which includes following concepts:
+
 - CRUD operations for a Consent, i.e.: Create, Read, Update or Delete a Consent Record. Specific details will be handled as for example in fact Consents may not be deleted but Revoked instead.
 - What information is relevant in the managed Consent record, e.g.: end User Identifier to which the Consent is associated, expiration/validity, etc.
 - Policy enforcement to validate existence and validity of Consent before Authorizing access to a (set of) scopes.
@@ -55,7 +56,7 @@ The list below introduces several key concepts:
 -	`Data processing`: storing, transforming, or accessing Personal Information is considered processing data. Third party clients will be data processors, while the telco operator will be the data controller.
 -	`Purpose`: The reason for which processing that Personal Information is required by the application. For example, an application might want to handle Personal Information to create a movie recommendation for a user. This is equivalent to the term Purpose mentioned in GDPR law; for example, [Art. 5 of the law](https://gdpr-info.eu/art-5-gdpr/) states the following: “Personal data shall be […] collected for specified, explicit and legitimate **purposes**”. Additionally, personal data is translated into Personal Information resources, as explained below.
 -	`Personal Information Scope`: Also known as PI scopes, these are scopes that refer to resources providing access to Personal Information and thus requiring special protection. **Getting access to PI scopes must always be done by explicitly declaring a purpose**. Therefore, a Purpose maps to a predefined set of PI scopes, giving access to Personal Information processing.
--	`Consent`: an explicit opt-in action that the user takes to allow processing of their Personal Information. Consent can be a signature on a paper, a voice recording or clicking on an authorize button on a website. And it grants a **legal** entity (e.g., the operator or a specific third party) access to a set of **scopes** of a given **user**, under a specific **purpose**.
+-	`Consent`: an explicit opt-in action that the user takes to allow processing of their Personal Information. It grants a **legal** entity (e.g., the operator or a specific third party) access to a set of **scopes** of a given **user**, under a specific **purpose**.
 -	`Legal Entities`: are the legal subjects that are willing to get access to personal information with a specific, predefined purpose.
 
 >[TO BE EDITED/COMPLETED]
@@ -64,16 +65,18 @@ The list below introduces several key concepts:
 
 A purpose declares what the application intends to do with a set of Personal Information resources. It provides a human-friendly description of why the data processing takes place and a list of the scopes of that Personal Information that gives access to its processing.
 
-Purposes can be grouped into three categories: 
+Purposes can be grouped into three categories*: 
 
-- **Automatic purpose** : This purpose does not require explicit consent from the user and cannot be revoked. For example, you need to handle call logs to create an invoice.
-- **Opt-out purpose** : This purpose does not require explicit consent from the user, but consent can be revoked. For example, processing invoices to improve our commercial offering and for marketing purposes.
-- **Opt-in purpose** : This purpose requires explicit user consent and can be revoked. For example, creating a credit score for a user based on CDRs and payment history.
+- **Automatic purpose** : This purpose does NOT require explicit opt-in from the user and cannot be revoked. For example, you need to handle call logs to create an invoice.
+- **Opt-out purpose** : This purpose does not require explicit opt-in from the user, but consent can be revoked. For example, processing invoices to improve our commercial offering and for marketing purposes.
+- **Opt-in purpose** : This purpose requires explicit user opt-in and can be revoked. For example, creating a credit score for a user based on CDRs and payment history.
 
-Moreover, when it comes to granting consent, there are two types of the purposes:
+_(*)NOTE: Some categories may NOT be allowed for all 3rd party Apps. (i.e. Automatic Purpose)_
 
--	**User-bound**: the consent is granted to be applied for all the identifiers of a given user i.e. granted at user level. For example, grant consent for accessing to the call history of any of her phone numbers. 
--	**Identifier-bound**: the consent is granted to be applied only for a specific user’s identifier i.e. for a public identifier associated with the service the Telco Operator provides to the user (typically a phone number). For example, grant consent for accessing to the call history of only one of her phone numbers.
+The explicit opt-int of the user can be collected either for all their identifiers or only for certain identifiers of the user. Accordingly, there are two types of purposes::
+
+-	**User-bound**: the consent is granted to be applied for all the identifiers of a given user i.e. granted at user level. For example, grant consent for accessing to the call history of any of their phone numbers. 
+-	**Identifier-bound**: the consent is granted to be applied only for a specific user’s identifier i.e. for a public identifier associated with the service the Telco Operator provides to the user (typically a phone number). For example, grant consent for accessing to the call history of only one of their phone numbers.
 
 >[TO BE EDITED/COMPLETED]
 
@@ -86,9 +89,7 @@ Depending on the purpose categories the purpose may have a specific level that d
 |`legal_obligation` | A process that is required by law. | Automatic purpose |
 |`contract` | A process that is needed to fulfill the service contract with the user, and it is already approved when the contract was signed. | Automatic purpose |
 |`legitimate_interest`| An interest of the data processor that does not conflict with the fundamental interest of the individuals. | Opt-out purpose |
-|`compatible` | A re-processing of data acquired through another purpose that is compatible with the first purpose. | Opt-out purpose|
 |`consent` | This level applies to purposes which are unrelated enough to the service. | Opt-in purpose|
-|`terms_and_conditions`| The operations or tasks done by an application to provide its functionality, as described in the Terms and Conditions. | Opt-in purpose|
 
 >[TO BE EDITED/COMPLETED]
 
@@ -102,11 +103,9 @@ The key concepts defined to handle user personal information are related to purp
 - A purpose has associated a set of personal information scopes (PI scopes). 
   - These are scopes that refer to resources providing access to Personal Information and thus requiring special protection as stated by e.g. the GDPR law.
   - Getting access to PI scopes MUST always be done by explicitly declaring a purpose.
-- Scopes are assigned to an application, granting access to APIs and other resources.
 - Purposes are assigned to an application.
 
 Therefore, an application will have access to:
-  - APIs or resources covered by the assigned scopes
   - APIs or resources providing personal information under the assigned purpose (because of the PI scopes included in that purpose)
     - **Only** if user has granted her consent for that purpose
     - Which may happen automatically (automatic purposes) or may need an explicit user action to provide consent (depending on the purpose level of the purpose associated to that consent). In the second case, the consent is created and stored and will be validated during authorization.
@@ -117,59 +116,9 @@ Therefore, an application will have access to:
 
 >[TO BE EDITED/COMPLETED] - purpose definition (naming + description) and format. Data Privacy Vocabulary: https://www.w3.org/community/dpvcg/​ | https://w3c.github.io/dpv/dpv/#vocab-purpose
 
-### Using purpose parameter in the authorization request
+### Applying purpose concenpt in the authorization request
 
-The application can request a list of purposes in the authorization request of the [OAuth 2.0 Authorization Framework](https://www.rfc-editor.org/rfc/rfc6749) using an additional `purpose` parameter:
-
-| **Authorize request param** | Description |
-| --- | --- |
-| `purpose` | The value of this parameter is expressed as a list of space-delimited, case-sensitive strings. The strings will be the id of the purposes. |
-
-This parameter has been defined in these guidelines to allow applications to provide a purpose/s name which represents the reason why a client application needs to process a certain piece of user Personal Information. Note that, as explained before, a purpose maps to a list of scopes giving access to Personal Information resources.
-
-_Example: requesting "purpose\_1", "purpose\_2" and "purpose\_3"_
-
-```
-POST /bc-authorize HTTP/1.1
-Authorization: Basic {Credentials}
-Content-Type: application/x-www-form-urlencoded
-purpose=purpose_1%20purpose_2%20purpose_3&
-login_hint_token=eyJ[…].efg[…].asW[…]&
-… 
-```
-
-The access token obtained from Token Endpoint will be granted to a subset or to all the scopes included in the requested purposes. The authorization server MAY fully or partially ignore the scopes of the requested purposes based on the authorization server policy. The authorization server MUST include the obtained scope list in the `scope` response parameter of the Token Endpoint to inform the client of the actual scopes granted.
-
-The authorization server MUST include the obtained purpose list in the `purpose` response parameter of the Token Endpoint. The purpose MUST only be included in the response if at least one scope of the purpose has been granted.
-
-_Example: only scopes of the "purpose\_1" and "purpose\_2" have been granted_
-
-```
-POST /token HTTP/1.1
-Authorization: Basic {Credentials}
-Content-Type: application/x-www-form-urlencoded
-grant_type=urn%3Aopenid%3Aparams%3Agrant-type%3Aciba&
-auth_req_id=1c266114-a1be-4252-8ad1-04986c5b9ac1
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "access_token":"2YotnFZFEjr1zCsicMWpAA",
-  "token_type":" Bearer",
-  "expires_in":3600,
-  "scope":"scope_1_of_purpose_1 scope_2_of_purpose_1 scope_1_of_purpose_2",
-  "purpose":"purpose_1 purpose_2"
-  …
-}
-```
-The authorization endpoint still MUST support the `scope` parameter of the OAuth 2.0 specification. For example, to request an ID token or refresh token using OpenID Connect standard scopes or to request scopes not associated to Personal Information.
-
-The application can request the Authorization endpoint using both parameters (`scope` and `purpose`), or one of them.
-
-PI scopes cannot be requested using `scope` parameter. As stated before in this document, getting access to PI scopes must always be done by explicitly declaring a purpose. If a PI scope is requested by using the `scope` parameter, it will be ignored and removed from the request in Auth Server.
-
-The authorization server MUST include all the obtained scopes and PI scopes in the `scope` response field of the Token Endpoint Request, the obtained scopes of the purposes and the obtained scopes of the `scope` parameter.
-
->[TO BE EDITED/COMPLETED]
+>[TO BE EDITED/COMPLETED - [OAuth 2.0 Authorization Framework](https://www.rfc-editor.org/rfc/rfc6749)]
 
 ## User Identity
 
