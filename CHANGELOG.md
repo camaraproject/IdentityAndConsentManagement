@@ -1,32 +1,24 @@
-# Changelog IdentityAndConsentManagement
+# Changelog
 
-## Table of Contents
-
-- Release v0.1.0 WIP
-
-## Version Details
-**Note Meeting Minutes commit histories are not included in ChangeLogs here.**
-
-# Release v0.1.0 WIP
-
-- API [definition](code/API_definitions)
-- API [documentation](documentation/API_documentation)
+## X.Y.Z [ALPHA] - YYYY-MM-DD
 
 ### Added
-* [2023.04.27]- [v0.1.0] - Add github templates for issue and PR request. [Details](https://github.com/camaraproject/IdentityAndConsentManagement/pull/19)
-* [2023.05.10]- [v0.1.0] - Add .gitignore and changelog file, update meeting info, add version control in main readme and Changelog. [Details](https://github.com/camaraproject/IdentityAndConsentManagement/pull/23)
+
+* New property `new_name`
+* New endpoint `new_name`
+* Examples
 
 ### Changed
-* None
+
+* Property `old_name` renamed to `new_name`
+* Format for property `property` changed to `new_format`
 
 ### Fixed
-* None
+
+* Typos fixed
+* Reference corrected
 
 ### Removed
-* None
 
-### Deprecation(if any)
-
-### New Contributors
-* @rartych made their first contribution in https://github.com/camaraproject/IdentityAndConsentManagement/pull/19
-* @Shuting Qing made their first contribution in https://github.com/camaraproject/IdentityAndConsentManagement/pull/23
+* Deprecated field `old_field`
+* Deprecated endpoint
