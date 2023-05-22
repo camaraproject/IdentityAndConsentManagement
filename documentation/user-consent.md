@@ -12,7 +12,7 @@ This document defines guidelines for Telco Operator Exposure platforms to manage
     - [Purpose levels](#purpose-levels)
     - [Purpose relationship with other key concepts](#purpose-relationship-with-other-key-concepts)
     - [Purpose definition](#purpose-definition)
-    - [Applying purpose concenpt in the authorization request](#applying-purpose-concenpt-in-the-authorization-request)
+    - [Applying purpose concept in the authorization request](#applying-purpose-concept-in-the-authorization-request)
   - [User Identity](#user-identity)
   - [User Authentication/Authorization \& Consent Management](#user-authenticationauthorization--consent-management)
     - [Authentication mechanism/s](#authentication-mechanisms)
@@ -116,7 +116,7 @@ Therefore, an application will have access to:
 
 >[TO BE EDITED/COMPLETED] - purpose definition (naming + description) and format. Data Privacy Vocabulary: https://www.w3.org/community/dpvcg/​ | https://w3c.github.io/dpv/dpv/#vocab-purpose
 
-### Applying purpose concenpt in the authorization request
+### Applying purpose concept in the authorization request
 
 >[TO BE EDITED/COMPLETED - [OAuth 2.0 Authorization Framework](https://www.rfc-editor.org/rfc/rfc6749)]
 
