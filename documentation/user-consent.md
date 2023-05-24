@@ -17,7 +17,7 @@ This document defines guidelines for telco operator exposure platforms to manage
   - [User Authentication/Authorization \& Consent Management](#user-authenticationauthorization--consent-management)
     - [Authentication mechanism/s](#authentication-mechanisms)
     - [Consent capture and storage](#consent-capture-and-storage)
-    - [Athorization flows / grant types](#athorization-flows--grant-types)
+    - [Authorization flows / grant types](#authorization-flows--grant-types)
       - [Authorization code flow](#authorization-code-flow)
       - [JWT-bearer flow](#jwt-bearer-flow)
       - [CIBA flow](#ciba-flow)
@@ -136,7 +136,7 @@ Therefore, an application will have access to:
 
 >[TO BE EDITED/COMPLETED] - Consent capture (by operator vs by API Client a.k.a delegated) and storage (in operator vs in a third party).
 
-### Athorization flows / grant types
+### Authorization flows / grant types
 
 >[TO BE EDITED/COMPLETED] - Authorization flows / grant types to be considered... E.g.: Authorization code flow, JWT-bearer flow, CIBA flow, Client credentials flow. For each API it should be possible to categorize it depending on the use case, integration/GTM model, personal information processing requirements, etc... and define the grant type/s to be used for each API.
 
