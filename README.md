@@ -9,7 +9,7 @@
 Repository to describe, develop, document and test the Identity And Consent Management API family
 
 ## Scope
-* Service APIs for “IdentityAndConsentManagement” (see APIBacklog.md)  
+* Service APIs for “IdentityAndConsentManagement” (see [APIBacklog.md](https://github.com/camaraproject/WorkingGroups/blob/main/APIBacklog/documentation/APIBacklog.md))  
 * Telco operator exposure platforms implementing CAMARA APIs should be built with a privacy-by-default approach to fully comply with data protection regulations, such as the GDPR regulation in Europe, which emphasises on user privacy. These regulations note that some CAMARA APIs may require user consent to be accessed. This forces the operators to provide means and appropriate solutions to capture, store and manage this consent through its lifecycle. Otherwise, the scoped CAMARA APIs cannot be rolled out in production networks. Building such a solution also means bringing in scope the identity of the end user and/or the subscriber (as both could be different) and making sure that end user experience of using the API is not compromised while doing so.
 * Describe, develop, document and test the APIs (with 1-2 Telcos)  
 * Started: March 2023
@@ -17,9 +17,16 @@ Repository to describe, develop, document and test the Identity And Consent Mana
 
 ## Meetings
 * Meetings are held virtually
-* Schedule: bi-weekly, Wednesday, 4 PM CET/CEST (15:00 UTC, 14:00 UTC during European DST). For next call, see minutes of previous meetings. 
+* Schedule: bi-weekly, Wednesday, 4 PM CET/CEST (15:00 UTC, 14:00 UTC during European DST). For next call, see minutes of [previous meetings](documentation/MeetingMinutes) 
 * Meeting link: [Microsoft Teams Meeting](https://teams.microsoft.com/l/meetup-join/19%3ameeting_MGVkMDUwMTYtNTZiNy00MmMzLWE1M2QtN2Q1ZmEwOWVmZDQ2%40thread.v2/0?context=%7b%22Tid%22%3a%229744600e-3e04-492e-baa1-25ec245c6f10%22%2c%22Oid%22%3a%22ec8dd69b-01fe-4d41-a294-c2927b548e27%22%7d)
+
+## Results and Status
+* Current Version: v0.1.0 WIP
+  * API [definition](code/API_definitions)
+  * API [documentation](documentation/API_documentation)
+  * For changes see [CHANGELOG.md](CHANGELOG.md)
 
 ## Contributorship and mailing list
 * To subscribe / unsubscribe to the mailing list of this Sub Project and thus be / resign as Contributor please visit <https://lists.camaraproject.org/g/sp-icm>.
 * A message to all Contributors of this Sub Project can be sent using <sp-icm@lists.camaraproject.org>.
+
