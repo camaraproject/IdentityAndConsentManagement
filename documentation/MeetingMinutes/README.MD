@@ -28,3 +28,4 @@ Wednesday ---> 4 PM CET/CEST
 - 2023/05/03 [Notes](MOM-2023-05-03.md)
 - 2023/05/17 [Notes](MOM-2023-05-17.md)
 - 2023/05/31 [Notes](MOM-2023-05-31.md)
+- 2023/06/14 [Notes](MOM-2023-06-14.md)
