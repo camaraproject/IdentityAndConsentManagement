@@ -136,6 +136,15 @@ It enables Clients to verify the identity of the End-User based on the authentic
 <img src="./images/oidc.png" alt="OIDC"
 	title="Abstarct OIDC Flow" width="350" height="300" />	
 
+ OIDC provides a framework for identity providers to support a wide range of authentication methods/factors that can be used to verify the identity of the user:
+
+ - Username and Password: The user provides the client application with a username and password. The client application then sends the username and password to the identity provider, which verifies the user's identity and returns an ID token to the client application.
+ - SMS One-Time Password (OTP): The user provides the client application with a phone number. The client application then sends the phone number to the identity provider, which sends an SMS message to the user's phone number. The user enters the code from the SMS message into the client application, which sends the code to the identity provider. The identity provider verifies the code and returns an ID token to the client application.
+- Network-based authentication: An authentication mechanism based on the identification of the endpoint of a network connection (e.g., by the observed IP address of the user device connected to the network). Network operators know which user is associated with a network resource at any given time, such as the mobile phone number associated with a particular cellular connection.<br>This is particularly interesting in the context of CAMARA APIs exposed by network operators. For example, it is the authentication method defined for the [Number Verification API](https://github.com/camaraproject/NumberVerification) without any user interaction in the process (aka "silent" auth).
+- Multi-factor authentication (MFA): MFA combines two or more authentication factors to increase security. For example, a combination of a password and a push notification to a registered mobile device. MFA is often used to provide an extra layer of security for sensitive applications such as banking.
+
+In fact, there are many more authentication methods/factors that can be used with OIDC, which can have different levels of security based on the factors they rely on to verify a user's identity (e.g., biometrics, hardware security keys, social identity providers such as Google, Facebook, etc.).
+
 
 #### Authorization code grant
 The authorization code is a temporary code that the client will exchange for an access token. The code is obtained from the authorization server. The user gets to know about the information requested by the client and can then approve or deny the request. The application requesting for the access token must supplement the request with the client secret. This reduces the risk that the authorization code can be exploited if intercepted by a bad actor.
