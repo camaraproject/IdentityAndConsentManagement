@@ -55,6 +55,7 @@ The list below introduces several key concepts:
 -	`Legal Entities`: are the legal subjects that are willing to get access to personal information with a specific, predefined purpose.
 - `Operator`: Mobile Network Operator (MNO), or CSP/telco operator, exposing network capabilities via standard CAMARA APIs.
 - `Aggregator`: aggregate Operator’s CAMARA standardised APIs for building services offered to application developers. An aggregator can be a hyperscaler (e.g. Vonage, AWS, Azure, Google Cloud) offering its own services or directly exposing CAMARA APIs available at the operators, or it can be a telco operator acting as an aggregator, i.e.: aggregating other telco operators and exposing CAMARA APIs available at these telco operators.
+- `API Exposure Platform`: Operator's platform for exposing network capabilities via standard CAMARA APIs. It is the platform that exposes the CAMARA APIs to application developers and provides the authentication and authorization mechanisms to access them. It is also responsible for consent management. It typically consists of at least an Auth Server and an API Gateway.
 
 >[TO BE EDITED/COMPLETED]
 
@@ -97,18 +98,18 @@ sequenceDiagram
 autonumber
 title Consume a CAMARA API - Authorization Code Grant (FrontEnd)
 participant FE as Device App
-participant BE as Invoker (App Backend/Aggregator)
+participant BE as Invoker<br>(App Backend/Aggregator)
 box Operator
-  participant ExpO as OGW Platform<br>@Operator
+  participant ExpO as API Exposure Platform<br>@Operator
   participant Consent as Consent Master<br>@Operator
 end
 
 Note over FE,BE: Use Feature needing<br>Operator Capability  
 BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&purpose=purpose&redirect_uri=invoker_callback...
 FE->>+FE: Browser /<br> Embedded Browser
-alt Standard OIDC Auth Code Flow between Invoker and OGW Platform
+alt Standard OIDC Auth Code Flow between Invoker and API Exposure Platform
   FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp&purpose=purpose&redirect_uri=invoker_callback...
-  Note over ExpO: OGW Platform Applies<br>Network Based Authentication (amr=nba/mnba)
+  Note over ExpO: API Exposure Platform applies<br>Network Based Authentication (amr=nba/mnba)
   ExpO->>ExpO: Network Based Authentication:<br>- map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc 
   opt If User Consent is required for the legal basis of the purpose  
@@ -137,30 +138,30 @@ Note over BE,FE: Response
 
 **Flow description**:
 
-First, the API invoker (which could potentially be the application BE, an aggregator, etc.) instructs the application frontend in the device to initiate the OIDC authorization code flow with the operator. 
+First, the API invoker (which could potentially be the application backend, an aggregator, etc.) instructs the application frontend in the device to initiate the OIDC authorization code flow with the operator. The authorization request includes the client_id of the final application requesting access to the data and the application redirect_uri (invoker_callback) where the authorization code will be sent.
 
-As per the standard authorization code flow, the device application is redirected to the operator authorization endpoint in OGW platform (Steps 1-2), providing a redirect_uri (invoker_callback) pointing to the invoker backend (where the auth code will eventually be sent), as well as the purpose for accessing the data.
+As per the standard authorization code flow, the device application is redirected to the operator authorization endpoint in API exposure platform (Steps 1-2), providing a redirect_uri (invoker_callback) pointing to the invoker backend (where the auth code will eventually be sent), as well as the purpose for accessing the data.
 
-The OGW platform receives the request from the device application (Step 3) and does the following:
+The API exposure platform receives the request from the device application (Step 3) and does the following:
 
 - Use network based authentication mechanism to obtain the user identifier, i.e.: MSISDN. Set the OAuth sub to the unique user ID in the operator (Step 4).
 
-- Check if user consent is required, which depends on the legal basis associated with the purpose ("legitimate interest", "contract", "consent", etc). If necessary, it will check in the operator's consent master whether user consent has already been given for this identifier and for the requested purpose(s) (Steps 5-6).
+- Check if user consent is required, which depends on the legal basis associated with the purpose ("legitimate interest", "contract", "consent", etc). If necessary, it will check in the operator's consent master whether user consent has already been given for this identifier, the application client_id and the requested purpose (Steps 5-6).
 
 Then, two alternatives may occur:
 
-**Scenario 1**: User consent is not required or consent is already given (Step 7). The OGW platform will continue the authorization code flow by redirecting to the API invoker redirect_uri (invoker_callback) and including the authorization code (OperatorCode).
+**Scenario 1**: User consent is not required or consent is already given (Step 7). The API exposure platform will continue the authorization code flow by redirecting to the API invoker redirect_uri (invoker_callback) and including the authorization code (OperatorCode).
 
 **Scenario 2**: Consent is required and not yet provided by user (Step 8)
 
 - The operator performs the consent capture. Since the authorization code grant involves the frontend, the consent can be captured directly from the user.
 - Once the user has given consent, the authorization code flow continues by redirecting to the API invoker redirect_uri (invoker_callback) and including the authorization code (OperatorCode).
 
-Once the API invoker receives the redirect with the authorization code (OperatorCode - Step 9), it will retrieve the access token from the OGW operator platform (OperatorAccessToken) (Steps 10-11). The OperatorAccessToken issued is encrypted so that no relevant information is exposed.
+Once the API invoker receives the redirect with the authorization code (OperatorCode - Step 9), it will retrieve the access token from the operator's API exposure platform (OperatorAccessToken) (Steps 10-11). The OperatorAccessToken issued is encrypted so that no relevant information is exposed.
 
 Now the API invoker has a valid access token that can be used to invoke the CAMARA API offered by the operator (Step 12).
 
-The operator OGW platform will validate OperatorAccessToken, grant the access to the API based on the scopes bound to the access token, progress request to the corresponding API backend and retrieve the API response (Step 13).
+The operator's API exposure platform will validate OperatorAccessToken, grant the access to the API based on the scopes bound to the access token, progress request to the corresponding API backend and retrieve the API response (Step 13).
 
 Finally, the operator will provide API response to the API invoker (Step 14).
 
@@ -174,7 +175,7 @@ On-net scenarios where the mobile connection of the device needs to be authentic
     - Standard OAuth 2.0 authorization code grant flow
     - Network based authentication.
       - Use network based authentication mechanism to obtain the user identifier, i.e.: MSISDN. Set the OAuth sub to the unique user ID in the operator.
-    - 3-legged (obtained access_token is associated to corresponding user identifier)
+    - 3-legged. **So that each access session is associated with the operator, a client_id (which must be the final application using the information) and the corresponding user identifier**.
   - Consent management:
     - Check if user consent is required by lawful basis associated with the declared purpose. 
       - If necessary, it will be checked **in the operator's consent master** whether user consent has already been given to the application for the user identifier and declared purpose.
@@ -191,12 +192,12 @@ On-net scenarios where the mobile connection of the device needs to be authentic
 ```mermaid
 sequenceDiagram
 autonumber
-title Consume a Hyperscaler Enhanced Service API - CIBA flow
+title Consume a CAMARA API - CIBA flow
 participant User as End User<br>@Authentication Device
 participant FE as Device App<br> (Consumption Device)
-participant BE as Invoker (App Backend/Aggregator)  
+participant BE as Invoker<br>(App Backend/Aggregator)  
 box Operator
-  participant ExpO as OGW Platform<br>@Operator  
+  participant ExpO as API Exposure Platform<br>@Operator  
   participant Consent as Consent Master<br>@Operator
 end
 
@@ -231,9 +232,9 @@ Note over BE,FE: Response
 
 **Flow description**:
 
-First, the API invoker (which could potentially be the application BE, an aggregator, etc.) requests a 3-legged access token to the operator OGW platform. The process follows the OpenID Connect [Client-Initiated Backchannel Authentication (CIBA)](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html) flow.
+First, the API invoker (which could potentially be the application backend, an aggregator, etc.) requests a 3-legged access token to the operator API exposure platform. The process follows the OpenID Connect [Client-Initiated Backchannel Authentication (CIBA)](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html) flow.
 
-The API invoker has to provide in the authorization request (/bc_authorize) a login_hint with a valid user identifier together with the credentials and indicate the purpose for accessing the data (Step 1): 
+The API invoker has to provide in the authorization request (/bc_authorize) a login_hint with a valid user identifier together with the application credentials (the client_id of the final application requesting access to the data) and indicate the purpose for accessing the data (Step 1): 
 
 - One option for the identifier is the public IP and (optionally – when applicable) port of the application. Other options could be the MSISDN or other identifiers. NOTE: In IoT scenarios or, in general, in those cases where the consumption device is different than the authorization device, the IP and port is the one of the consumption device for which the network capabilities will be requested/applied.
 - The login_hint is a hint regarding the user for whom authentication is being requested. It has the format `<type>:<identifier>`, for instance, "ipport:" for IP addresses or "tel:+" for phone numbers. A login_hint example for MSISDN "+346xxxyyyzzz" looks like:
@@ -248,22 +249,22 @@ The API invoker has to provide in the authorization request (/bc_authorize) a lo
     ```
 - Purpose under which the personal data associated to API consumption will be processed.
 
-The operator OGW platform will:
+The operator's API exposure platform will:
 
 - Validate user identifier, map it to a telco identifier if applicable, e.g.: map IP to MSISDN. Set the OAuth sub to the unique user id in the operator (Step 2).
 
-- Check if a user consent is needed, which depends on the legal basis associated to the purpose (“legitimate interest”, “contract”, “consent”, etc). If needed, it will check in operator consent master if user consent was already given for that identifier and for the requested purpose(s) (Steps 3-4).
+- Check if a user consent is needed, which depends on the legal basis associated to the purpose (“legitimate interest”, “contract”, “consent”, etc). If needed, it will check in the operator's consent master whether user consent has already been given for that identifier, the application client_id and the requested purpose (Steps 3-4).
 
 Then, two alternatives may occur.
 
-**Scenario 1**: User consent is not needed or consent is already granted (Step 5). OGW platform will directly return a 200 OK response with the CIBA auth request identifier (auth_req_id=OperatorAuthReqId) to the API invoker. This is a unique identifier to identify the authentication request made by the invoker.
+**Scenario 1**: User consent is not needed or consent is already granted (Step 5). API exposure platform will directly return a 200 OK response with the CIBA auth request identifier (auth_req_id=OperatorAuthReqId) to the API invoker. This is a unique identifier to identify the authentication request made by the invoker.
 
 **Scenario 2**: Consent is needed and is not granted by the user yet (Step 6)
 
 - A mechanism is triggered to capture user consent in the operator:
   
   - The operator triggers an out-of-band consent capture mechanism to interact with the user. **Operators can choose the consent capture mechanism that best suits their capabilities, preferences and needs**. This mechanism can be a push notification, an SMS, etc.
-  - In parallel, the OGW platform operator returns a 200 OK response with the CIBA auth request identifier (auth_req_id=OperatorAuthReqId) to the API invoker to indicate that the authentication request has been accepted and is going to be processed (Step 6).
+  - In parallel, the API exposure platform operator returns a 200 OK response with the CIBA auth request identifier (auth_req_id=OperatorAuthReqId) to the API invoker to indicate that the authentication request has been accepted and is going to be processed (Step 6).
 
 <br>
 
@@ -279,7 +280,7 @@ Then, the API invoker polls the token endpoint by making an "HTTP POST" request 
     }
     ```
 - When this response is received, the API invoker must wait the seconds of the `interval` value received in the CIBA authorization endpoint and then repeat the request until a final response is received.
-- Once the user has granted consent, the OGW platform operator will provide the access token (OperatorAccessToken) to the API invoker (Step 8). The OperatorAccessToken issued will be encrypted so no relevant information is disclosed.
+- Once the user has granted consent, the API exposure platform operator will provide the access token (OperatorAccessToken) to the API invoker (Step 8). The OperatorAccessToken issued will be encrypted so no relevant information is disclosed.
 
 <br>
 
@@ -295,7 +296,7 @@ The operator will provide the API response to the API invoker (Step 11).
     - Identification by IP, MSISDN or others like IMSI, ICCID for specific use cases... it is open for more possibilities.
   - AuthZ/AuthN:
     - Standard OIDC backend-based flow: CIBA.
-    - 3-legged (obtained access_token is associated to corresponding user identifier)
+    - 3-legged. **So that each access session is associated with the operator, a client_id (which must be the final application using the information) and the corresponding user identifier**.
   - Consent management:
     - Check if user consent is required by lawful basis associated with the declared purpose. 
       - If necessary, it will be checked **in the operator's consent master** whether user consent has already been given to the application for the user identifier and declared purpose.
