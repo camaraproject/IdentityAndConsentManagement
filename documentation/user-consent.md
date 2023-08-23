@@ -318,5 +318,4 @@ The operator will provide the API response to the API invoker (Step 11).
     - Device connected to WiFi
     - Device without UI (IoT)
 
->[TO BE EDITED/COMPLETED] - [Technical disscussion on ruleset to be applied](https://github.com/camaraproject/IdentityAndConsentManagement/issues/52) are ongoing.
 
