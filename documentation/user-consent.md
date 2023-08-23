@@ -165,9 +165,15 @@ The operator's API exposure platform will validate OperatorAccessToken, grant th
 
 Finally, the operator will provide API response to the API invoker (Step 14).
 
+<br>
+
 **Technical ruleset for the Frontend flow**
 
-On-net scenarios where the mobile connection of the device needs to be authenticated (e.g. This flow is for example the one specified for the [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification/blob/main/documentation/API_documentation/CAMARA/uml_v0.3.jpg) due to the nature of its functionality where a given MSISDN needs to be compared to the MSISDN associated with the mobile connection of the user device). The device application (front-end) must be able to handle browser redirects.
+> If all API usecases point to the need of On-net scneario and where the consumption device and authentication device are the same, the front end flow must be used. eg. NumberVerification
+
+This flow is then applicable to On-net scenarios where the mobile connection of the device needs to be authenticated e.g. This flow is for example the one specified for the [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification/blob/main/documentation/API_documentation/CAMARA/uml_v0.3.jpg) due to the nature of its functionality where a given MSISDN needs to be compared to the MSISDN associated with the mobile connection of the user device. 
+
+The device application (front-end) must be able to handle browser redirects.
 
   - Identity: 
     - Identification by IP address (or header enrichment).
@@ -290,7 +296,11 @@ Finally, the operator will validate the OperatorAccessToken, grant access to the
 
 The operator will provide the API response to the API invoker (Step 11).
 
+<br>
+
 **Technical ruleset for the Backend flow**
+
+>If some usecase/s for an API point to off-net scenarios and where consumption and authenticaiton devices could be different, the backend flow must be used.
 
   - Identity: 
     - Identification by IP, MSISDN or others like IMSI, ICCID for specific use cases... it is open for more possibilities.
