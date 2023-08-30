@@ -28,9 +28,9 @@ It is also important to reflect on a step before authentication (step 0) - onboa
 
 ### User indentity
 
-On what refers to CAMARA APIs to be exposed by Telco operators, the end user is the human participant which is identified in Telco Operator by a unique user identifier (e.g. Subject identifier `sub` in OIDC terminology). Therefore, the Authentication process allows to confirm/validate user identity.
+On what refers to CAMARA APIs to be exposed by Telco operators, the **End user** is the human participant who uses the application from a consumption device. And the **User** is the client/subscriber of the telco operator, identified by a unique user identifier (e.g. subject identifier sub in OpenID Connect terminology). The user is the resource owner. Usually the user corresponds to the end user, but this is not always the case. For example, a parent may be the user of a mobile subscription for their children. Therefore, the Authentication process allows to confirm/validate user identity (i.e. the operator subscriber).
 
-It is important to differentiate the identification of a user from the identification of a device or UE. For example, the same user could have multiple associated devices.  
+It is important to differentiate the identification of a user from the identification of a device or UE. For example, the same user could have multiple associated devices. This means that multiple identifiers may correspond to a unique user.
 
 ## API Gateway pattern <a name="Pattern"></a>
 An API implementation typically includes the business logic of the offered service. If the API includes all the security and exposure specific logic into an API, it will end up making the implementation too complex. The API gateway resides between the backend service (resource service) and the API consumer and it intercept all the requests from the consumer to the service. The API Management system integrates with an identity and access management system to ensure that all users accessing the system are authenticated and authorized to use the platform.
