@@ -26,7 +26,7 @@ Authorization [2] refers to the process of verifying what a user has access to. 
 
 It is also important to reflect on a step before authentication (step 0) - onboarding. This is also referred to commonly as partner/consumer onboarding. 
 
-### User indentity
+### User identity
 
 On what refers to CAMARA APIs to be exposed by Telco operators, the **End user** is the human participant who uses the application from a consumption device. And the **User** is the client/subscriber of the telco operator, identified by a unique user identifier (e.g. subject identifier sub in OpenID Connect terminology). The user is the resource owner. Usually the user corresponds to the end user, but this is not always the case. For example, a parent may be the user of a mobile subscription for their children. Therefore, the Authentication process allows to confirm/validate user identity (i.e. the operator subscriber).
 
