@@ -105,7 +105,7 @@ For ID token, audience, time of token issue, nonce etc. should be included as a 
 <ins> Protocol Flow </ins>: An abstract protocol flow for OAuth2 is illustrated below:
 
 <img src="./images/oauth2.png" alt="Oauth2"
-	title="Abstarct Oauth2 Flow" width="550" height="300" />
+	title="Abstract Oauth2 Flow" width="550" height="300" />
 
 Relevant Authorization grants
 
@@ -125,7 +125,7 @@ The implicit and password grant types are other options specified by OAuth2 when
 The client credential grant is used for server to server use cases involving trusted partners or clients without any protected user data involved. In this method the API invoker client is registered as a confidential client with an authorization grant type of client_credentials. 
 
 <img src="./images/cc.png" alt="cc"
-	title="CLient Credentials Grant" width="800" height="600" />
+	title="Client Credentials Grant" width="800" height="600" />
 
 ### OIDC <a name="oidc"></a>
 As already mentioned earlier OAuth2 is not authentication. OpenID Connect 1.0 (OIDC) is a standard from the OpenID Foundation that extends the OAuth2 protocol with a simple identity layer on top. It allows both protocols to work together, providing both Single Sign-On (SSO) and authorization to access APIs on the user’s behalf. OpenID Connect achieves this using identity tokens, and a new API - user info endpoint.
@@ -134,7 +134,7 @@ It enables Clients to verify the identity of the End-User based on the authentic
 
 
 <img src="./images/oidc.png" alt="OIDC"
-	title="Abstarct OIDC Flow" width="350" height="300" />	
+	title="Abstract OIDC Flow" width="350" height="300" />
 
  OIDC provides a framework for identity providers to support a wide range of authentication methods/factors that can be used to verify the identity of the user:
 
@@ -158,7 +158,7 @@ The authorization code is a temporary code that the client will exchange for an 
 Proof Key for Code Exchange (PKCE is specified in RFC 7636) is a kind of proof of possession. It is an extension to the authorization code flow to prevent CSRF and authorization code injection attacks. The technique involves the client first creating a secret on each authorization request, and then using that secret again when exchanging the authorization code for an access token. This way if the code is intercepted, it will not be useful since the token request relies on the initial secret. PKCE uses cryptography to guarantee that the client exchanging an OAuth2 code for tokens is the same client that started the original OAuth2 request. It is hence important to use this extension when using Auth code grant flow.
 
 #### OIDC Client-Initiated Backchannel Authentication (CIBA) flow
-CIBA is an authentication flow like regular OpenID Connect. However, unlike OpenID Connect, there is direct Relying Party to OpenID Provider communication without redirects through the user's browser. It decouples the concept of a Consumption Device (on which the user interacts with the Relying Party) and an Authentication Device (on which the user authenticates with the OpenID Provider and authorizes the request). CIBA allows a Relying Party that has an identifier for a user to obtain tokens from the OpenID Provider. The user starts the flow with the Relying Party at the Consumption Device, but authenticates and authorizes request on the Authentication Device. Authentication could even be initiated without user action on the consumption device.
+CIBA [10] is an authentication flow like regular OpenID Connect. However, unlike OpenID Connect, there is direct Relying Party to OpenID Provider communication without redirects through the user's browser. It decouples the concept of a Consumption Device (on which the user interacts with the Relying Party) and an Authentication Device (on which the user authenticates with the OpenID Provider and authorizes the request). CIBA allows a Relying Party that has an identifier for a user to obtain tokens from the OpenID Provider. The user starts the flow with the Relying Party at the Consumption Device, but authenticates and authorizes request on the Authentication Device. Authentication could even be initiated without user action on the consumption device.
 As the end user does not provide authentication credentials directly to the consumption device, supporting this flow requires the OpenID Provider to have some mechanism of initiating user authentication out-of-band from the interaction with the consumption device.
 
 ## Documentation and Specs <a name="docs"></a>
@@ -232,6 +232,7 @@ Depending on the Service API use cases, we expect the APIs contributed to the Ca
 [7] https://openid.net/specs/openid-connect-core-1_0.html "OpenID Connect Specification"  
 [8] https://openid.net/specs/openid-connect-discovery-1_0.html "OIDC Discovery Specification"  
 [9] https://spec.openapis.org/oas/v3.1.0 "OAS3"
+[10] https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html "CIBA"
 
 
 #### RFCs 
