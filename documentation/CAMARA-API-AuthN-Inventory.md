@@ -1,7 +1,7 @@
 ## CAMARA-API-AuthN-Inventory.md
 
-| API Name | Security-scheme name | Type | Flow |
-| -------- | ------------- | ---- | ---- |
-| QoD | oauth2-cc | oauth2 | clientCredentials |
-| NumberVerify | openId-ac | openIdConnect | authorizationCode |
-| DeviceStatus | openId-cb | openIdConnect | ciba |
+| API Name | Scopes | Security-scheme name | Type | Flow |
+| -------- | ------ | ------------- | ---- | ---- |
+| QoD | qod-sessions-read, qod-sessions-write, qod-sessions-delete, qod-profiles-read |oauth2-cc | oauth2 | clientCredentials |
+| NumberVerify |xxxx | openId-ac | openIdConnect | authorizationCode |
+| DeviceStatus |xxxx| openId-cb | openIdConnect | ciba |
