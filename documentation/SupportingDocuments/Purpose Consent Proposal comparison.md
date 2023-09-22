@@ -11,6 +11,7 @@ We have, as of now, 2 distinct proposal on the table: one initially provided by 
 
 ## Proposal presentation
 
+
 | Topic     | Telefonica proposal | Orange proposal |DT proposal |
 | --------- | ------------------- | --------------- |---------------|
 | What is the Open Gateway (OPGW) Product granularity? |  |  Open Gateway product matches 1-1 with a CAMARA API. For example, as of now, the CAMARA Device location API family features 2 APIs (2 yaml): `location-retrieval` and `location_verification` : we consider them as 2 separate OPGW product. The OPGW product covers completely the API (all the resources of the API). This is an important point because it means that API granularity must not be considered only from a technical aspect but also from a business aspect (which is already the case for CAMARA API). <br> The OPGW product is **not** strong-coupled with a purpose but independent of it. However in the catalog it is possible to recommend OPGW product with purpose (see next point).|Aligned with Orange |
@@ -22,6 +23,8 @@ We have, as of now, 2 distinct proposal on the table: one initially provided by 
 | How the legal consent displayed to the end user is defined and provided? | | Telco  associates a legal wording for each scope design-time. Then on the fly the legal notice is generated and displayed to the front end. <br> <br > As an example, simswap-verify-read technical scope is associated to wording:  'Verify latest SIM swap Date', number-verification-verify-read to 'Verify your MSIDN from network'. The request `POST /authorize` with `scope=FraudDetectionAndPrevention:simswap-verify-read` triggers following notice: <br> _"For fraud detection and prevention, application NiceApp request your consent to perform following action(s): <br> - Verify latest SIM swap Date <br> - Verify your MSIDN from network"_ | As explained in the above point, this template is already prepared as a part of creating the above-said purpose-scope-subset combinations for an API product and will be in compliance with the requirements from our legal/privacy teams (which for eg. could ask to show the text in at least 2 languages etc.) |
 | What if a new API is introduced in a country? |  | As long as a OPGW product is already existing for this API there is nothing else to do. This OPGW product should be visible in the catalogue once Telco has a live implementation of this API | Aligned with Orange |
 | What if a developper wishes to use API for a purpose not defined in this country? |  | Nothing to be done at OPGW product. The only action is at the authorization server to implement the legal base for this purpose for the API scope(s). | Aligned with Orange about nothing to be done to the product. <br> <br >Will depend on every individual Telco to extend their pre-approved list of purposes with the new one requested by the developer and implement the needed pre-configuration needed for purpose+scope-subset+legal-bases combinations etc. |
+
+
 
 
 
