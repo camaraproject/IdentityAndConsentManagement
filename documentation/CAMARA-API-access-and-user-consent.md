@@ -167,11 +167,7 @@ Finally, the operator will provide API response to the API invoker (Step 14).
 
 <br>
 
-**Technical ruleset for the Frontend flow**
-
-> If all API usecases point to the need of On-net scneario and where the consumption device and authentication device are the same, the front end flow must be used. eg. NumberVerification
-
-This flow is then applicable to On-net scenarios where the mobile connection of the device needs to be authenticated e.g. This flow is for example the one specified for the [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification/blob/main/documentation/API_documentation/CAMARA/uml_v0.3.jpg) due to the nature of its functionality where a given MSISDN needs to be compared to the MSISDN associated with the mobile connection of the user device. 
+ This flow is then applicable to On-net scenarios where the mobile connection of the device needs to be authenticated e.g. This flow is for example the one specified for the [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification/blob/main/documentation/API_documentation/CAMARA/uml_v0.3.jpg) due to the nature of its functionality where a given MSISDN needs to be compared to the MSISDN associated with the mobile connection of the user device.
 
 The device application (front-end) must be able to handle browser redirects.
 
@@ -298,9 +294,6 @@ The operator will provide the API response to the API invoker (Step 11).
 
 <br>
 
-**Technical ruleset for the Backend flow**
-
->If some usecase/s for an API point to off-net scenarios and where consumption and authenticaiton devices could be different, the backend flow must be used.
 
   - Identity: 
     - Identification by IP, MSISDN or others like IMSI, ICCID for specific use cases... it is open for more possibilities.
@@ -318,4 +311,14 @@ The operator will provide the API response to the API invoker (Step 11).
     - Device connected to WiFi
     - Device without UI (IoT)
 
+**Technical ruleset** <br>
+The technical ruleset is applicable only after a subproject has agreed to use a 3-legged authentication flow. This ruleset provides a recommendation which will help API providers to align on the 3-legged flow and help with aggregation.
 
+**Technical ruleset for the Frontend flow**
+
+> If all API usecases point to the need of On-net scneario and where the consumption device and authentication device are the same, the front end flow should be used. eg. NumberVerification
+
+
+**Technical ruleset for the Backend flow**
+
+>If some usecase/s for an API point to off-net scenarios and where consumption and authenticaiton devices could be different, the backend flow should be used.
