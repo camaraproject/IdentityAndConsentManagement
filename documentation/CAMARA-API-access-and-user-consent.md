@@ -87,19 +87,19 @@ The examples are provided below:
 Strong recommendation for format samples:
 
 ```
-fraud-preventiondetection:retrieve-sim-swap-date
+FraudPreventionAndDetection:retrieve-sim-swap-date
 
-fraud-preventiondetection:check-sim-swap
+FraudPreventionAndDetection:check-sim-swap
 
-fraud-preventiondetection:sim-swap (*)
+FraudPreventionAndDetection:sim-swap (*)
 ```
 _(*)Use api name when all scopes are included_
 
 Strongly discourage the below formats and they do not guarantee interoperability:
 
 ```
-fraud-preventiondetection:scope1 (legal-base1) scope2 (legal-base2)
-fraud-preventiondetection:scope1 scope2 (one legal base)
+FraudPreventionAndDetection:scope1 (legal-base1) scope2 (legal-base2)
+FraudPreventionAndDetection:scope1 scope2 (one legal base)
 ```
 _(*)Can be re-opened as an issue later for discussion_
 
