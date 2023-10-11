@@ -71,7 +71,7 @@ A purpose declares what the application intends to do with a set of personal inf
 
 ### Applying purpose concept in the authorization request
 
-In order to declare a purpose when accessing CAMARA APIs, it is strongly recommended that `scope` param in the /authorize request will be valued with:
+In order to declare a purpose when accessing the CAMARA APIs, it is strongly recommended that the `scope' parameter is set to:
 
 `<dpvValue>:<technicalParameter>`
 
