@@ -26,11 +26,11 @@ Authorization [2] refers to the process of verifying what a user has access to. 
 
 It is also important to reflect on a step before authentication (step 0) - onboarding. This is also referred to commonly as partner/consumer onboarding. 
 
-### User indentity
+### User identity
 
-On what refers to CAMARA APIs to be exposed by Telco operators, the end user is the human participant which is identified in Telco Operator by a unique user identifier (e.g. Subject identifier `sub` in OIDC terminology). Therefore, the Authentication process allows to confirm/validate user identity.
+On what refers to CAMARA APIs to be exposed by Telco operators, the **End user** is the human participant who uses the application from a consumption device. And the **User** is the client/subscriber of the telco operator, identified by a unique user identifier (e.g. subject identifier sub in OpenID Connect terminology). The user is the resource owner. Usually the user corresponds to the end user, but this is not always the case. For example, a parent may be the user of a mobile subscription for their children. Therefore, the Authentication process allows to confirm/validate user identity (i.e. the operator subscriber).
 
-It is important to differentiate the identification of a user from the identification of a device or UE. For example, the same user could have multiple associated devices.  
+It is important to differentiate the identification of a user from the identification of a device or UE. For example, the same user could have multiple associated devices. This means that multiple identifiers may correspond to a unique user.
 
 ## API Gateway pattern <a name="Pattern"></a>
 An API implementation typically includes the business logic of the offered service. If the API includes all the security and exposure specific logic into an API, it will end up making the implementation too complex. The API gateway resides between the backend service (resource service) and the API consumer and it intercept all the requests from the consumer to the service. The API Management system integrates with an identity and access management system to ensure that all users accessing the system are authenticated and authorized to use the platform.
@@ -105,7 +105,7 @@ For ID token, audience, time of token issue, nonce etc. should be included as a 
 <ins> Protocol Flow </ins>: An abstract protocol flow for OAuth2 is illustrated below:
 
 <img src="./images/oauth2.png" alt="Oauth2"
-	title="Abstarct Oauth2 Flow" width="550" height="300" />
+	title="Abstract Oauth2 Flow" width="550" height="300" />
 
 Relevant Authorization grants
 
@@ -125,7 +125,7 @@ The implicit and password grant types are other options specified by OAuth2 when
 The client credential grant is used for server to server use cases involving trusted partners or clients without any protected user data involved. In this method the API invoker client is registered as a confidential client with an authorization grant type of client_credentials. 
 
 <img src="./images/cc.png" alt="cc"
-	title="CLient Credentials Grant" width="800" height="600" />
+	title="Client Credentials Grant" width="800" height="600" />
 
 ### OIDC <a name="oidc"></a>
 As already mentioned earlier OAuth2 is not authentication. OpenID Connect 1.0 (OIDC) is a standard from the OpenID Foundation that extends the OAuth2 protocol with a simple identity layer on top. It allows both protocols to work together, providing both Single Sign-On (SSO) and authorization to access APIs on the user’s behalf. OpenID Connect achieves this using identity tokens, and a new API - user info endpoint.
@@ -134,7 +134,16 @@ It enables Clients to verify the identity of the End-User based on the authentic
 
 
 <img src="./images/oidc.png" alt="OIDC"
-	title="Abstarct OIDC Flow" width="350" height="300" />	
+	title="Abstract OIDC Flow" width="350" height="300" />
+
+ OIDC provides a framework for identity providers to support a wide range of authentication methods/factors that can be used to verify the identity of the user:
+
+ - Username and Password: The user provides the client application with a username and password. The client application then sends the username and password to the identity provider, which verifies the user's identity and returns an ID token to the client application.
+ - SMS One-Time Password (OTP): The user provides the client application with a phone number. The client application then sends the phone number to the identity provider, which sends an SMS message to the user's phone number. The user enters the code from the SMS message into the client application, which sends the code to the identity provider. The identity provider verifies the code and returns an ID token to the client application.
+- Network-based authentication: An authentication mechanism based on the identification of the endpoint of a network connection (e.g., by the observed IP address of the user device connected to the network). Network operators know which user is associated with a network resource at any given time, such as the mobile phone number associated with a particular cellular connection.<br>This is particularly interesting in the context of CAMARA APIs exposed by network operators. For example, it is the authentication method defined for the [Number Verification API](https://github.com/camaraproject/NumberVerification) without any user interaction in the process (aka "silent" auth).
+- Multi-factor authentication (MFA): MFA combines two or more authentication factors to increase security. For example, a combination of a password and a push notification to a registered mobile device. MFA is often used to provide an extra layer of security for sensitive applications such as banking.
+
+In fact, there are many more authentication methods/factors that can be used with OIDC, which can have different levels of security based on the factors they rely on to verify a user's identity (e.g., biometrics, hardware security keys, social identity providers such as Google, Facebook, etc.).
 
 
 #### Authorization code grant
@@ -149,7 +158,7 @@ The authorization code is a temporary code that the client will exchange for an 
 Proof Key for Code Exchange (PKCE is specified in RFC 7636) is a kind of proof of possession. It is an extension to the authorization code flow to prevent CSRF and authorization code injection attacks. The technique involves the client first creating a secret on each authorization request, and then using that secret again when exchanging the authorization code for an access token. This way if the code is intercepted, it will not be useful since the token request relies on the initial secret. PKCE uses cryptography to guarantee that the client exchanging an OAuth2 code for tokens is the same client that started the original OAuth2 request. It is hence important to use this extension when using Auth code grant flow.
 
 #### OIDC Client-Initiated Backchannel Authentication (CIBA) flow
-CIBA is an authentication flow like regular OpenID Connect. However, unlike OpenID Connect, there is direct Relying Party to OpenID Provider communication without redirects through the user's browser. It decouples the concept of a Consumption Device (on which the user interacts with the Relying Party) and an Authentication Device (on which the user authenticates with the OpenID Provider and authorizes the request). CIBA allows a Relying Party that has an identifier for a user to obtain tokens from the OpenID Provider. The user starts the flow with the Relying Party at the Consumption Device, but authenticates and authorizes request on the Authentication Device. Authentication could even be initiated without user action on the consumption device.
+CIBA [10] is an authentication flow like regular OpenID Connect. However, unlike OpenID Connect, there is direct Relying Party to OpenID Provider communication without redirects through the user's browser. It decouples the concept of a Consumption Device (on which the user interacts with the Relying Party) and an Authentication Device (on which the user authenticates with the OpenID Provider and authorizes the request). CIBA allows a Relying Party that has an identifier for a user to obtain tokens from the OpenID Provider. The user starts the flow with the Relying Party at the Consumption Device, but authenticates and authorizes request on the Authentication Device. Authentication could even be initiated without user action on the consumption device.
 As the end user does not provide authentication credentials directly to the consumption device, supporting this flow requires the OpenID Provider to have some mechanism of initiating user authentication out-of-band from the interaction with the consumption device.
 
 ## Documentation and Specs <a name="docs"></a>
@@ -223,6 +232,7 @@ Depending on the Service API use cases, we expect the APIs contributed to the Ca
 [7] https://openid.net/specs/openid-connect-core-1_0.html "OpenID Connect Specification"  
 [8] https://openid.net/specs/openid-connect-discovery-1_0.html "OIDC Discovery Specification"  
 [9] https://spec.openapis.org/oas/v3.1.0 "OAS3"
+[10] https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html "CIBA"
 
 
 #### RFCs 
