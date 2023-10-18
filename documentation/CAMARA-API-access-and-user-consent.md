@@ -87,19 +87,19 @@ The examples are provided below:
 Strong recommendation for format samples:
 
 ```
-FraudPreventionAndDetection:retrieve-sim-swap-date
+dpv:FraudPreventionAndDetection#retrieve-sim-swap-date
 
-FraudPreventionAndDetection:check-sim-swap
+dpv:FraudPreventionAndDetection#check-sim-swap
 
-FraudPreventionAndDetection:sim-swap (*)
+dpv:FraudPreventionAndDetection#sim-swap (*)
 ```
 _(*)Use api name when all scopes are included_
 
 Strongly discourage the below formats and they do not guarantee interoperability:
 
 ```
-FraudPreventionAndDetection:scope1 (legal-base1) scope2 (legal-base2)
-FraudPreventionAndDetection:scope1 scope2 (one legal base)
+dpv:FraudPreventionAndDetection#scope1 (legal-base1) scope2 (legal-base2)
+dpv:FraudPreventionAndDetection#scope1 scope2 (one legal base)*
 ```
 _(*)Can be re-opened as an issue later for discussion_
 
@@ -138,10 +138,10 @@ box Operator
 end
 
 Note over FE,BE: Use Feature needing<br>Operator Capability  
-BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope:<purposeDpvValue>:<technicalParameter><br>&redirect_uri=invoker_callback...
+BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue>#35;<technicalParameter><br>&redirect_uri=invoker_callback...
 FE->>+FE: Browser /<br> Embedded Browser
 alt Standard OIDC Auth Code Flow between Invoker and API Exposure Platform
-  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope:<purposeDpvValue>:<technicalParameter><br>&redirect_uri=invoker_callback...
+  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue>#35;<technicalParameter><br>&redirect_uri=invoker_callback...
   Note over ExpO: API Exposure Platform applies<br>Network Based Authentication (amr=nba/mnba)
   ExpO->>ExpO: Network Based Authentication:<br>- map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc 
@@ -244,7 +244,7 @@ Note over FE,BE: Feature needing<br>Operator Capability
 Note over BE: Select User Identifier:<br> Ip:port / MSISDN / other TBD  
 
 alt OIDC Client-Initiated Backchannel Authentication (CIBA) Standard Flow between Invoker and Operator.
-  BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope: "<purposeDpvValue>:<technicalParameter>",<br>login_hint including User Identifier    
+  BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope=dpv:<purposeDpvValue>#35;<technicalParameter>",<br>login_hint including User Identifier    
   ExpO->>ExpO: - Validate User Identifier<br>- (Opt) map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc  
   opt If User Consent is required for the legal basis of the purpose  
