@@ -73,7 +73,7 @@ A purpose declares what the application intends to do with a set of personal inf
 
 In order to declare a purpose when accessing the CAMARA APIs, it is strongly recommended that the `scope' parameter is set to:
 
-`<dpvValue>:<technicalParameter>`
+`dpv:<dpvValue>#<technicalParameter>`
 
 - `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
 - `<technicalParameter>` must be either:
