@@ -71,7 +71,40 @@ A purpose declares what the application intends to do with a set of personal inf
 
 ### Applying purpose concept in the authorization request
 
->[TO BE EDITED/COMPLETED] - [OAuth 2.0 Authorization Framework](https://www.rfc-editor.org/rfc/rfc6749)
+In order to declare a purpose when accessing the CAMARA APIs, it is strongly recommended that the `scope' parameter is set to:
+
+`dpv:<dpvValue>#<technicalParameter>`
+
+- `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
+- `<technicalParameter>` must be either:
+  - one **technical scope** to limit the request to one API endpoint (this technical scope is described in the API spec YAML file)
+  - one **API name** to cover the complete API (This API name is not described in the API spec YAML file as technical scope) – In this case the request covers all technical scopes of the API.
+
+<br>
+
+The examples are provided below:
+
+Strong recommendation for format samples:
+
+```
+dpv:FraudPreventionAndDetection#retrieve-sim-swap-date
+
+dpv:FraudPreventionAndDetection#check-sim-swap
+
+dpv:FraudPreventionAndDetection#sim-swap (*)
+```
+_(*)Use api name when all scopes are included_
+
+Strongly discourage the below formats and they do not guarantee interoperability:
+
+```
+dpv:FraudPreventionAndDetection#scope1 (legal-base1) scope2 (legal-base2)
+dpv:FraudPreventionAndDetection#scope1 scope2 (one legal base)*
+```
+_(*)Can be re-opened as an issue later for discussion_
+
+>NOTE: Purpose (dpv) to be added as custom claim and other such options for purpose will be discussed with OIDF after they have finalized the formal liaison with CAMARA. They will be asked to provide recommendation as a neutral and OIDF expert party here for this topic*.<br>
+(*)_Can be opened as an issue later_
 
 ## User Identity
 
@@ -105,10 +138,10 @@ box Operator
 end
 
 Note over FE,BE: Use Feature needing<br>Operator Capability  
-BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&purpose=purpose&redirect_uri=invoker_callback...
+BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue>#35;<technicalParameter><br>&redirect_uri=invoker_callback...
 FE->>+FE: Browser /<br> Embedded Browser
 alt Standard OIDC Auth Code Flow between Invoker and API Exposure Platform
-  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp&purpose=purpose&redirect_uri=invoker_callback...
+  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue>#35;<technicalParameter><br>&redirect_uri=invoker_callback...
   Note over ExpO: API Exposure Platform applies<br>Network Based Authentication (amr=nba/mnba)
   ExpO->>ExpO: Network Based Authentication:<br>- map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc 
@@ -211,7 +244,7 @@ Note over FE,BE: Feature needing<br>Operator Capability
 Note over BE: Select User Identifier:<br> Ip:port / MSISDN / other TBD  
 
 alt OIDC Client-Initiated Backchannel Authentication (CIBA) Standard Flow between Invoker and Operator.
-  BE->>+ExpO: POST /bc-authorize<br> Credentials, purpose,<br>login_hint including User Identifier    
+  BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope=dpv:<purposeDpvValue>#35;<technicalParameter>",<br>login_hint including User Identifier    
   ExpO->>ExpO: - Validate User Identifier<br>- (Opt) map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc  
   opt If User Consent is required for the legal basis of the purpose  
@@ -220,7 +253,7 @@ alt OIDC Client-Initiated Backchannel Authentication (CIBA) Standard Flow betwee
   alt If Consent is Granted or Consent not needed for legal basis   
     ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"  
   else If Consent is needed and is NOT granted - Out Of Band Consent Capture (Push/SMS/other)
-    note over ExpO,User: User Interaction <br> out-of-band capture consent mechanism chosen by the Operator
+    Note over ExpO,User: User Interaction <br> out-of-band capture consent mechanism chosen by the Operator
     ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"
   end
   loop Invoker polls until consent is granted or until expires. If granted in advance, token returned in first poll
