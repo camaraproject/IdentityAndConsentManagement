@@ -302,7 +302,10 @@ The operator will provide the API response to the API invoker (Step 11).
 <br>
 
 **Technical ruleset for the Backend flow**
-The technical ruleset is applicable only after a subproject has agreed to use a 3-legged authentication flow. This ruleset provides a recommendation which will help API providers to align on the 3-legged flow and help with aggregation. If some usecase/s for an API point to off-net scenarios and where consumption and authenticaiton devices could be different, the backend flow should be used.
+
+The technical ruleset is applicable only after a subproject has agreed to use a 3-legged authentication flow. Every time personal user data is processed by an API and the user can exercise their rights either via opt-in and/or opt-out, 3-legged access tokens must be used. This ruleset provides a recommendation which will help API providers to align on the 3-legged flow and help with aggregation. 
+
+If some usecase/s for an API point to off-net scenarios and where consumption and authentication devices could be different, the Backend flow should be used.
 
   - Identity: 
     - Identification by IP, MSISDN or others like IMSI, ICCID for specific use cases... it is open for more possibilities.
