@@ -169,7 +169,7 @@ Finally, the operator will provide API response to the API invoker (Step 14).
 
 **Technical ruleset for the Frontend flow**
 
-The technical ruleset is applicable only after a subproject has agreed to use a 3-legged authentication flow. This ruleset provides a recommendation which will help API providers to align on the 3-legged flow and help with aggregation.
+The technical ruleset is applicable only after a subproject has agreed to use a 3-legged authentication flow. Every time personal user data is processed by an API and the user can exercise their rights either via opt-in and/or opt-out, 3-legged access tokens must be used. This ruleset provides a recommendation which will help API providers to align on the 3-legged flow and help with aggregation.
 
 If all API usecases point to the need of On-net scneario and where the consumption device and authentication device are the same, the front end flow should be used. eg. NumberVerification
 
