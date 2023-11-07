@@ -194,8 +194,6 @@ The device application (front-end) must be able to handle browser redirects.
     - Off-net scenarios using refresh_token, as long as there was a connection when the first access_token was requested.
 
 
->[TO BE EDITED/COMPLETED] - [Technical disscussion on ruleset to be applied](https://github.com/camaraproject/IdentityAndConsentManagement/issues/52) are ongoing.
-
 #### CIBA flow (Backend flow)
 
 ```mermaid
