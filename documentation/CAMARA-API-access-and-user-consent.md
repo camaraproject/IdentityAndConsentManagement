@@ -151,14 +151,16 @@ alt Standard OIDC Auth Code Flow between Invoker and API Exposure Platform
   alt If Consent is Granted or Consent not needed for legal basis   
     ExpO-->>FE: 302<br>Location: invoker_callback?code=Operatorcode
   else If Consent is NOT granted - Consent Capture within AuthCode Flow  
-    Note over FE,ExpO: Consent capture  
-    alt when user grants consent / otherwise flow fails  
-      ExpO-->>FE: 302<br>Location: invoker_callback?code=Operatorcode
-    end  
-  end  
+    Note over FE,ExpO: Consent capture    
+    ExpO-->>FE: 302<br>Location: aggregator_callback?code=Operatorcode 
+  end
   FE-->>-BE: GET invoker_callback?code=OperatorCode
   BE->>ExpO: POST /token<br> code=OperatorCode
-  ExpO->>BE: 200 OK <br> {OperatorAccessToken}
+  alt If Consent is Granted or Consent not needed for legal basis
+    ExpO->>BE: 200 OK <br> {OperatorAccessToken}
+  else If Consent is NOT granted - Flow fails if there is no other granted scope
+    ExpO->>BE: 400 Bad Request <br> {error: invalid_request}
+  end
 end
 
 BE->>ExpO: Access Operator CAMARA API <br> Authorization: Bearer {OperatorAccessToken}        
@@ -190,7 +192,7 @@ Then, two alternatives may occur:
 - The operator performs the consent capture. Since the authorization code grant involves the frontend, the consent can be captured directly from the user.
 - Once the user has given consent, the authorization code flow continues by redirecting to the API invoker redirect_uri (invoker_callback) and including the authorization code (OperatorCode).
 
-Once the API invoker receives the redirect with the authorization code (OperatorCode - Step 9), it will retrieve the access token from the operator's API exposure platform (OperatorAccessToken) (Steps 10-11). The OperatorAccessToken issued is encrypted so that no relevant information is exposed.
+Once the API invoker receives the redirect with the authorization code (OperatorCode - Step 9), it will retrieve the access token from the operator's API exposure platform (OperatorAccessToken) (Steps 10-11). The OperatorAccessToken issued is encrypted so that no relevant information is exposed. If the user has not given consent, the access token will not contain the appropriate scopes, and if no other scopes are granted, the flow will fail.
 
 Now the API invoker has a valid access token that can be used to invoke the CAMARA API offered by the operator (Step 12).
 
