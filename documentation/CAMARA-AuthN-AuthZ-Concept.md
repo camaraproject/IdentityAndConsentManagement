@@ -155,7 +155,7 @@ The authorization code is a temporary code that the client will exchange for an 
 
 <ins>PKCE (security related Oauth2 extension)</ins>
 
-Proof Key for Code Exchange (PKCE is specified in RFC 7636) is an extension to the authorization code flow to prevent CSRF and authorization code injection attacks. This extension utilizes a dynamically created cryptographically random key called "code verifier". A unique code verifier is created for every authorization request, and
+Proof Key for Code Exchange (PKCE is specified in RFC 7636) is an extension to the authorization code flow to prevent Cross Site Request Forgery (CSRF) and authorization code injection attacks. This extension utilizes a dynamically created cryptographically random key called "code verifier". A unique code verifier is created for every authorization request, and
 its transformed value, called "code challenge", is sent to the authorization server to obtain the authorization code.  The authorization code obtained is then sent to the token endpoint with the "code verifier", and the server compares it with the previously received request code so that it can perform the proof of possession
 of the "code verifier" by the client.  This works as the mitigation since the attacker would not know this one-time key, since it is sent over TLS and cannot be intercepted.
 
