@@ -224,6 +224,7 @@ Depending on the Service API use cases, we expect the APIs contributed to the Ca
 [7]: https://openid.net/specs/openid-connect-core-1_0.html "OpenID Connect Specification"  
 [8]: https://openid.net/specs/openid-connect-discovery-1_0.html "OIDC Discovery Specification"  
 [9]: https://spec.openapis.org/oas/v3.1.0 "OAS3"
+[10]: https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html "CIBA"
 
 [1] https://auth0.com/docs/authentication "Authentication"  
 [2] https://auth0.com/docs/authorization "Authorization"  
@@ -248,4 +249,5 @@ Depending on the Service API use cases, we expect the APIs contributed to the Ca
 -   OAuth 2 Assertion,  [RFC 7521](https://tools.ietf.org/html/rfc7521)
 -   OAuth 2 Token Introspection [RFC 7662](https://datatracker.ietf.org/doc/html/rfc7662)
 -   OAuth 2 Security Assertion Markup Language,  [RFC 7522](https://tools.ietf.org/html/rfc7522)
+-   OAuth 2 Proof Key for Code Exchange, [RFC 7636](https://tools.ietf.org/html/rfc7636)
 -   JSON Web Token Bearer,  [RFC 7523](https://tools.ietf.org/html/rfc7523)
