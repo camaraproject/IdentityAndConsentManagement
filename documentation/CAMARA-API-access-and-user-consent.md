@@ -18,6 +18,10 @@ This document defines guidelines for telco operator exposure platforms to manage
     - [Authorization flows / grant types](#authorization-flows--grant-types)
       - [Authorization code flow (Frontend flow)](#authorization-code-flow-frontend-flow)
       - [CIBA flow (Backend flow)](#ciba-flow-backend-flow)
+  - [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
+    - [Use of openIdConnect for `securitySchemes`](#use-of-openidconnect-for-securityschemes)
+    - [Use of `security` property](#use-of-security-property)
+    - [Mandatory template for `info.description` in CAMARA API specs](#mandatory-template-for-infodescription-in-camara-api-specs)
 
 
 ## Introduction
@@ -63,7 +67,7 @@ The list below introduces several key concepts:
 
 A purpose declares what the application intends to do with a set of personal information resources...
 
->[TO BE EDITED/COMPLETED] - [Technical discussions around the purpose concept](https://github.com/camaraproject/IdentityAndConsentManagement/issues/32) are still ongoing. This section of the document will be finalized when a consensus is reached in this working group.
+>[TO BE EDITED/COMPLETED]
 
 ### Purpose definition
 
@@ -108,7 +112,7 @@ _(*)Can be re-opened as an issue later for discussion_
 
 ## User Identity
 
->[TO BE EDITED/COMPLETED] - User identification: Get an identifier for a user from some information. E.g.: IP, phone number, document number... The [Technical Discussions on user identity](https://github.com/camaraproject/IdentityAndConsentManagement/issues/32) are still ongoing. This section of the document will be finalized when consensus is reached in this working group.
+>[TO BE EDITED/COMPLETED] - User identification: Get an identifier for a user from some information. E.g.: IP, phone number, document number...
 
 ## User Authentication/Authorization & Consent Management
 
@@ -354,3 +358,52 @@ If some usecase/s for an API point to off-net scenarios and where consumption an
     - Device connected to WiFi
     - Device without UI (IoT)
 
+## CAMARA API Specification - Authorization and authentication common guidelines
+
+The purpose of this document section is to standardise the specification of `securitySchemes` and `security` across all CAMARA API subprojects with common mandatory guidelines as agreed by the Technical Steering Committee (TSC) and the participants of this Working Group.
+
+### Use of openIdConnect for `securitySchemes`
+
+In general, OpenID Connect is the protocol to be used for securitization. Each API specification must ONLY define the following openIdConnect entry in `securitySchemes`, as shown in document [CAMARA-AuthN-AuthZ-Concept.md](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-AuthN-AuthZ-Concept.md#documentation-and-specs-):
+
+```
+components:
+  securitySchemes:
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
+```
+
+The value for `openIdConnectUrl` in the CAMARA spec is an example, that must be substituted by the specific discovery endpoint for OIDC protocol of the API provider, when the API is exposed in one of its environments.
+
+### Use of `security` property
+
+Generally, each operation is protected by a scope and it will include a security property with a single element in the array:
+
+```
+paths:
+  {path}:
+    {method}:
+      ...
+      security:
+        - openId:
+            - {scope}
+```
+The key is arbitrary in OAS, but convention in CAMARA is to name it `openId`. This key must be same defined in the `components.securitySchemes` section.
+
+The {scope} is the specific scope defined to protect this operation.
+
+### Mandatory template for `info.description` in CAMARA API specs
+
+The documentation template below must be used as part of the API documentation in  `info.description` property in the CAMARA API specs:
+
+
+```
+### Authorization and authentication
+
+CAMARA guidelines defines a set of authorization flows which can grant API clients access to the API functionality, as outlined in the document [CAMARA-API-access-and-user-consent.md](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-API-access-and-user-consent.md). Which specific authorization flows are to be used will be determined during onboarding process, happening between the API Client and the Telco Operator exposing the API, taking into account the declared purpose for accessing the API, while also being subject to the prevailing legal framework dictated by local legislation.
+
+It is important to remark that in cases where personal user data is processed by the API, and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of 3-legged access tokens becomes mandatory. This measure ensures that the API remains in strict compliance with user privacy preferences and regulatory obligations, upholding the principles of transparency and user-centric data control.
+```
+
+It tells potential API customers why the API specification does not list specific grant types, and how to find out what authorization flows they can use.
