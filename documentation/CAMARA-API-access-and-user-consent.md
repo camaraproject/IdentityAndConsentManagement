@@ -18,6 +18,7 @@ This document defines guidelines for telco operator exposure platforms to manage
     - [Authorization flows / grant types](#authorization-flows--grant-types)
       - [Authorization code flow (Frontend flow)](#authorization-code-flow-frontend-flow)
       - [CIBA flow (Backend flow)](#ciba-flow-backend-flow)
+      - [Client Credentials](#client-credentials)
   - [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
     - [Use of openIdConnect for `securitySchemes`](#use-of-openidconnect-for-securityschemes)
     - [Use of `security` property](#use-of-security-property)
@@ -357,6 +358,12 @@ If some usecase/s for an API point to off-net scenarios and where consumption an
     - Off-net scenarios (no mobile connection)
     - Device connected to WiFi
     - Device without UI (IoT)
+
+#### Client Credentials
+
+The Client Credentials grant type is used to obtain a 2-legged access_token that does not represent a user. This grant type can only be used when no personal user data is processed, and it is only a valid option to access the CAMARA APIs for these specific scenarios. 
+
+More details about the standard flow can be found in the official IETF specification [The OAuth 2.0 Authorization Framework](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4).
 
 ## CAMARA API Specification - Authorization and authentication common guidelines
 
