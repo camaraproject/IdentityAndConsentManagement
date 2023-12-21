@@ -129,6 +129,8 @@ _(*)Can be re-opened as an issue later for discussion_
 
 ### Authorization flows / grant types
 
+Detailed information on the below specified grant types (for eg. extensions to some of the grant types, links to original RFC documents etc.) is available in [CAMARA-AuthN-AuthZ-Concept.md](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-AuthN-AuthZ-Concept.md)
+
 #### Authorization code flow (Frontend flow)
 
 ```mermaid
