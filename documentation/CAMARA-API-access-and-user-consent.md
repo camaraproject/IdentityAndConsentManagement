@@ -281,7 +281,7 @@ The API invoker has to provide in the authorization request (/bc_authorize) a lo
 
     ```
     POST /bc-authorize HTTP/1.1
-    Authorization: Basic {Credentials}
+    Authorization: ...
     Content-Type: application/x-www-form-urlencoded
 
     login_hint=tel%3A%2B346xxyyyzzz&
