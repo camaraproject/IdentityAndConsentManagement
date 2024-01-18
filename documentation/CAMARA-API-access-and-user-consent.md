@@ -76,6 +76,12 @@ A purpose declares what the application intends to do with a set of personal inf
 
 ### Applying purpose concept in the authorization request
 
+A purpose must be declared within the requested scope for the following grant types:
+- authorization_code
+- urn:openid:params:grant-type:ciba
+
+No purpose is required for the client_credentials grant type, as this grant type can only be used when no personal user data is processed. The requested scope must be set directly to the value defined for the relevant endpoint within the OAS ("YAML") specification. "Wild card" scopes (i.e. specifying only the API name) are not valid for this grant type.
+
 In order to declare a purpose when accessing the CAMARA APIs, it is strongly recommended that the `scope' parameter is set to:
 
 `dpv:<dpvValue>#<technicalParameter>`
