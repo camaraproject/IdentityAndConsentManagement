@@ -20,11 +20,10 @@ Repository to describe, develop, document and test the Identity And Consent Mana
 * Schedule: bi-weekly, Wednesday, 4 PM CET/CEST (15:00 UTC, 14:00 UTC during European DST). For next call, see minutes of [previous meetings](documentation/MeetingMinutes) 
 * Meeting link: [Microsoft Teams Meeting](https://teams.microsoft.com/l/meetup-join/19%3ameeting_MGVkMDUwMTYtNTZiNy00MmMzLWE1M2QtN2Q1ZmEwOWVmZDQ2%40thread.v2/0?context=%7b%22Tid%22%3a%229744600e-3e04-492e-baa1-25ec245c6f10%22%2c%22Oid%22%3a%22ec8dd69b-01fe-4d41-a294-c2927b548e27%22%7d)
 
-## Results and Status
-* Current Version: v0.1.0 WIP
-  * API [definition](code/API_definitions)
-  * API [documentation](documentation/API_documentation)
-  * For changes see [CHANGELOG.md](CHANGELOG.md)
+## Status and released versions
+* Release 0.1.0 of guidelines and documentation for CAMARA APIs is available within the [release-0.1.0 branch](https://github.com/camaraproject/IdentityAndConsentManagement/tree/release-0.1.0)
+
+For changes see [CHANGELOG.md](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/CHANGELOG.md)
 
 ## Contributorship and mailing list
 * To subscribe / unsubscribe to the mailing list of this Sub Project and thus be / resign as Contributor please visit <https://lists.camaraproject.org/g/sp-icm>.
