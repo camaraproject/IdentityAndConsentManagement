@@ -5,7 +5,7 @@
 <a href="https://github.com/camaraproject/IdentityAndConsentManagement" title="Repo Size"><img src="https://img.shields.io/github/repo-size/camaraproject/IdentityAndConsentManagement?style=plastic"></a>
 <a href="https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/LICENSE" title="License"><img src="https://img.shields.io/badge/License-Apache%202.0-green.svg?style=plastic"></a>
 
-# IdentityAndConsentManagement
+# Identity And Consent Management
 Repository to describe, develop, document and test the Identity And Consent Management API family
 
 ## Scope
