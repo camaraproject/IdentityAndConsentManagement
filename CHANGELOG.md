@@ -1,4 +1,4 @@
-# Changelog IdentityAndConsentManagement
+# Changelog Identity And Consent Management
 
 # v0.1.0 - Initial version
 
@@ -8,7 +8,7 @@
 
 The content of the release includes:
 
-* IdentityAndConsentManagement approved deliverables in **documentation** folder:
+* Identity And Consent Management approved deliverables in **documentation** folder:
   
   - **[CAMARA-API-access-and-user-consent.md](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.1.0/documentation/IdentityAndConsentManagement)** - This document defines guidelines for telco operator API exposure platforms to manage CAMARA API access and user consent (when applicable). **This document is the result of the agreements reached in this working group and sets the stage for future discussions**. The major contents of the document added for this baseline release are:
     - [Glossary of Terms and Concepts](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.1.0/documentation/CAMARA-API-access-and-user-consent.md#glossary-of-terms-and-concepts)
