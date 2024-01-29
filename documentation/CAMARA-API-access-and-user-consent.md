@@ -306,7 +306,7 @@ The API invoker has to provide in the authorization request (/bc_authorize) a lo
 
 The operator's API exposure platform will:
 
-- Validate user identifier, map it to a telco identifier if applicable, e.g.: map IP to MSISDN. Set the OAuth sub to the unique user id in the operator (Step 2).
+- Validate user identifier, map it to a telco identifier if applicable, e.g.: map IP to MSISDN. Set the OAuth sub to the unique user id in the operator (Step 2). If the operator is not able to identify which user the application wishes to be authenticated by means of the hint provided in the request an `unknown_user_id` error will be returned.
 
 - Check if a user consent is needed, which depends on the legal basis associated to the purpose (“legitimate interest”, “contract”, “consent”, etc). If needed, it will check in the operator's consent master whether user consent has already been given for that identifier, the application client_id and the requested purpose (Steps 3-4).
 
@@ -335,7 +335,7 @@ Then, the API invoker polls the token endpoint by making an "HTTP POST" request 
     }
     ```
 - When this response is received, the API invoker must wait the seconds of the `interval` value received in the CIBA authorization endpoint and then repeat the request until a final response is received.
-- Once the user has granted consent, the API exposure platform operator will provide the access token (OperatorAccessToken) to the API invoker (Step 8). The OperatorAccessToken issued will be encrypted so no relevant information is disclosed.
+- Once the user has granted consent, the API exposure platform operator will provide the access token (OperatorAccessToken) to the API invoker (Step 8). The OperatorAccessToken issued will be encrypted so no relevant information is disclosed. If the issued access token scope is different from the one requested by the application, based on the authorization server policy or the user's instructions, the authorization server must include the "scope" response parameter to inform the application of the actual scope granted. If the user denied the authorization request an `access_denied` error may be returned. Eventually, if the user does not respond when consent is required, the operator may return an `expired_token` error.
 
 <br>
 
