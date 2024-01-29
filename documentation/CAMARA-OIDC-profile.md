@@ -75,10 +75,11 @@ The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SH
 
 ## Authorization using the Authorization Code Flow
 
+The [OAuth 2.0 Authorization Code](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1) flow involves exchanging an authorization code for a token. Instead of requesting authorization directly from the resource owner, the client directs the resource owner to an authorization server (via its user-agent), which in turn directs the resource owner back to the client with the authorization code.
 
 ### Authentication Request
 
-An Authentication Request is an OpenID Connect Authorization Request that requests that the End-User be authenticated by the Authorization Server.
+An Authentication Request is an [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) Authorization Request that requests that the End-User be authenticated by the Authorization Server.
 
 The CAMARA profile uses the following OpenID Connect request parameters with the Authorization Code Flow:
 
@@ -386,7 +387,7 @@ Content-Type: application/json
 
 ## Authorization using the OpenID Connect Client-Initiated Backchannel Authentication Flow (CIBA)
 
-The Backchannel Authentication Endpoint is used to initiate an out-of-band authentication of the end-user. This is done by sending an HTTP POST message directly from the Client to the OpenID Provider's Backchannel Authentication Endpoint, using a request defined in the following subsections.
+The [Client-Initiated Backchannel Authentication (CIBA)](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html) flow is used to initiate an out-of-band authentication of the end-user. This is done by sending an HTTP POST message directly from the Client to the OpenID Provider's Backchannel Authentication Endpoint, using a request defined in the following subsections.
 
 Communication with the Backchannel Authentication Endpoint MUST utilize TLS.
 
@@ -703,7 +704,7 @@ Content-Type: application/json
 
 ## Client Credentials Flow
 
-The Client Credentials grant type is used to obtain a 2-legged Access Token that does not represent a user. This grant type can only be used when no personal user data is processed, and it is only a valid option to access the CAMARA APIs for these specific scenarios.
+The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) grant type is used to obtain a 2-legged Access Token that does not represent a user. This grant type can only be used when no personal user data is processed, and it is only a valid option to access the CAMARA APIs for these specific scenarios.
 
 
 ### Access Token Request
@@ -836,7 +837,7 @@ Content-Type: application/json
 
 Oauth scope values determine the specific CAMARA services being requested by the Service Provider, subject to the SP being registered to use those services.
 
-The Open Gateway Authorization Request MUST contain the `scope` parameter, which is a space delimited, case-sensitive list of ASCII strings (scope values). Multiple scope values can be requested simultaneously, subject to the SP being registered to use those “scopes”.
+The Authorization Request MUST contain the `scope` parameter, which is a space delimited, case-sensitive list of ASCII strings (scope values). Multiple scope values can be requested simultaneously, subject to the SP being registered to use those “scopes”.
 
 For OpenID requests, the scope values MUST include `openid`, to indicate that the request is an OpenID Connect request, followed by other values depending on the specific CAMARA services being requested.
 
@@ -976,6 +977,7 @@ The value of the [OAuth.Assertions](https://www.rfc-editor.org/info/rfc7521) `cl
 * [Data Privacy Vocabulary (DPV)](https://w3c.github.io/dpv/dpv/)
 * [E.164 - The international public telecommunication numbering plan](https://www.itu.int/rec/T-REC-E.164-201011-I/en)
 * [OpenID Connect Core 1.0 specification](https://openid.net/specs/openid-connect-core-1_0.html)
+* [OpenID Connect Client-Initiated Backchannel Authentication Flow - Core 1.0](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html)
 * [RFC 2617 - HTTP Authentication: Basic and Digest Access Authentication](https://www.rfc-editor.org/info/rfc2617)
 * [RFC 3986 - Uniform Resource Identifier (URI): Generic Syntax](https://www.rfc-editor.org/info/rfc3986)
 * [RFC 3966 - The tel URI for Telephone Numbers](https://www.rfc-editor.org/info/rfc3966)
