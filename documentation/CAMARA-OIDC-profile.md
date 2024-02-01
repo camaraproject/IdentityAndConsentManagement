@@ -40,7 +40,7 @@
 
 ## Introduction
 
-Telco network capabilities exposed through APIs provide great value to customers. By simplifying the complexity of telco networks with APIs and making the APIs available across telco networks and countries, CAMARA enables easy and seamless access. To ensure seamless interoperability and increased security, this technical document introduces the OpenID Connect (OIDC) profile, which is specifically tailored for CAMARA APIs.
+Telco network capabilities exposed through APIs provide great value to customers. By simplifying the complexity of telco networks with APIs and making the APIs available across telco networks and countries, CAMARA enables easy and seamless access. To ensure seamless interoperability and increased security, this technical specification introduces the OpenID Connect (OIDC) profile, based on several standards, which is specifically tailored for CAMARA APIs.
 
 OpenID Connect is a widely adopted standard for user authentication and authorization in the context of APIs. This document builds on the basic principles of OIDC and outlines CAMARA-specific guidelines to address CAMARA APIs scenarios and use cases.
 
@@ -100,7 +100,7 @@ The CAMARA profile uses the following OpenID Connect request parameters with the
 
 * **redirect_uri**
 
-  REQUIRED. Redirection URI to which the response will be sent. This URI MUST exactly match one of the Redirection URI values for the Client pre-registered at the OpenID Provider, with the matching performed as described in [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986.html#section-6.2.1). When using this flow, the Redirection URI SHOULD use the https scheme; however, it MAY use the http scheme. The Redirection URI MAY use an alternate scheme, such as one that is intended to identify a callback into a native application.
+  REQUIRED. Redirection URI to which the response will be sent. This URI MUST exactly match one of the Redirection URI values for the Client pre-registered at the OpenID Provider, with the matching performed as described in [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986.html#section-6.2.1). When using this flow, the Redirection URI MUST use the https scheme; however, it MAY use the http scheme only for non-production environments. The Redirection URI MAY use an alternate scheme, such as one that is intended to identify a callback into a native application.
 
 
 * **state**
@@ -348,7 +348,7 @@ The authorization server responds with an HTTP 400 (Bad Request) status code (un
 
     * **_invalid_client_**
 
-      Client authentication failed (e.g., unknown client, no client authentication included, or unsupported authentication method). The authorization server MAY return an HTTP 401 (Unauthorized) status code to indicate which HTTP authentication schemes are supported. If the client attempted to authenticate via the `Authorization` request header field, the authorization server MUST respond with an HTTP 401 (Unauthorized) status code and include the `WWW-Authenticate` response header field matching the authentication scheme used by the client.
+      Client authentication failed (e.g., unknown client, no client authentication included, or unsupported authentication method). The authorization server MAY return an HTTP 401 (Unauthorized) status code to indicate which HTTP authentication schemes are supported.
 
     * **_invalid_grant_**
 
@@ -651,7 +651,7 @@ The authorization server responds with an HTTP 400 (Bad Request) status code (un
 
     * **_invalid_client_**
 
-      Client authentication failed (e.g., unknown client, no client authentication included, or unsupported authentication method). The authorization server MAY return an HTTP 401 (Unauthorized) status code to indicate which HTTP authentication schemes are supported. If the client attempted to authenticate via the `Authorization` request header field, the authorization server MUST respond with an HTTP 401 (Unauthorized) status code and include the `WWW-Authenticate` response header field matching the authentication scheme used by the client.
+      Client authentication failed (e.g., unknown client, no client authentication included, or unsupported authentication method). The authorization server MAY return an HTTP 401 (Unauthorized) status code to indicate which HTTP authentication schemes are supported. 
 
     * **_invalid_grant_**
 
@@ -718,7 +718,7 @@ The client makes a request to the token endpoint by adding the following paramet
 
 * **scope**
 
-  OPTIONAL. A space delimited and a case-sensitive list of ASCII strings.
+  REQUIRED. A space delimited and a case-sensitive list of ASCII strings. If the scope parameter is not present, the behavior is entirely unspecified (i.e., the authorization server may return an `invalid_request` error or accept the request by assigning it a default value).
 
 
 The client MUST authenticate with the authorization server as described in [Client Authentication Section](#client-authentication).
@@ -841,26 +841,7 @@ The Authorization Request MUST contain the `scope` parameter, which is a space d
 
 For OpenID requests, the scope values MUST include `openid`, to indicate that the request is an OpenID Connect request, followed by other values depending on the specific CAMARA services being requested.
 
-A purpose must be declared within the requested scope for the following grant types:
-
-* _authorization_code_
-
-* _urn:openid:params:grant-type:ciba_
-
-No purpose is required for the `client_credentials` grant type, as this grant type can only be used when no personal user data is processed. The requested scope must be set directly to the value defined for the relevant endpoint within the OAS ("YAML") specification. "Wild card" scopes (i.e. specifying only the API name) are not valid for this grant type.
-
-To declare a purpose when accessing the CAMARA APIs, it is strongly recommended to guarantee interoperability among Authorization Servers that the `scope` parameter is set to:
-
-`dpv:<dpvValue>#<technicalParameter>`
-
-* `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
-
-* `<technicalParameter>` must be either:
-
-    * one technical scope to limit the request to one API endpoint (this technical scope is described in the API spec YAML file)
-
-    * one API name to cover the complete API (This API name is not described in the API spec YAML file as technical scope) – In this case the request covers all technical scopes of the API.
-
+How to apply the concept of purpose can be found in [Section Purposes of CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.2.0/documentation/CAMARA-API-access-and-user-consent.md#applying-purpose-concept-in-the-authorization-request).
 
 ## ID Token
 
@@ -875,7 +856,7 @@ The following Claims are used within the ID Token for all OAuth 2.0 flows used b
 
 * **sub**
 
-  REQUIRED. Subject Identifier. A locally unique and never reassigned identifier within the Issuer for the End-User, which is intended to be consumed by the Client. It MUST NOT exceed 255 ASCII characters in length. The sub value is a case-sensitive string.
+  REQUIRED. Subject Identifier. A locally unique and never reassigned identifier (i.e. a pseudonymous customer reference) within the Issuer for the End-User, which is intended to be consumed by the Client. It MUST NOT exceed 255 ASCII characters in length. The sub value is a case-sensitive string.
 
 
 * **aud**
@@ -928,13 +909,13 @@ ID Tokens MAY contain other Claims. Any Claims used that are not understood MUST
 
 ## Client Authentication
 
-This section defines a set of Client Authentication methods that are used by Clients to authenticate to the Authorization Server when using the Token or Backchannel Authorization Endpoint.
+This section defines the Client Authentication methods that are used by Clients to authenticate to the Authorization Server when using the Token or Backchannel Authorization Endpoint.
 
-These Client Authentication methods are:
+Only one authentication method is allowed:
 
 * **_private_key_jwt_**
 
-  RECOMMENDED. Clients that have registered a public key sign a JWT using that key. The Client authenticates in accordance with JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants [OAuth.JWT] and Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants [OAuth.Assertions]. At least the Authorization Server MUST support JWS-signed Object with the RS256 algorithm. The JWT MUST contain the following REQUIRED Claim Values and MAY contain the following OPTIONAL Claim Values:
+  REQUIRED. Clients that have registered a public key sign a JWT using that key. The Client authenticates in accordance with [JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants](https://www.rfc-editor.org/rfc/rfc7523.html#section-2.2). At least the Authorization Server MUST support JWS-signed Object with the RS256 algorithm. The JWT MUST contain the following REQUIRED Claim Values and MAY contain the following OPTIONAL Claim Values:
 
     * **iss**
 
@@ -960,16 +941,9 @@ These Client Authentication methods are:
 
       OPTIONAL. Time at which the JWT was issued.
 
-The JWT MAY contain other Claims. Any Claims used that are not understood MUST be ignored.
+  The JWT MAY contain other Claims. Any Claims used that are not understood MUST be ignored.
 
-The authentication token MUST be sent as the value of the [OAuth.Assertions](https://www.rfc-editor.org/info/rfc7521) `client_assertion` parameter.
-
-The value of the [OAuth.Assertions](https://www.rfc-editor.org/info/rfc7521) `client_assertion_type` parameter MUST be `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`, per [OAuth.JWT](https://www.rfc-editor.org/info/rfc7523).
-
-
-* **_client_secret_basic_**
-
-  OPTIONAL. Clients that have received a client_secret value from the Authorization Server MAY authenticate with the Authorization Server using the HTTP Basic authentication scheme as defined in [RFC 2617](https://www.rfc-editor.org/info/rfc2617).
+  The authentication token MUST be sent as the value of the `client_assertion` parameter. The value of the `client_assertion_type` parameter MUST be `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
 
 
 ## References
