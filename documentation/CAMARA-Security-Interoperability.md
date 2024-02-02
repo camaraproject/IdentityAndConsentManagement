@@ -105,7 +105,7 @@ The client MUST authenticate with the authorization server as described in [Clie
 Scope values determine the specific CAMARA services being requested by the Service Provider, subject to the SP being registered to use those services.
 
 
-How to apply the concept of purpose can be found in [Section Purposes of CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.2.0/documentation/CAMARA-API-access-and-user-consent.md#applying-purpose-concept-in-the-authorization-request).
+How to apply the concept of purpose can be found in [Section Purposes of CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-API-access-and-user-consent.md).
 
 ## Client Authentication
 
