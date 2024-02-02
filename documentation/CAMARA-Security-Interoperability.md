@@ -8,7 +8,7 @@
 * General Considerations
     * Transport Security
 * OIDC Authorization Code Flow
-    * Cross-Site Request forgery protection
+    * Cross-Site Request Forgery Protection
 * Client-Initiated Backchannel Authentication Flow
     * Authentication Request
 * Client Credentials Flow
@@ -21,23 +21,17 @@
 
 ## Introduction
 
-This document is the Camara Security and Interoperability Profile. To ensure interoperability and increased security, this technical specification restricts some options available in OIDC and CIBA, but does not change these standards.
+This document is the CAMARA Security and Interoperability Profile. To ensure interoperability and increased security, this technical specification restricts some options available in OIDC and CIBA, but does not change these standards.
 
 The CAMARA document sharpens the following for interoperability and security: 
 
-    * OIDC Authorization Code Flow.
-    * Client Initiated Back Channel Authentication (CIBA).
-    * Client Credentials.
+* Of the flows defined in OIDC CAMARA uses the [OIDC Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth)
 
-* Camara uses the [OIDC Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth)
+* Scope Parameter. Recommendations about the format of the scope parameter used in  CAMARA APIs.
 
-* Scope Parameter. Definition of scope parameter format applicable to CAMARA APIs.
+* Client Authentication. Specifications for client authentication within CAMARA.
 
-* ID Token Content. CAMARA specific details about the content of the Id token.
-
-* Client Authentication. Specifications for client authentication within the CAMARA OIDC profile.
-
-By encapsulating these elements within the CAMARA OIDC profile, this document aims to provide a comprehensive guide for developers and operators, ensuring consistent implementation and adherence to standardized security measures across the CAMARA ecosystem. The defined OIDC profile not only facilitates the integration process, but also serves as a basic framework for developers wishing to leverage the CAMARA APIs while maintaining security and interoperability.
+By encapsulating these elements within this document, it aims to provide a comprehensive guide for developers and operators, ensuring consistent implementation and adherence to standardized security measures across the CAMARA ecosystem. The defined OIDC profile not only facilitates the integration process, but also serves as a basic framework for developers wishing to leverage the CAMARA APIs while maintaining security and interoperability.
 
 
 ## Audience
@@ -58,31 +52,31 @@ All network connections MUST use TLS 1.2 or better.
 
 The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html)
 
-### Cross-Site Request forgery protection
+### Cross-Site Request Forgery Protection
 
-Camara REQUIRES cross-site request forgery protection
+CAMARA REQUIRES cross-site request forgery protection.
 
-Camara RECOMMENDS PKCE for CSRF protection. 
-Camara Authorization Servers MUST implement PKCE. If PKCE is not used by the Client then the Camara AZ must handle **state** and **nonce** as defined in OAuth2.
+CAMARA RECOMMENDS PKCE for CSRF protection. 
+CAMARA Authorization Servers MUST implement PKCE. If PKCE is not used by the Client then the CAMARA AZ must handle **state** and **nonce** as defined in OAuth2.
 
-Camara Clients SHOULD use PKCE.
+CAMARA Clients SHOULD use PKCE.
 
 If nonce for CSRF-protection is used then implementers must ensure that sufficient entropy is present in the nonce value.
 Please see [OAuth 2.0 Security Best Current Practice](https://oauthstuff.github.io/draft-ietf-oauth-security-topics/draft-ietf-oauth-security-topics.html#name-protecting-redirect-based-f).
 
 ## Client-Initiated Backchannel Authentication Flow
 
-The [Client-Initiated Backchannel Authentication (CIBA)](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html) flow is used to initiate an out-of-band authentication of the end-user. This is done by sending an HTTP POST message directly from the Client to the OpenID Provider's Backchannel Authentication Endpoint, using a request defined in the following subsections.
+The [Client-Initiated Backchannel Authentication (CIBA)](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html) flow is used to initiate an out-of-band authentication of the end-user.
 
 Communication with the Backchannel Authentication Endpoint MUST utilize TLS.
 
-CIBA allows the Client to get the authentication result in three ways: poll, ping, or push. This profile only allows poll mode. In the Poll mode, the authentication result is retrieved by the Client by polling the OP's token endpoint using the new grant type.
+CIBA allows the Client to get the authentication result in three ways: poll, ping, or push. This profile allows clients to use the *poll* mode. In the Poll mode, the authentication result is retrieved by the Client by polling the OP's token endpoint using the new grant type. 
 
 ### Authentication Request
 
-This Camara document makes the login_hint parameter REQUIRED if CIBA is used in a Camara context.
+This CAMARA document makes the login_hint parameter REQUIRED if CIBA is used in a CAMARA context.
 
-This Camara document clarifies the values used in login_hint in the following way:
+This CAMARA document clarifies the values used in login_hint in the following way:
 
     * **_tel_**
 
@@ -93,9 +87,6 @@ This Camara document clarifies the values used in login_hint in the following wa
       For IPv4 and IPv6 addresses, that can optionally include a port. For example, `ipport:80.90.34.2:16790`, `ipport:80.90.34.2`, `ipport:[2001:db8::1]:8080` or `ipport:[2001:db8::1]`.
 
 
-
-An authentication request is made using the HTTP POST method with the aforementioned parameters in the `application/x-www-form-urlencoded` format and a character encoding of UTF-8 in the HTTP request entity-body. When applicable, additional parameters required by the given client authentication method are also included (e.g. JWT assertion-based client authentication uses `client_assertion` and `client_assertion_type`).
-
 The client MUST authenticate with the authorization server as described in [Client Authentication Section](#client-authentication).
 
 ## Client Credentials Flow
@@ -105,7 +96,7 @@ The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749
 
 ### Access Token Request
 
-This Camara document make the scope parameter REQUIRED for the OAuth2 Client Credentials Grant.
+This CAMARA document make the scope parameter REQUIRED for the OAuth2 Client Credentials Grant.
 
 The client MUST authenticate with the authorization server as described in [Client Authentication Section](#client-authentication).
 
@@ -118,7 +109,7 @@ How to apply the concept of purpose can be found in [Section Purposes of CAMARA 
 
 ## Client Authentication
 
-This Camara document allows **one** authentication method is allowed private_key_jwt as defined in OIDC
+This CAMARA document allows **one** authentication method, private_key_jwt, as defined in OIDC
 [OIDC Client Authentication](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication)
 [JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants](https://www.rfc-editor.org/rfc/rfc7523.html#section-2.2)
 
