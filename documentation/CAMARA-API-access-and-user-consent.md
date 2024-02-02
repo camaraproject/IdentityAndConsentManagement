@@ -379,6 +379,11 @@ More details about the standard flow can be found in the official IETF specifica
 
 The purpose of this document section is to standardise the specification of `securitySchemes` and `security` across all CAMARA API subprojects with common mandatory guidelines as agreed by the Technical Steering Committee (TSC) and the participants of this Working Group.
 
+CAMARA guidelines defines a set of authorization flows which can grant API clients access to the API functionality.
+Which specific authorization flows are to be used will be determined during onboarding process, happening between the API Client (the direct API invoker) and the Telco Operator exposing the API.T he negotiated flow can consider the declared purpose for accessing the API, while also being subject to the prevailing legal framework dictated by local legislation and eventually also consider the capabilities of the application (frontend and backend) ultimately involved in the API invocation flow.
+The possible authorization flows must be configured on the API product offering. Note that as of now, there is a 1:1 relationship between API product offering and exposed Service API envisioned.
+The authorization flow to be used will be settled when the API product is ordered. The API invoker is supposed to initiate the negotiated authorization flow when requesting ID & access tokens. The AuthZ server is reponsible to validate that the authorization flow negotiated between API Invoker and Telco operator for this application, purpose, API/data scopes is applied.
+
 ### Use of openIdConnect for `securitySchemes`
 
 In general, OpenID Connect is the protocol to be used for securitization. Each API specification must ONLY define the following openIdConnect entry in `securitySchemes`, as shown in document [CAMARA-AuthN-AuthZ-Concept.md](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-AuthN-AuthZ-Concept.md#documentation-and-specs-):
