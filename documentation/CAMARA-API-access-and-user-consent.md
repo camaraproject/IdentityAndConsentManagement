@@ -383,7 +383,7 @@ CAMARA guidelines define a set of authorization flows which can grant API client
 Which specific authorization flows are to be used will be determined during the onboarding process, happening between the API Client (the direct API invoker) and the API provider exposing the API. The API product order flow can consider the declared purpose for accessing the API, while also being subject to the prevailing legal framework dictated by local legislation and eventually also consider the capabilities of the application (frontend and backend) ultimately involved in the API invocation flow.
 The possible authorization flows must be configured on the API product specification used to build the API product offering. This configuration could be purpose dependent. Note that as of now, there is a 1:1 relationship between a single API product offering and exposed Service API envisioned.
 The authorization flow to be used will be settled when the API product is ordered. 
-The API invoker is expected to initiate the negotiated authorization flow when requesting ID & access tokens. The AuthZ server is responsible to validate that the authorization flow negotiated between API Invoker and Telco operator for this application, purpose, API/data scopes is applied.
+The API invoker is expected to initiate the negotiated authorization flow when requesting ID & access tokens. The AuthZ server is responsible to validate that the authorization flow negotiated between API Invoker and API provider for this application, purpose, API/data scopes is applied.
 
 ### Use of openIdConnect for `securitySchemes`
 
