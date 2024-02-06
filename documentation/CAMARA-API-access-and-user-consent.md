@@ -381,7 +381,6 @@ The purpose of this document section is to standardise the specification of `sec
 
 CAMARA guidelines define a set of authorization flows which can grant API Consumers access to the API.
 Which specific authorization flows are to be used will be determined during the onboarding process, happening between the API Consumer (the direct API invoker) and the API producer exposing the API. When API access for an API consumer is ordered,  the declared purpose for accessing the API can be taken into account. This is also being subject to the prevailing legal framework dictated by local legislation and eventually also considers the capabilities of the application (frontend and backend) ultimately involved in the API invocation flow. 
-The possible authorization flows should be configured on the API specification, eventually being purpose dependent. 
 The authorization flow to be used will therefore be settled when the API access is ordered. 
 The API Consumer is expected to initiate the negotiated authorization flow when requesting ID & access tokens. The AuthZ server is responsible to validate that the authorization flow negotiated between API Invoker and API producer for this application, purpose, API/data scopes is applied.
 
