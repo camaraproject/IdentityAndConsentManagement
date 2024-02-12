@@ -29,7 +29,7 @@ This document defines guidelines for telco operator exposure platforms to manage
 
 Some APIs process personal information and require a “legal basis” to do so (e.g. “legitimate interest”, “contract”, “consent”, etc). Telco operator exposure platforms implementing CAMARA should be built with a privacy-by-design approach to fully comply with data protection regulations, such as the [GDPR regulation](https://gdpr-info.eu/) in Europe, to protect user privacy. This means that a CAMARA API exposed to capability consumers that processes personal data may require user consent (explicit user opt-in), depending on the "legal basis" for processing that data. This consent is given by users to legal entities to process personal data under a specific purpose.
 
-As per CAMARA ["Authentication and Authorization Concept for Service APIs"](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-AuthN-AuthZ-Concept.md), CAMARA API access will be secured using [OpenID Connect](https://openid.net/connect/) on top of OAuth 2.0 protocol. This document defines guidelines for operator exposure platform to manage CAMARA API access and user consent to comply with GDPR or equivalent requirements in an easy way, introducing the concept of "purpose" in CAMARA APIs access. Even being defined based on concepts that maps to GDPR regulation, proposed solution and concepts are generic enough to be used by operators on any country.
+CAMARA API access will be secured using [OpenID Connect](https://openid.net/connect/) on top of OAuth 2.0 protocol. This document defines guidelines for operator exposure platform to manage CAMARA API access and user consent to comply with GDPR or equivalent requirements in an easy way, introducing the concept of "purpose" in CAMARA APIs access. Even being defined based on concepts that maps to GDPR regulation, proposed solution and concepts are generic enough to be used by operators on any country.
 
 The document details aspects regarding CAMARA APIs access and the user consent management, which includes following concepts:
 
@@ -134,8 +134,6 @@ _(*)Can be re-opened as an issue later for discussion_
 >[TO BE EDITED/COMPLETED] - Consent capture by operator and storage in operator (consent master).
 
 ### Authorization flows / grant types
-
-Detailed information on the below specified grant types (for eg. extensions to some of the grant types, links to original RFC documents etc.) is available in [CAMARA-AuthN-AuthZ-Concept.md](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-AuthN-AuthZ-Concept.md)
 
 #### Authorization code flow (Frontend flow)
 
@@ -381,7 +379,7 @@ The purpose of this document section is to standardise the specification of `sec
 
 ### Use of openIdConnect for `securitySchemes`
 
-In general, OpenID Connect is the protocol to be used for securitization. Each API specification must ONLY define the following openIdConnect entry in `securitySchemes`, as shown in document [CAMARA-AuthN-AuthZ-Concept.md](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-AuthN-AuthZ-Concept.md#documentation-and-specs-):
+In general, OpenID Connect is the protocol to be used for securitization. Each API specification must ONLY define the following openIdConnect entry in `securitySchemes`, as shown below:
 
 ```
 components:
