@@ -281,10 +281,10 @@ The API invoker has to provide in the authorization request (/bc_authorize) a lo
 
     ```
     POST /bc-authorize HTTP/1.1
-    Authorization: ...
     Content-Type: application/x-www-form-urlencoded
 
     login_hint=tel%3A%2B346xxyyyzzz&
+    client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer&
     … 
     ```
 - Purpose under which the personal data associated to API consumption will be processed.
