@@ -109,10 +109,27 @@ How to apply the concept of purpose can be found in [Section Purposes of CAMARA 
 
 ## Client Authentication
 
-This CAMARA document allows **one** authentication method, private_key_jwt, as defined in OIDC
+This CAMARA document allows **one** client authentication method, private_key_jwt, as defined in OIDC
 [OIDC Client Authentication](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication)
 [JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants](https://www.rfc-editor.org/rfc/rfc7523.html#section-2.2)
 
+## Sender-constraint Access Token
+
+This CAMARA document RECOMMENDS sender-constraint access tokens.
+
+### DPoP Requirements for Camara Clients
+
+Camara clients SHOULD utilize DPoP as described in [RFC9449].
+
+If Camara clients use DPoP, they shall support the server provided nonce mechanism (as defined in Section 8 of [RFC9449])
+
+### DPoP Requirements for Camara Authorizatin Servers
+
+Camara Authorization Servers MUST support DPoP as described in [RFC9449].
+
+### DPoP Requirements for Resource Servers
+
+Camara Resource Servers MUST support and verify sender-constrained access tokens using DPoP as described in [RFC9449].
 
 ## References
 
@@ -130,3 +147,5 @@ This CAMARA document allows **one** authentication method, private_key_jwt, as d
 * [RFC 7523 - JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants](https://www.rfc-editor.org/info/rfc7523)
 * [RFC 8259 - The JavaScript Object Notation (JSON) Data Interchange Format](https://www.rfc-editor.org/info/rfc8259)
 * [RFC 8414 - OAuth 2.0 Authorization Server Metadata](https://www.rfc-editor.org/info/rfc8414)
+* [RFC 9449 - OAuth 2.0 Demonstrating Proof of Possession (DPoP)](https://www.rfc-editor.org/info/rfc9449)
+
