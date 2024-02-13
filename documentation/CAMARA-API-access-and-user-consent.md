@@ -19,6 +19,10 @@ This document defines guidelines for telco operator exposure platforms to manage
       - [Authorization code flow (Frontend flow)](#authorization-code-flow-frontend-flow)
       - [CIBA flow (Backend flow)](#ciba-flow-backend-flow)
       - [Client Credentials](#client-credentials)
+  - [Offline Access - Refresh Token](#offline-access---refresh-token)
+    - [Request a Refresh Token in Frontend Based Flow](#request-a-refresh-token-in-frontend-based-flow)
+    - [Request Refresh Token in Backend Based Flow](#request-refresh-token-in-backend-based-flow)
+    - [Refresh Token Flow](#refresh-token-flow)
   - [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
     - [Use of openIdConnect for `securitySchemes`](#use-of-openidconnect-for-securityschemes)
     - [Use of `security` property](#use-of-security-property)
@@ -163,7 +167,7 @@ alt Standard OIDC Auth Code Flow between Invoker and API Exposure Platform
     ExpO-->>FE: 302<br>Location: invoker_callback?code=Operatorcode
   else If Consent is NOT granted - Consent Capture within AuthCode Flow  
     Note over FE,ExpO: Start user consent capture process<br>following Section 3.1.2.4 of the OIDC Core 1.0 spec.    
-    ExpO-->>FE: 302<br>Location: aggregator_callback?code=Operatorcode 
+    ExpO-->>FE: 302<br>Location: invoker_callback?code=Operatorcode 
   end
   FE-->>-BE: GET invoker_callback?code=OperatorCode
   BE->>ExpO: POST /token<br> code=OperatorCode
@@ -372,6 +376,186 @@ If some usecase/s for an API point to off-net scenarios and where consumption an
 The Client Credentials grant type is used to obtain a 2-legged access_token that does not represent a user. This grant type can only be used when no personal user data is processed, and it is only a valid option to access the CAMARA APIs for these specific scenarios. 
 
 More details about the standard flow can be found in the official IETF specification [The OAuth 2.0 Authorization Framework](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4).
+
+## Offline Access - Refresh Token
+
+The defined solution uses Refesh Token as a mean to enable CAMARA API access in Offline Scenarios. Online Access means that there is a Telco-based Network Connection, either Mobile Network connection in mobile use cases or Fixed Network connection in fixed use cases.
+
+- Refresh Token may be issued as result of AuthN/AuthZ, if requested by API invoker and allowed by use case. 
+  - [RFC6749 Section 1.5](https://datatracker.ietf.org/doc/html/rfc6749#section-1.5): _A refresh token is a string representing the authorization granted to  the client by the resource owner.  The string is usually opaque to the client. The token denotes an identifier used to retrieve the authorization information. Therefore, the Refresh Token is bound to the authorization of the end user to the Application._
+
+- As indicated by [OIDC Spec](https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess ), one of the uses of refresh token is allowing offline access. 
+
+- Thus, a Refresh Token can be used for Offline Access as it represents an existing authorization, gathered in a previously Online Access. 
+
+- Also, can be used even in Online Access, just to avoid a re-authentication. This would be use case driven and depending on the security needs for each API, e.g.: APIs may require more frequent Auth or even Auth for each use (like Number Verification API). 
+
+This chapter includes the flows for CAMARA showing the usage of Refresh Token.
+
+### Request a Refresh Token in Frontend Based Flow
+
+
+```mermaid
+sequenceDiagram
+autonumber
+title Request Refresh Token - Authorization Code Flow
+participant FE as Device App
+participant BE as Invoker<br>(App Backend/Aggregator)
+box Operator
+  participant ExpO as API Exposure Platform<br>@Operator
+  participant Consent as Consent Master<br>@Operator
+end
+
+Note over FE,BE: Use Feature needing<br>Operator Capability
+Note over BE: Offline Access wanted,<br>thus offline_access scope requested  
+BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue>#35;<technicalParameter> offline_access<br>&redirect_uri=invoker_callback...
+FE->>+FE: Browser /<br> Embedded Browser
+alt Standard OIDC Auth Code Flow between Invoker and API Exposure Platform
+  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue>#35;<technicalParameter> offline_access<br>&redirect_uri=invoker_callback...
+  rect rgb(0, 76, 153)
+    Note over ExpO: Authorization process details included in<br>the "Consume a CAMARA API<br>- Authorization Code Grant (FrontEnd)" flow...
+  end    
+  ExpO-->>FE: 302<br>Location: invoker_callback?code=Operatorcode
+  FE-->>-BE: GET invoker_callback?code=OperatorCode
+  BE->>ExpO: POST /token<br> code=OperatorCode
+  ExpO->>ExpO: Create and save<br>Operator Refresh Token
+  ExpO->>BE: 200 OK <br> {OperatorAccessToken}<br>{OperatorRefreshToken}
+end
+```
+
+**Key concepts**
+
+- Same considerations that apply for general call flows in [Authorization flows / grant types](#authorization-flows--grant-types) also apply for this flow.
+-  Refresh Token issuance is achieved by requesting `offline_access` scope. 
+
+**Flow description** 
+
+The API invoker (which could potentially be the application backend, an aggregator, etc.) instructs the application frontend in the device to initiate the OIDC authorization code flow with the operator as described in the [Authorization code flow (Frontend flow)](#authorization-code-flow-frontend-flow).   
+
+The API invoker includes `offline_access` scope to signal that a Refresh Token is expected (step 1). 
+
+Then same flow depicted in [Authorization code flow (Frontend flow)](#authorization-code-flow-frontend-flow) occurs (steps 2-8). 
+
+> **NOTE: Flow diagram is simplified, full details offered in general call flows** 
+
+When Operator is going to issue the Access Token, it also issues a Refresh Token (OperatorRefreshToken), as `offline_access` scope was requested. 
+
+> NOTE: **Depending on the use case this will be allowed or not.** i.e.: not every API invoker will have by default the right to have a Refresh Token.
+
+Flow will be completed normally, so Operator provides API invoker with both Access Token and Refresh Token (step 8). 
+
+
+### Request Refresh Token in Backend Based Flow 
+
+ 
+```mermaid
+sequenceDiagram
+autonumber
+title Request Refresh Token - CIBA Flow
+participant FE as Device App<br> (Consumption Device)
+participant BE as Invoker<br>(App Backend/Aggregator)  
+box Operator
+  participant ExpO as API Exposure Platform<br>@Operator  
+  participant Consent as Consent Master<br>@Operator
+end
+
+Note over FE,BE: Feature needing<br>Operator Capability  
+Note over BE: Offline Access wanted,<br>thus offline_access scope requested
+Note over BE: Select User Identifier:<br> Ip:port / MSISDN / other TBD  
+
+alt OIDC Client-Initiated Backchannel Authentication (CIBA) Standard Flow between Invoker and Operator.
+  BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope=dpv:<purposeDpvValue>#35;<technicalParameter>" offline_access,<br>login_hint including User Identifier    
+  rect rgb(0, 76, 153)
+    Note over ExpO: Authorization process details included in<br>the "Consume a CAMARA API - CIBA flow"...
+  end  
+  ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"
+  loop Invoker polls until consent is granted or until expires. If granted in advance, token returned in first poll
+    BE->>+ExpO: POST /token <br>Credentials}<br>auth_req_id={OperatorAuthReqId}
+    ExpO->>ExpO: Create and save<br>Operator Refresh Token    
+    ExpO->>-BE: HTTP 200 OK <br>{OperatorAccessToken}<br>{OperatorRefreshToken} 
+  end  
+end
+```
+
+**Key concepts**
+
+- Same considerations that apply for general call flows in [Authorization flows / grant types](#authorization-flows--grant-types) also apply for this flow. 
+- Refresh Token issuance is achieved by requesting `offline_access` scope 
+ 
+**Flow description**
+
+The API invoker (which could potentially be the application backend, an aggregator, etc.) requests a 3-legged access token to the operator API exposure platform. The process follows the OpenID Connect Client-Initiated Backchannel Authentication (CIBA) flow as described in [CIBA flow (Backend flow)](#ciba-flow-backend-flow).  
+
+The API invoker selects an Identifier and performs `/bc-authorize` call including `offline_access` scope to signal that a Refresh Token is expected (step 1). Then same flow depicted in [CIBA flow (Backend flow)](#ciba-flow-backend-flow) occurs (steps 1-5). 
+
+> **NOTE: Flow is simplified, full details offered in General call flows.** 
+
+When Operator is going to issue the Access Token, it also issues a Refresh Token (OperatorRefreshToken) (step 4), as `offline_access` scope was requested. 
+
+> NOTE: **Depending on the use case this will be allowed or not.** I.e.: not every API invoker will have by default the right to have a Refresh Token. 
+
+Flow will be completed normally, so Operator provides API invoker with both Access Token and Refresh Token (step 5). 
+ 
+### Refresh Token Flow 
+
+
+```mermaid
+sequenceDiagram
+autonumber
+title Refresh Token Flow - Consent validation
+participant FE as Device App
+participant BE as Invoker<br>(App Backend/Aggregator)
+box Operator
+  participant ExpO as API Exposure Platform<br>@Operator
+  participant Consent as Consent Master<br>@Operator
+end
+
+Note over FE,BE: Use Feature needing<br>Operator Capability  
+
+opt Access to API fails due to Access Token Expired
+  BE->>ExpO: Access Operator CAMARA API <br> Authorization: Bearer {OperatorAccessToken}        
+  ExpO->>ExpO: Decrypt and validate<br>Access Token. It has expired.  
+  ExpO->>BE: 401 Unauthorized<br>{"code": "UNAUTHENTICATED",<br> "message": "Token Expired"}
+end
+
+alt Standard OIDC Refresh Token flow between Invoker and API Exposure Platform
+  BE->>ExpO: POST /token<br>refresh_token={OperatorRefreshToken}
+  ExpO->>ExpO: Validate {OperatorRefreshToken}<br>fetch associated info (scopes)
+  ExpO->>ExpO: Check legal basis of the purpose<br>associated with the token<br> e.g.: contract, legitimate_interest, consent, etc
+  opt If User Consent is required for the legal basis of the purpose  
+      ExpO->>Consent: Check if Consent is granted    
+  end
+  alt If Consent is NOT granted (consent expired/revoked) - The flow fails
+    ExpO->>BE: 400 Bad Request<br>{"error":"invalid_scope"}        
+  else If Consent is Granted or Consent not needed for legal basis   
+    ExpO->>ExpO: Generate<br>new {NewOperatorAccessToken}<br> and {NewOperatorRefreshToken}
+    ExpO->>ExpO: Save new {NewOperatorRefreshToken}
+    ExpO->>BE: 200 OK <br> {NewOperatorAccessToken}<br>{NewOpeatorRefreshToken}
+  end 
+end
+alt Regular Access to API
+  BE->>ExpO: Access Operator CAMARA API <br> Authorization: Bearer {NewOperatorAccessToken}        
+  ExpO->>ExpO: Decrypts NewOperatorAccessToken,<br>grants Access,<br>progresses request to API Backend,<br>gets API response  
+  ExpO->>BE: CAMARA API Response
+  Note over BE,FE: Response
+end
+```
+
+**Key concepts**
+
+- Same considerations that apply for general call flows in [Authorization flows / grant types](#authorization-flows--grant-types) also apply for this flow.
+
+**Flow description**
+
+When a network feature is needed (step 1), the API invoker tries to consume a CAMARA API with an Access Token, but it has already expired, so it gets an error (steps 2-3). 
+
+Upon this error, the API invoker performs standard Refresh Token Grant flow, providing the Operator Refresh Token in order to get a new pair of Operator Refresh Token and Operator Access Token (step 4). 
+
+The Operator validates the refresh token and retrieves the related information, i.e.: scopes/purpose (step 5) and checks the legal basis of the purpose associated with the token (step 6). If the purpose requires the user's consent, the Operator validates whether the consent is granted (step 7). If the consent is NOT granted e.g., the consent has expired or the user has revoked the consent, the Operator will not issue a new token and will return an error (step 8) and the refresh token flow will fail. 
+
+If the user's consent is granted or not required for the applied legal basis, the Operator generates a new pair of Operator Access Token and Aggregator Access Token (step 9), saves the refresh token (step 10), and responds to the API invoker with this information (step 11). 
+
+Then, the API invoker can access normally to the CAMARA API by using the New Operator Access Token (steps 12-14). This part of the flow is just the same as in general call flows.
 
 ## CAMARA API Specification - Authorization and authentication common guidelines
 
