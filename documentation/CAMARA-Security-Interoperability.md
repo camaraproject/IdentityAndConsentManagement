@@ -131,6 +131,10 @@ Camara Authorization Servers MUST support DPoP as described in [RFC9449].
 
 Camara Resource Servers MUST support and verify sender-constrained access tokens using DPoP as described in [RFC9449].
 
+## OpenId Foundation Certification
+
+Camara recommends that implementations run the OIDF interoperability suite and achive [OIDF certification](https://openid.net/certification/).
+
 ## References
 
 * [Data Privacy Vocabulary (DPV)](https://w3c.github.io/dpv/dpv/)
