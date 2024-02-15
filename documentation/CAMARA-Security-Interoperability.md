@@ -104,7 +104,22 @@ The client MUST authenticate with the authorization server as described in [Clie
 
 Scope values determine the specific CAMARA services being requested by the Service Provider, subject to the SP being registered to use those services. The scope values must be documented in the API OAS files by all Camara API subprojects.
 
+### Missing "openid" scope
+
+[OIDC Core Authentication Request](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) states the following about the value of scope.
+> REQUIRED. OpenID Connect requests MUST contain the openid scope value. If the openid scope value is not present, the behavior is entirely unspecified. Other scope values MAY be present. ...
+
+This document defines the following error handling for a missing "openid" value in scope. 
+Please refer to [Authentication Error Response](https://openid.net/specs/openid-connect-core-1_0.html#AuthError).
+
+If "openid" is missing in the scope value, the Authorization Server returns an HTTP response code of 400 (Bad Request) and an error invalid_request.
+
+### Purpose as part of scope
+
 How to apply the concept of purpose with scope can be found in [Section Purposes of CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-API-access-and-user-consent.md).
+
+This document does not change OIDC definitions of scope values.
+
 
 ## ID Token sub claim
 
