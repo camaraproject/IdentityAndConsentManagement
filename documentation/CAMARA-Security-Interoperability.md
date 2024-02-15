@@ -114,6 +114,21 @@ Please refer to [Authentication Error Response](https://openid.net/specs/openid-
 
 If "openid" is missing in the scope value, the Authorization Server returns an HTTP response code of 400 (Bad Request) and an error invalid_request.
 
+### Handling of acr_values
+
+OIDC specifies in [Mandatory to Implement Features for All OpenID Providers](https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI) that OpenId Providers MUST implement support for acr_values.
+
+> Authentication Context Class Reference
+>>    OPs MUST support requests for specific Authentication Context Class Reference values via the acr_values parameter, as defined in Section 3.1.2. (Note that the minimum level of support required for this parameter is simply to have its use not result in an error.)
+
+OIDC also defines that the parameter acr_values is OPTIONAL and does not specify possible values. This leads to interoperability issues.
+
+This documents defines that Camara OpenId Providers MUST ignore the parameter acr_values. 
+
+This document defines that Camara Clients SHOULD not use the acr_values parameter. 
+
+> To foster interoperability a future version of this document might define values for the acr_values parameter acceptable in Camara.
+
 ### Purpose as part of scope
 
 How to apply the concept of purpose with scope can be found in [Section Purposes of CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-API-access-and-user-consent.md).
