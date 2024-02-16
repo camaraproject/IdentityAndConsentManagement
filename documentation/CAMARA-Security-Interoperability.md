@@ -133,7 +133,7 @@ To improve interoperablitiy this document RECOMMENDS that API providers publish 
 - `<technical_scope>` some technical scope needed by the Camara API
 
 Example entry in AZ metadata as defined in [OpenID Provider Metadata](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata):
-```json
+```javascript
 "supported_scopes": [
   openid,
   dpv:<dpvValue>#camara-api-scope0,
@@ -145,7 +145,7 @@ Example entry in AZ metadata as defined in [OpenID Provider Metadata](https://op
 If the AZ chooses not to publish supported_scopes then the supported scopes are agreed upon at onboarding time of the client.
 Either way the client knows which scopes are supported by this AZ.
 
-This document requires that in an authentication request all requested scope values that specify a purpose MUST have the same dpv:<dpvValue>.
+This document requires that in an authentication request all requested scope values that specify a purpose MUST have the same dpv:&lt;dpvValue&gt;.
 For clarity: The openid scope MUST not have a purpose prefix. Otherwise it would not be the "openid" scope.
 
 Example value of scope parameter in a request:
