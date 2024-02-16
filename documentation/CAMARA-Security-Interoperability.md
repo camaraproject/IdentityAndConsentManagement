@@ -125,16 +125,32 @@ Scope values determine the specific CAMARA services being requested by the Servi
 
 ### Purpose as part of scope
 
-To improve interoperablitiy this document RECOMMENDS that API Working groups define each single scope value following this scheme:
+To improve interoperablitiy this document RECOMMENDS that API providers publish the *supported_scopes* with each single scope value following this scheme:
 
 `dpv:<dpvValue>#<technical_scope>`
 
 - `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
 - `<technical_scope>` some technical scope needed by the Camara API
 
+Example entry in AZ metadata as defined in [OpenID Provider Metadata](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata):
+```json
+"supported_scopes": [
+  openid,
+  dpv:<dpvValue>#camara-api-scope0,
+  dpv:<dpvValue>#camara-api-scope-1,
+  dpv:<dpvValue>#camara-api-scope-2
+]
+```
+
+If the AZ chooses not to publish supported_scopes then the supported scopes are agreed upon at onboarding time of the client.
+Either way the client knows which scopes are supported by this AZ.
+
+This document requires that in an authentication request all requested scope values that specify a purpose MUST have the same dpv:<dpvValue>.
+For clarity: The openid scope MUST not have a purpose prefix. Otherwise it would not be the "openid" scope.
+
 Example value of scope parameter in a request:
 ```text
-openid dpv:<dpvValue>#camara-api-scope0 dpv:<dpvValue>#camara-api-scope-1 dpv:<dpvValue>#camara-api-scope-2
+openid dpv:<dpvValue>#camara-api-scope0 dpv:<dpvValue>#camara-api-scope-1
 ```
 
 This document does not change OIDC definitions of scope values.
