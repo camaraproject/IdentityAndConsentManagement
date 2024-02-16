@@ -6,15 +6,20 @@
 * Audience
 * Conventions
 * General Considerations
-    * Transport Security
+  *  Transport Security
 * OIDC Authorization Code Flow
-    * Cross-Site Request Forgery Protection
+  *  Cross-Site Request Forgery Protection
 * Client-Initiated Backchannel Authentication Flow
-    * Authentication Request
+  *  Authentication Request
 * Client Credentials Flow
-    * Access Token Request
+* Handling of acr_values
+* Access Token Request
 * The Scope Parameter
+  *  Purpose as part of scope
+* Missing "openid" scope
+* ID Token sub claim
 * Client Authentication
+* OpenId Foundation Certification
 * References
 <!-- TOC -->
 
