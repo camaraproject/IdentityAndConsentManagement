@@ -120,12 +120,15 @@ Scope values determine the specific CAMARA services being requested by the Servi
 
 ### Purpose as part of scope
 
-To improve interoperablitiy this document RECOMMENDS that API Working groups define scope values following this scheme:
+To improve interoperablitiy this document RECOMMENDS that API Working groups define each single scope value following this scheme:
 
 `dpv:<dpvValue>#<technical_scope>`
 
 - `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
 - `<technical_scope>` some technical scope needed by the Camara API
+
+Example value of scope parameter in a request:
+> "openid dpv:<dpvValue>#camara-api-scope0 dpv:<dpvValue>#camara-api-scope-1 dpv:<dpvValue>#camara-api-scope-2"
 
 This document does not change OIDC definitions of scope values.
 
