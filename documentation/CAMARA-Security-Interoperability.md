@@ -128,7 +128,9 @@ To improve interoperablitiy this document RECOMMENDS that API Working groups def
 - `<technical_scope>` some technical scope needed by the Camara API
 
 Example value of scope parameter in a request:
-> "openid dpv:<dpvValue>#camara-api-scope0 dpv:<dpvValue>#camara-api-scope-1 dpv:<dpvValue>#camara-api-scope-2"
+```text
+openid dpv:<dpvValue>#camara-api-scope0 dpv:<dpvValue>#camara-api-scope-1 dpv:<dpvValue>#camara-api-scope-2
+```
 
 This document does not change OIDC definitions of scope values.
 
