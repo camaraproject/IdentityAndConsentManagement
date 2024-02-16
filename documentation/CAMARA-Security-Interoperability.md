@@ -57,9 +57,9 @@ The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.n
 CAMARA REQUIRES cross-site request forgery protection.
 
 CAMARA RECOMMENDS PKCE for CSRF protection. 
-CAMARA Authorization Servers MUST implement PKCE. If PKCE is not used by the Client then the CAMARA AZ must handle **state** and **nonce** as defined in OAuth2.
+CAMARA Authorization Servers SHOULD implement PKCE. If PKCE is not used by the Client then the CAMARA AZ must handle **state** and **nonce** as defined in OAuth2.
 
-CAMARA Clients SHOULD use PKCE.
+CAMARA Clients SHOULD use PKCE if the CAMARA AZ supports PKCE.
 
 If nonce for CSRF-protection is used then implementers must ensure that sufficient entropy is present in the nonce value.
 Please see [OAuth 2.0 Security Best Current Practice](https://oauthstuff.github.io/draft-ietf-oauth-security-topics/draft-ietf-oauth-security-topics.html#name-protecting-redirect-based-f).
