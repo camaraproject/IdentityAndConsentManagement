@@ -93,28 +93,7 @@ The client MUST authenticate with the authorization server as described in [Clie
 
 The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) grant type is used to obtain a 2-legged Access Token that does not represent a user. This grant type can only be used when no personal user data is processed, and it is only a valid option to access the CAMARA APIs for these specific scenarios.
 
-
-### Access Token Request
-
-This CAMARA document makes the scope parameter REQUIRED for the OAuth2 Client Credentials Grant.
-
-The client MUST authenticate with the authorization server as described in [Client Authentication Section](#client-authentication).
-
-## The Scope Parameter
-
-Scope values determine the specific CAMARA services being requested by the Service Provider, subject to the SP being registered to use those services. The scope values must be documented in the API OAS files by all Camara API subprojects.
-
-### Missing "openid" scope
-
-[OIDC Core Authentication Request](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) states the following about the value of scope.
-> REQUIRED. OpenID Connect requests MUST contain the openid scope value. If the openid scope value is not present, the behavior is entirely unspecified. Other scope values MAY be present. ...
-
-This document defines the following error handling for a missing "openid" value in scope. 
-Please refer to [Authentication Error Response](https://openid.net/specs/openid-connect-core-1_0.html#AuthError).
-
-If "openid" is missing in the scope value, the Authorization Server returns an HTTP response code of 400 (Bad Request) and an error invalid_request.
-
-### Handling of acr_values
+## Handling of acr_values
 
 OIDC specifies in [Mandatory to Implement Features for All OpenID Providers](https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI) that OpenId Providers MUST implement support for acr_values.
 
@@ -129,12 +108,37 @@ This document defines that Camara Clients SHOULD not use the acr_values paramete
 
 > To foster interoperability a future version of this document might define values for the acr_values parameter acceptable in Camara.
 
+## Access Token Request
+
+This CAMARA document makes the scope parameter REQUIRED for the OAuth2 Client Credentials Grant.
+
+The client MUST authenticate with the authorization server as described in [Client Authentication Section](#client-authentication).
+
+## The Scope Parameter
+
+Scope values determine the specific CAMARA services being requested by the Service Provider, subject to the SP being registered to use those services. The scope values must be documented in the API OAS files by all Camara API subprojects.
+
 ### Purpose as part of scope
 
-How to apply the concept of purpose with scope can be found in [Section Purposes of CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-API-access-and-user-consent.md).
+To improve interoperablitiy this document RECOMMENDS that API Working groups define scope values following this scheme:
+
+`dpv:<dpvValue>#<technical_scope>`
+
+- `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
+- `<technical_scope>` some technical scope needed by the Camara API
 
 This document does not change OIDC definitions of scope values.
 
+
+## Missing "openid" scope
+
+[OIDC Core Authentication Request](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) states the following about the value of scope.
+> REQUIRED. OpenID Connect requests MUST contain the openid scope value. If the openid scope value is not present, the behavior is entirely unspecified. Other scope values MAY be present. ...
+
+This document defines the following error handling for a missing "openid" value in scope. 
+Please refer to [Authentication Error Response](https://openid.net/specs/openid-connect-core-1_0.html#AuthError).
+
+If "openid" is missing in the scope value, the Authorization Server returns an HTTP response code of 400 (Bad Request) and an error invalid_request.
 
 ## ID Token sub claim
 
@@ -148,7 +152,7 @@ This CAMARA document allows **one** client authentication method, private_key_jw
 
 ## OpenId Foundation Certification
 
-Camara recommends that implementations run the OIDF interoperability suite and achive [OIDF certification](https://openid.net/certification/).
+Camara recommends that implementations run the OIDF interoperability suite and achieve [OIDF certification](https://openid.net/certification/).
 
 ## References
 
