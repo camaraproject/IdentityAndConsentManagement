@@ -146,24 +146,6 @@ This CAMARA document allows **one** client authentication method, private_key_jw
 [OIDC Client Authentication](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication)
 [JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants](https://www.rfc-editor.org/rfc/rfc7523.html#section-2.2)
 
-## Sender-constraint Access Token
-
-This CAMARA document RECOMMENDS sender-constraint access tokens.
-
-### DPoP Requirements for Camara Clients
-
-Camara clients SHOULD utilize DPoP as described in [RFC9449].
-
-If Camara clients use DPoP, they shall support the server provided nonce mechanism (as defined in Section 8 of [RFC9449])
-
-### DPoP Requirements for Camara Authorizatin Servers
-
-Camara Authorization Servers MUST support DPoP as described in [RFC9449].
-
-### DPoP Requirements for Resource Servers
-
-Camara Resource Servers MUST support and verify sender-constrained access tokens using DPoP as described in [RFC9449].
-
 ## OpenId Foundation Certification
 
 Camara recommends that implementations run the OIDF interoperability suite and achive [OIDF certification](https://openid.net/certification/).
