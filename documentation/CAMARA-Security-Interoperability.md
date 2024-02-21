@@ -69,6 +69,41 @@ CAMARA Clients SHOULD use PKCE if the CAMARA AZ supports PKCE.
 If nonce for CSRF-protection is used then implementers must ensure that sufficient entropy is present in the nonce value.
 Please see [OAuth 2.0 Security Best Current Practice](https://oauthstuff.github.io/draft-ietf-oauth-security-topics/draft-ietf-oauth-security-topics.html#name-protecting-redirect-based-f).
 
+### Offline Access
+
+Neither OIDC not OAuth2 define a way for clients to indicate whether they need a refresh_token. 
+In OIDC and OAuth2 refresh token issuance is optional in Authorization Code Flow and at the discretion of the AZ.
+
+Camara uses the scope `offline_access` in the authorization request to indicate to the AZ that the client requests a refresh token additionally to the access token for Camara API access.
+
+---
+**NOTE**
+
+OIDC defines the scope `offline_access` and it is used to get an access token to be used at the UserInfo endpoint, and also to obtain a request token to refresh this access token.
+
+---
+
+The OIDC rules for `offline_access` as defined in [OIDC Offline Access](https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess) apply. 
+
+Copied to here unchanged from the OIDC standard for clarity: 
+
+>  When offline access is requested, a prompt parameter value of consent MUST be used unless other conditions for processing the request permitting offline access to the requested resources are in place. The OP MUST always obtain consent to returning a Refresh Token that enables offline access to the requested resources. A previously saved user consent is not always sufficient to grant offline access.
+
+> Upon receipt of a scope parameter containing the offline_access value, the Authorization Server:
+
+>    MUST ensure that the prompt parameter contains consent unless other conditions for processing the request permitting offline access to the requested resources are in place; unless one or both of these conditions are fulfilled, then it MUST ignore the offline_access request,
+
+>    MUST ignore the offline_access request unless the Client is using a response_type value that would result in an Authorization Code being returned,
+
+>    MUST explicitly receive or have consent for offline access when the registered application_type is web,
+
+>    SHOULD explicitly receive or have consent for offline access when the registered application_type is native.
+
+The OIDC section on [OIDC Using Refresh Tokens](https://openid.net/specs/openid-connect-core-1_0.html#RefreshTokens) is not changed by this document.
+
+The OIDC security and privacy considerations regarding offline access and refresh tokens apply e.g. on
+[Token lifetime](https://openid.net/specs/openid-connect-core-1_0.html#TokenLifetime) and [Offline Access Privacy](https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccessPrivacy).
+
 ## Client-Initiated Backchannel Authentication Flow
 
 The [Client-Initiated Backchannel Authentication (CIBA)](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html) flow is used to initiate an out-of-band authentication of the end-user.
