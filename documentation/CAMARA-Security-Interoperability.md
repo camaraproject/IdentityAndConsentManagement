@@ -160,6 +160,15 @@ The client MUST authenticate with the authorization server as described in [Clie
 Scope values determine the specific CAMARA services being requested by the Service Provider, subject to the SP being registered to use those services. The scope values must be documented in the API OAS files by all Camara API subprojects. This document does not change OIDC definitions of scope values.
 
 
+---
+**NOTE**
+
+Scope values are an integral part of any OAuth2 and OIDC implementation. The RS enforces API access based on scope (if the Camara API subproject defines scopes).
+Therefore scopes should be available to API implementations.
+
+---
+
+
 ## Missing "openid" scope
 
 [OIDC Core Authentication Request](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) states the following about the value of scope.
