@@ -18,7 +18,7 @@ Repository to describe, develop, document and test the Identity And Consent Mana
 ## Meetings
 * Meetings are held virtually
 * Schedule: bi-weekly, Wednesday, 4 PM CET/CEST (15:00 UTC, 14:00 UTC during European DST). For next call, see minutes of [previous meetings](documentation/MeetingMinutes) 
-* For meeting details please use the [Camara calendar](https://lists.camaraproject.org/calendar) or import this [ICS](https://lists.camaraproject.org/g/sp-icm/ics/invite.ics?repeatid=57069) file into your favorite calendar app.
+* Meetings are held virtually: [Registration / Join](https://zoom-lfx.platform.linuxfoundation.org/meeting/94629188836?password=278b4c8a-f370-43bf-bac1-b30a39f169f3) 
 
 ## Status and released versions
 * Release 0.1.0 of guidelines and documentation for CAMARA APIs is available within the [release-0.1.0 branch](https://github.com/camaraproject/IdentityAndConsentManagement/tree/release-0.1.0)
