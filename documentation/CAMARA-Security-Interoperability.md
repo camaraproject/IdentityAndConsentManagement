@@ -204,9 +204,15 @@ This document does not mandate a particular PPID algorithm to be used.
 
 ## Client Authentication
 
-This CAMARA document allows **one** client authentication method, private_key_jwt, as defined in OIDC
+This CAMARA document allows **one** client authentication method, `private_key_jwt`, as defined in OIDC
 [OIDC Client Authentication](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication)
-[JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants](https://www.rfc-editor.org/rfc/rfc7523.html#section-2.2)
+
+OIDC Client Authentication defined the following about the `aud`field:
+
+> REQUIRED. Audience. The aud (audience) Claim. Value that identifies the Authorization Server as an intended audience. The Authorization Server MUST verify that it is an intended audience for the token. The Audience SHOULD be the URL of the Authorization Server's Token Endpoint.
+
+This document defines that for [OIDC Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) and [OAuth2 Client Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) the audience MUST be the URL of the Authorization Server's [Token Endpoint](https://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint).
+This document defines that for OIDC CIBA the audience MUST be the [Backchannel Authentication Endpoint](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#auth_backchannel_endpoint).
 
 ## OpenId Foundation Certification
 
