@@ -553,7 +553,7 @@ Upon this error, the API invoker performs standard Refresh Token Grant flow, pro
 
 The Operator validates the refresh token and retrieves the related information, i.e.: scopes/purpose (step 5) and checks the legal basis of the purpose associated with the token (step 6). If the purpose requires the user's consent, the Operator validates whether the consent is granted (step 7). If the consent is NOT granted e.g., the consent has expired or the user has revoked the consent, the Operator will not issue a new token and will return an error (step 8) and the refresh token flow will fail. 
 
-If the user's consent is granted or not required for the applied legal basis, the Operator generates a new pair of Operator Access Token and Aggregator Access Token (step 9), saves the refresh token (step 10), and responds to the API invoker with this information (step 11). 
+If the user's consent is granted or not required for the applied legal basis, the Operator generates a new pair of Operator Access Token and Operator Refresh Token (step 9), saves the refresh token (step 10), and responds to the API invoker with this information (step 11). 
 
 Then, the API invoker can access normally to the CAMARA API by using the New Operator Access Token (steps 12-14). This part of the flow is just the same as in general call flows.
 
