@@ -190,12 +190,15 @@ The purpose string MUST use below format for interoperability
 
 ## ID Token sub claim
 
+This document defines that the sub claim MUST not be a globally unique identifier.
+
+The sub claim MUST not contain Personally Identifiable Information (PII) such as the MSISDN.
+
+If the sub claim is based on PII then it must be hard for an attacker and colluding clients to reverse the sub claim and reveal the PII.
+
 To prevent [correlation](https://openid.net/specs/openid-connect-core-1_0.html#Correlation) OIDC recommends that the sub claim is a [Pairwise Pseudonymous Identifier (PPID)](https://openid.net/specs/openid-connect-core-1_0.html#Terminology).
 
-This document defines that the sub claim MUST be a Pairwise Pseudonymous Identifier (PPID).
-
-The PPID MUST not contain Personally Identifiable Information (PII) such as the MSISDN.
-If the PPID is based on PII then it must be hard for an attacker to reverse the PPID and reveal the PII.
+This document RECOMMENDS that the sub claim is a Pairwise Pseudonymous Identifier (PPID).
 
 OIDC discusses [Pairwise Identifier Algorithms](https://openid.net/specs/openid-connect-core-1_0.html#PairwiseAlg).
 
