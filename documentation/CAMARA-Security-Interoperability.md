@@ -71,6 +71,8 @@ Please see [OAuth 2.0 Security Best Current Practice](https://oauthstuff.github.
 
 ### Offline Access
 
+#### Refresh Token Issuance
+
 Neither OIDC not OAuth2 define a way for clients to indicate whether they need a refresh_token. 
 In OIDC and OAuth2 refresh token issuance is optional in Authorization Code Flow and at the discretion of the AZ.
 
@@ -128,6 +130,24 @@ This CAMARA document clarifies the values used in login_hint in the following wa
 
 
 The client MUST authenticate with the authorization server as described in [Client Authentication Section](#client-authentication).
+
+## Refresh Token Usage
+
+This section applies to OIDC Authorization Code Flow and CIBA. Other flows do not need refresh tokens and MUST not use refresh tokens.
+
+In addition to [OIDC Using Refresh Tokens](https://openid.net/specs/openid-connect-core-1_0.html#RefreshTokens) and [OAuth2 Refreshing an Access Token](https://datatracker.ietf.org/doc/html/rfc6749#section-6) this document defines the following:
+
+    The authorization decisions for issuing an access token MUST be re-checked by the Authorization Server when a refresh token is used. 
+        * A new access token MUST not be issued if the user has revoked their consent.
+        * A new access token MUST not be issued if the client status regarding the requested API access has changed.
+
+### Refresh Token Error Response
+
+In addition to [OIDC Refresh Error Response](Refresh Error Response) and [OAuth2 Issuing Access Token Error Response]() this document requires that the error `consent_required` MUST be used in the error response if user consent is required.
+
+### Refresh Token Security
+
+Considering [OAuth2 Refresh Token Protection](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics#refresh_token_protection) this document RECOMMENDS using `Refresh token rotation`.
 
 ## Client Credentials Flow
 
