@@ -129,7 +129,7 @@ In addition to [OIDC Using Refresh Tokens](https://openid.net/specs/openid-conne
 
 ### Refresh Token Error Response
 
-In addition to [OIDC Refresh Error Response](Refresh Error Response) and [OAuth2 Issuing Access Token Error Response]() this document requires that the error `consent_required` MUST be used in the error response if user consent is required.
+In addition to [OIDC Refresh Error Response](https://openid.net/specs/openid-connect-core-1_0.html#RefreshErrorResponse) and [OAuth2 Issuing Access Token Error Response](https://datatracker.ietf.org/doc/html/rfc6749#section-5.2) this document requires that the error `consent_required` MUST be used in the error response if user consent is required.
 
 ### Refresh Token Security
 
