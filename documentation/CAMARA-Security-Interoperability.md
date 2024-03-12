@@ -1,27 +1,31 @@
 # CAMARA Security and Interoperability Profile
 
 ## Table of Contents
-<!-- TOC -->
-* Introduction
-* Audience
-* Conventions
-* General Considerations
-  *  Transport Security
-* OIDC Authorization Code Flow
-  *  Cross-Site Request Forgery Protection
-* Client-Initiated Backchannel Authentication Flow
-  *  Authentication Request
-* Client Credentials Flow
-* Handling of acr_values
-* Access Token Request
-* The Scope Parameter
-* Missing "openid" scope
-* Purpose
-* ID Token sub claim
-* Client Authentication
-* OpenId Foundation Certification
-* References
-<!-- TOC -->
+
+  - [Introduction](#introduction)
+  - [Audience](#audience)
+  - [Conventions](#conventions)
+  - [General Considerations](#general-considerations)
+    - [Transport Security](#transport-security)
+  - [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
+    - [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
+  - [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
+    - [Authentication Request](#authentication-request)
+  - [Offline Access](#offline-access)
+      - [Refresh Token Issuance](#refresh-token-issuance)
+    - [Refresh Token Usage](#refresh-token-usage)
+    - [Refresh Token Error Response](#refresh-token-error-response)
+    - [Refresh Token Security](#refresh-token-security)
+  - [Client Credentials Flow](#client-credentials-flow)
+  - [Handling of acr\_values](#handling-of-acr_values)
+  - [Access Token Request](#access-token-request)
+  - [The Scope Parameter](#the-scope-parameter)
+  - [Missing "openid" scope](#missing-openid-scope)
+  - [Purpose](#purpose)
+  - [ID Token sub claim](#id-token-sub-claim)
+  - [Client Authentication](#client-authentication)
+  - [OpenId Foundation Certification](#openid-foundation-certification)
+  - [References](#references)
 
 
 ## Introduction
