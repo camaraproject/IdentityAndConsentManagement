@@ -81,6 +81,13 @@ Communication with the Backchannel Authentication Endpoint MUST utilize TLS.
 
 CIBA allows the Client to get the authentication result in three ways: poll, ping, or push. This profile allows clients to use the *poll* mode. In the Poll mode, the authentication result is retrieved by the Client by polling the OP's token endpoint using the new grant type. 
 
+CIBA defines that `binding_message`, `user_code`, and `requested_expiry` as OPTIONAL. 
+These parameters are currently not implemented in Camara and for interoperability this document defines that the authorization server MUST return an [error](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#auth_error_response) if these parameters are present in a request. 
+
+* For any request that contains `user_code` or `requested_expiry` the AZ MUST return the error `invalid_request`.
+* If the request contains `binding_message` but not `user_code` or `requested_expiry` the error `invalid_binding_message` MUST be returned.
+
+
 ### Authentication Request
 
 This CAMARA document makes the login_hint parameter REQUIRED if CIBA is used in a CAMARA context.
