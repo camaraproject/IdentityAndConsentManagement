@@ -85,6 +85,10 @@ CIBA allows the Client to get the authentication result in three ways: poll, pin
 
 This CAMARA document makes the login_hint parameter REQUIRED if CIBA is used in a CAMARA context.
 
+The client MUST authenticate with the authorization server as described in [Client Authentication Section](#client-authentication).
+
+## Format of `login_hint`
+
 This CAMARA document clarifies the values used in login_hint in the following way:
 
     * **_tel_**
@@ -95,8 +99,6 @@ This CAMARA document clarifies the values used in login_hint in the following wa
 
       For IPv4 and IPv6 addresses, that can optionally include a port. For example, `ipport:80.90.34.2:16790`, `ipport:80.90.34.2`, `ipport:[2001:db8::1]:8080` or `ipport:[2001:db8::1]`.
 
-
-The client MUST authenticate with the authorization server as described in [Client Authentication Section](#client-authentication).
 
 ## Offline Access
 
