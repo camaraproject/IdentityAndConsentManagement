@@ -2,30 +2,32 @@
 
 ## Table of Contents
 
-  - [Introduction](#introduction)
-  - [Audience](#audience)
-  - [Conventions](#conventions)
-  - [General Considerations](#general-considerations)
-    - [Transport Security](#transport-security)
-  - [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
-    - [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
-  - [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
-    - [Authentication Request](#authentication-request)
-  - [Offline Access](#offline-access)
-      - [Refresh Token Issuance](#refresh-token-issuance)
-    - [Refresh Token Usage](#refresh-token-usage)
-    - [Refresh Token Error Response](#refresh-token-error-response)
-    - [Refresh Token Security](#refresh-token-security)
-  - [Client Credentials Flow](#client-credentials-flow)
-  - [Handling of acr\_values](#handling-of-acr_values)
-  - [Access Token Request](#access-token-request)
-  - [The Scope Parameter](#the-scope-parameter)
-  - [Missing "openid" scope](#missing-openid-scope)
-  - [Purpose](#purpose)
-  - [ID Token sub claim](#id-token-sub-claim)
-  - [Client Authentication](#client-authentication)
-  - [OpenId Foundation Certification](#openid-foundation-certification)
-  - [References](#references)
+* [Introduction](#introduction)
+* [Audience](#audience)
+* [Conventions](#conventions)
+* [General Considerations](#general-considerations)
+    + [Transport Security](#transport-security)
+* [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
+    + [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
+* [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
+    + [Optional Parameters](#optional-parameters)
+    + [Authentication Request](#authentication-request)
+* [Format of `login_hint`](#format-of-login_hint)
+* [Offline Access](#offline-access)
+  - [Refresh Token Issuance](#refresh-token-issuance)
+    + [Refresh Token Usage](#refresh-token-usage)
+    + [Refresh Token Error Response](#refresh-token-error-response)
+    + [Refresh Token Security](#refresh-token-security)
+* [Client Credentials Flow](#client-credentials-flow)
+* [Handling of acr_values](#handling-of-acr_values)
+* [Access Token Request](#access-token-request)
+* [The Scope Parameter](#the-scope-parameter)
+* [Missing "openid" scope](#missing-openid-scope)
+* [Purpose](#purpose)
+* [ID Token sub claim](#id-token-sub-claim)
+* [Client Authentication](#client-authentication)
+* [OpenId Foundation Certification](#openid-foundation-certification)
+* [References](#references)
 
 
 ## Introduction
@@ -81,7 +83,7 @@ Communication with the Backchannel Authentication Endpoint MUST utilize TLS.
 
 CIBA allows the Client to get the authentication result in three ways: poll, ping, or push. This profile allows clients to use the *poll* mode. In the Poll mode, the authentication result is retrieved by the Client by polling the OP's token endpoint using the new grant type. 
 
-### Optional Parameters `binding_message`, `user_code`, and `requested_expiry`
+### Optional Parameters
 
 The parameters `binding_message`, `user_code`, and `requested_expiry` are currently not implemented in Camara and for interoperability this document defines that the authorization server SHOULD ignore them. 
 
