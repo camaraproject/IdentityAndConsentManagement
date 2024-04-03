@@ -140,9 +140,9 @@ In addition to [OIDC Using Refresh Tokens](https://openid.net/specs/openid-conne
         * A new access token MUST not be issued if the user has revoked their consent.
         * A new access token MUST not be issued if the client status regarding the requested API access has changed.
 
-### Refresh Token Error Response
+#### Refresh Token Usage Error Response
 
-In addition to [OIDC Refresh Error Response](https://openid.net/specs/openid-connect-core-1_0.html#RefreshErrorResponse) and [OAuth2 Issuing Access Token Error Response](https://datatracker.ietf.org/doc/html/rfc6749#section-5.2) this document requires that the error `consent_required` MUST be used in the error response if user consent is required.
+This document requires that the error `consent_required` MUST be used in the error response if user consent is required.
 
 ### Refresh Token Security
 
