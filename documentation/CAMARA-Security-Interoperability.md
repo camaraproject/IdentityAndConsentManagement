@@ -16,7 +16,7 @@
 * [Offline Access](#offline-access)
   - [Refresh Token Issuance](#refresh-token-issuance)
     + [Refresh Token Usage](#refresh-token-usage)
-    + [Refresh Token Error Response](#refresh-token-error-response)
+        + [Refresh Token Usage Error Response](#refresh-token-error-response)
     + [Refresh Token Security](#refresh-token-security)
 * [Client Credentials Flow](#client-credentials-flow)
 * [Handling of acr_values](#handling-of-acr_values)
