@@ -144,7 +144,7 @@ In addition to [OIDC Using Refresh Tokens](https://openid.net/specs/openid-conne
 
 #### Refresh Token Usage Error Response
 
-This document requires that the error `consent_required` MUST be used in the error response if user consent is required.
+This document requires that the error `invalid_grant` MUST be used in the [error response](https://datatracker.ietf.org/doc/html/rfc6749#section-5.2) if user consent is required. New user consent might be required if e.g. the user revoked their consent and the issued access tokens and refresh token are not valid anymore.
 
 ### Refresh Token Security
 
