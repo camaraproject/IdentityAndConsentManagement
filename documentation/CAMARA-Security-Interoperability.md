@@ -24,7 +24,8 @@
    * [The Scope Parameter](#the-scope-parameter)
    * [Missing "openid" scope](#missing-openid-scope)
    * [Purpose](#purpose)
-   * [ID Token sub claim](#id-token-sub-claim)
+   * [ID Token](#id-token)
+      + [ID Token sub claim](#id-token-sub-claim)
    * [Client Authentication](#client-authentication)
    * [OpenId Foundation Certification](#openid-foundation-certification)
    * [References](#references)
@@ -209,7 +210,12 @@ The purpose string MUST use below format for interoperability
 
 `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
 
-## ID Token sub claim
+
+## ID Token
+
+Camara uses ID Token as defined in [OpenID Connect Core 1.0 incorporating errata set 2](https://openid.net/specs/openid-connect-core-1_0.html#CodeIDToken). ID token must be a part of a successul response parameter as specified in  [Successful Token Response section](https://openid.net/specs/openid-connect-core-1_0.html#TokenResponse).
+
+### ID Token sub claim
 
 This document defines that the sub claim MUST not be a globally unique identifier.
 
