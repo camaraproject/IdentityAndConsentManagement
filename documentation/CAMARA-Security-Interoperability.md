@@ -196,10 +196,16 @@ Therefore scopes should be available to API implementations.
 [OIDC Core Authentication Request](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) states the following about the value of scope.
 > REQUIRED. OpenID Connect requests MUST contain the openid scope value. If the openid scope value is not present, the behavior is entirely unspecified. Other scope values MAY be present. ...
 
+This document defines that the authentication server SHOULD not return an id token if `openid` is missing in the scope parameter.
+
 This document defines the following error handling for a missing "openid" value in scope. 
 Please refer to [Authentication Error Response](https://openid.net/specs/openid-connect-core-1_0.html#AuthError).
 
-If "openid" is missing in the scope value, the Authorization Server returns an HTTP response code of 400 (Bad Request) and an error invalid_request.
+If "openid" is missing in the scope value but a claim that is [standardized in OIDC](https://openid.net/specs/openid-connect-core-1_0.html#Claims) is requested, then the Authorization Server returns an HTTP response code of 400 (Bad Request) and an error invalid_request.
+
+Clients SHOULD follow the OIDC standard and SHOULD include `openid` in the list of requested scopes.
+Without id token there is no `sub` field and the privacy features of OIDC are severely crippled. 
+Globally unique identifiers, like the MSISDN, should be avoided for privacy reasons.
 
 ## Purpose
 
