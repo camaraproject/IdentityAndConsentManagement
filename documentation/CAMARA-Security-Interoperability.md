@@ -93,7 +93,7 @@ The parameters `binding_message`, `user_code`, and `requested_expiry` are curren
 
 ### Authentication Request
 
-This CAMARA document makes the login_hint parameter REQUIRED if CIBA is used in a CAMARA context.
+CIBA allows the client to use login_hint_token, id_token_hint or login_hint as a hint in the authentication request. This CAMARA profile makes the login_hint parameter REQUIRED. The client SHALL specify login_hint (and only login_hint) in the authentication request when using CIBA in a CAMARA context.
 
 The client MUST authenticate with the authorization server as described in [Client Authentication Section](#client-authentication).
 
