@@ -216,6 +216,14 @@ The purpose string MUST use below format for interoperability
 
 `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
 
+**Disclaimer:** This document introduces a new method for handling the "purpose" of access sessions in OpenID Connect for CAMARA. Please note:
+
+- **Breaking Change Alert:** this new specification requires updates to existing implementations and is not backward compatible with the original solution defined in the [v0.1.0 release](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.1.0/documentation/CAMARA-API-access-and-user-consent.md#applying-purpose-concept-in-the-authorization-request).
+- **Adoption Requirement:** All parties must adopt this CAMARA profile upon release to maintain interoperability and security.
+- **Transitional Period:** Existing implementations may continue to use the previous solution during a specified transition period. Early migration is encouraged.
+- **End of Legacy Support:** Support for the previous "purpose" handling mechanism will be phased out after the transition period.
+
+By adhering to these guidelines, stakeholders can smoothly transition to the new CAMARA profile while ensuring continued compatibility and standards compliance.
 
 ## ID Token
 
