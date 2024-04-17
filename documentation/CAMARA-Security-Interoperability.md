@@ -40,7 +40,7 @@ This document is the CAMARA Security and Interoperability Profile. To ensure int
 The CAMARA document sharpens the following for interoperability and security: 
 
 * Of the flows defined in OIDC, CAMARA uses the [OIDC Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) and [OIDC Client Initiated Backchannel Authentication Flow](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html)
-
+* Of the flows defined in Oauth2, Camara uses the [Client credentials grant flow](https://www.rfc-editor.org/rfc/rfc6749#section-4.4)
 * Scope Parameter. Recommendations about the format of the scope parameter used in  CAMARA APIs.
 
 * Client Authentication. Specifications for client authentication within CAMARA.
