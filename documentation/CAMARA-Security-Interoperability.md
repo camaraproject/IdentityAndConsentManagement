@@ -138,9 +138,8 @@ This section applies to OIDC Authorization Code Flow and CIBA. Other flows do no
 
 In addition to [OIDC Using Refresh Tokens](https://openid.net/specs/openid-connect-core-1_0.html#RefreshTokens) and [OAuth2 Refreshing an Access Token](https://datatracker.ietf.org/doc/html/rfc6749#section-6) this document defines the following:
 
-    The authorization decisions for issuing an access token MUST be re-checked by the Authorization Server when a refresh token is used. 
-        * A new access token MUST not be issued if the user has revoked their consent.
-        * A new access token MUST not be issued if the client status regarding the requested API access has changed.
+     * A new access token MUST not be issued if the user has revoked their consent.
+     * A new access token MUST not be issued if the client status regarding the requested API access has changed.
 
 ---
 **NOTE**
