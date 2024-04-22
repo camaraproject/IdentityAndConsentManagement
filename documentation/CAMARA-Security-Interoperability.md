@@ -16,7 +16,6 @@
    * [Offline Access](#offline-access)
          - [Refresh Token Issuance](#refresh-token-issuance)
       + [Refresh Token Usage](#refresh-token-usage)
-         - [Refresh Token Usage Error Response](#refresh-token-usage-error-response)
       + [Refresh Token Security](#refresh-token-security)
    * [Client Credentials Flow](#client-credentials-flow)
    * [Handling of acr_values](#handling-of-acr_values)
@@ -143,9 +142,13 @@ In addition to [OIDC Using Refresh Tokens](https://openid.net/specs/openid-conne
         * A new access token MUST not be issued if the user has revoked their consent.
         * A new access token MUST not be issued if the client status regarding the requested API access has changed.
 
-#### Refresh Token Usage Error Response
+---
+**NOTE**
 
-This document requires that the error `invalid_grant` MUST be used in the [error response](https://datatracker.ietf.org/doc/html/rfc6749#section-5.2) if user consent is required. New user consent might be required if e.g. the user revoked their consent and the issued access tokens and refresh token are not valid anymore.
+New user consent might be required if e.g. the user revoked their consent and the issued access tokens and refresh token are not valid anymore.
+As defined in [error response](https://datatracker.ietf.org/doc/html/rfc6749#section-5.2) the error returned in this case is `invalid_grant`. 
+
+---
 
 ### Refresh Token Security
 
