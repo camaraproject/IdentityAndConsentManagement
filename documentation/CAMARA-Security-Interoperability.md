@@ -211,21 +211,13 @@ Globally unique identifiers, like the MSISDN, should be avoided for privacy reas
 
 ## Purpose
 
-If the client is requesting access to end user data, the reason for this MUST be specified in a separate `purpose` parameter. This parameter MUST be included in the authentication request at the same level as the `scope` parameter. and applies to all requested scopes. This method of declaring the purpose of a transaction is currently being specified by the [OpenID eKYC-IDA Working Group](https://openid.net/wg/ekyc-ida/).
-The purpose string MUST use below format for interoperability
-
-`dpv:<dpvValue>` 
+In Camara Purpose is encoded into the scope values.
+If a purpose is declared in a scope then the scope MUST have this format: `dpv:<dpvValue>#<technicalParameter>`
 
 `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
 
-**Disclaimer:** This document introduces a new method for handling the "purpose" of access sessions in OpenID Connect for CAMARA. Please note:
+There SHOULD not be two scopes that are the same technical scope for different purposes.
 
-- **Breaking Change Alert:** this new specification requires updates to existing implementations and is not backward compatible with the original solution defined in the [v0.1.0 release](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.1.0/documentation/CAMARA-API-access-and-user-consent.md#applying-purpose-concept-in-the-authorization-request).
-- **Adoption Requirement:** All parties must adopt this CAMARA profile upon release to maintain interoperability and security.
-- **Transitional Period:** Existing implementations may continue to use the previous solution during a specified transition period. Early migration is encouraged.
-- **End of Legacy Support:** Support for the previous "purpose" handling mechanism will be phased out after the transition period.
-
-By adhering to these guidelines, stakeholders can smoothly transition to the new CAMARA profile while ensuring continued compatibility and standards compliance.
 
 ## ID Token
 
