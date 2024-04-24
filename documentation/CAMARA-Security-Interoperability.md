@@ -211,7 +211,7 @@ Globally unique identifiers, like the MSISDN, should be avoided for privacy reas
 
 ## Purpose
 
-A transaction specific request parameter purpose as specified in [openid-connect-4-identity-assurance-1_0-13](https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-transaction-specific-purpos) MUST be used to allow a SP to state the purpose for the transfer of End-User data it is asking for.
+If the client is requesting access to end user data, the reason for this MUST be specified in a separate `purpose` parameter. This parameter MUST be included in the authentication request at the same level as the `scope` parameter. and applies to all requested scopes. This method of declaring the purpose of a transaction is currently being specified by the [OpenID eKYC-IDA Working Group](https://openid.net/wg/ekyc-ida/).
 The purpose string MUST use below format for interoperability
 
 `dpv:<dpvValue>` 
