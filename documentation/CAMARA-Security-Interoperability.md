@@ -218,6 +218,13 @@ If a purpose is declared in a scope then the scope MUST have this format: `dpv:<
 
 There SHOULD not be two scopes that are the same technical scope for different purposes.
 
+---
+**NOTE**
+
+As [OAuth2](https://datatracker.ietf.org/doc/html/rfc6749#section-3.3) defines the scope parameter in both the request and response is a list of scopes separated by space, the above allows requesting multiple purposes in one request.
+
+---
+
 
 ## ID Token
 
