@@ -211,20 +211,32 @@ Globally unique identifiers, like the MSISDN, should be avoided for privacy reas
 
 ## Purpose
 
-In Camara Purpose is encoded into the scope values.
-If a purpose is declared in a scope then the scope MUST have this format: `dpv:<dpvValue>#<technicalParameter>`
+In Camara `purpose` is used to convey to the user for which purpose an API is used. E.g.: Does the client request the user's location because it wants to show relevant tourist information or is the user's location informat protecting the user when they withdraw money from an ATM?
+Therefore `purpose`is only used in Camara when user consent is required (CIBA or OIDC authorization code flow) and a potential `prompt` parameter's value is NOT `none`.
 
-`<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
+### Purpose encoded in scope
+
+It is OPTIONAL to declare `purpose` in a scope, but then the scope MUST have this format: `dpv:<dpvValue>#<technicalParameter>`
+
++ `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
++ `<technicalParameter>` must be either:
+    + one technical scope to limit the request to one API endpoint (this technical scope is described in the API spec YAML file)
+    + one API name to cover the complete API (This API name is not described in the API spec YAML file as technical scope) – In this case the request covers all technical scopes of the API.
 
 There SHOULD not be two scopes that are the same technical scope for different purposes.
 
+### Purpose as a Authentication Request Parameter
+
+It is OPTIONAL to declare `purpose` as a request parameter in the authentication request. The `purpose` parameter is an extension of OIDC. 
+If the `purpose` parameter is used then its value MUST be a *single* value coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose).
+Multiple `purpose` parameters are not allowed. 
+
 ---
-**NOTE**
+**DISCLAIMER**
 
-As [OAuth2](https://datatracker.ietf.org/doc/html/rfc6749#section-3.3) defines the scope parameter in both the request and response is a list of scopes separated by space, the above allows requesting multiple purposes in one request.
+Neither option `Purpose encoded in scope` or `Purpose as a Authentication Request Parameter` is currently widely implemented. Authorization Server might respond with `invalid_request`.
 
 ---
-
 
 ## ID Token
 
