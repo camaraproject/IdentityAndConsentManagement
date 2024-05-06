@@ -326,17 +326,23 @@ Please note again that access token content or structure are not part of the OAu
 
 #### Access Token Variant 3 Response on introspecting an access token with two purpose and RAR
 
-**Note**: [RAR suggests replacing `scope` by `location`](https://www.rfc-editor.org/rfc/rfc9396#name-relationship-to-the-scope-p). `location` is the path-element in openapi.yaml e.g. [sim_swap.yaml](https://github.com/camaraproject/SimSwap/blob/main/code/API_definitions/sim_swap.yaml).
-
 ```
 {
   "active": true,
   "client_id": "s6BhdRkqt3",
   "username": "jdoe",
-  "locations": {
-    "/check": ["dpv:FraudPreventionAndDetection"],
-    "/retrieve-date": ["dpv:Advertising"]
-  },
+  "authorization_details": [
+    {
+      "type": "org.camaraproject.simswap",
+      "purpose": "dpv:Advertising",
+      "location": "/retrieve-date"
+    },
+    {
+      "type": "org.camaraproject.simswap",
+      "purpose": "dpv:FraudPreventionAndDetection",
+      "location": "/check"
+    }
+  ],
   "sub": "Z5O3upPC88QrAjx00dis",
   "aud": "https://protected.example.net/resource",
   "iss": "https://server.example.com/",
