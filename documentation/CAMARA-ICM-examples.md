@@ -230,14 +230,14 @@ Host: server.example.com
 ```
 [
   {
-    "type": "org.camaraproject.purpose",
+    "type": "org.camaraproject.sim-swap",
     "purpose": "dpv:Advertising",
-    "location": "/retrieve-date"
+    "locations": ["/retrieve-date"]
   },
   {
-    "type": "org.camaraproject.purpose",
+    "type": "org.camaraproject.sim-swap",
     "purpose": "dpv:FraudPreventionAndDetection",
-    "location": "/check"
+    "locations": ["/check"]
   }
 ]
 ```
