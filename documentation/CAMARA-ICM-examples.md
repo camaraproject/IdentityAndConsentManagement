@@ -26,7 +26,7 @@ This document does not say that the access token is self-contained or not.
 ```
 GET /authorize?
     response_type=code
-    &scope=openid%20dpv%3AFraudPreventionAndDetection%20check-sim-swap%20retrieve-sim-swap-date
+    &scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date
     &client_id=s6BhdRkqt3
     &state=af0ifjsldkj
     &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb HTTP/1.1
@@ -42,7 +42,7 @@ Host: server.example.com
   "response_type": "code",
   "client_id": "s6BhdRkqt3",
   "redirect_uri": "https://client.example.org/cb",
-  "scope": "openid dpv:FraudPreventionAndDetection check-sim-swap retrieve-sim-swap-date",
+  "scope": "openid dpv:FraudPreventionAndDetection sim-swap:check sim-swap:retrieve-date",
   "state": "af0ifjsldkj",
   "nonce": "n-0S6_WzA2Mj",
   "max_age": 86400
@@ -57,7 +57,7 @@ Host: server.example.com
 ```
 GET /authorize?
     response_type=code
-    &scope=openid%20dpv%3AFraudPreventionAndDetection%23check-sim-swap%20dpv%3AFraudPreventionAndDetection%23retrieve-sim-swap-date
+    &scope=openid%20dpv%3AFraudPreventionAndDetection%23sim-swap%3Acheck%20dpv%3AFraudPreventionAndDetection%23sim-swap%3Aretrieve-date
     &client_id=s6BhdRkqt3
     &state=af0ifjsldkj
     &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb HTTP/1.1
@@ -73,7 +73,7 @@ Host: server.example.com
   "response_type": "code",
   "client_id": "s6BhdRkqt3",
   "redirect_uri": "https://client.example.org/cb",
-  "scope": "openid dpv:FraudPreventionAndDetection#check-sim-swap dpv:FraudPreventionAndDetection#retrieve-sim-swap-date",
+  "scope": "openid dpv:FraudPreventionAndDetection#sim-swap:check dpv:FraudPreventionAndDetection#sim-swap:retrieve-date",
   "state": "af0ifjsldkj",
   "nonce": "n-0S6_WzA2Mj",
   "max_age": 86400
@@ -82,13 +82,13 @@ Host: server.example.com
 
 ### Purpose as a Authentication Request Parameter
 
-#### OIDC authorization code flow: with purpose as a Authentication Request Parameter
+#### OIDC authorization code flow with purpose as a Authentication Request Parameter
 
 ```
 GET /authorize?
     response_type=code
     &purpose=dpv%3AFraudPreventionAndDetection
-    &scope=openid%20check-sim-swap%20retrieve-sim-swap-date
+    &scope=openid%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date
     &client_id=s6BhdRkqt3
     &state=af0ifjsldkj
     &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb HTTP/1.1
@@ -105,7 +105,7 @@ Host: server.example.com
   "client_id": "s6BhdRkqt3",
   "redirect_uri": "https://client.example.org/cb",
   "purpose": "dpv:FraudPreventionAndDetection"
-  "scope": "openid check-sim-swap retrieve-sim-swap-date",
+  "scope": "openid sim-swap:check sim-swap:retrieve-date",
   "state": "af0ifjsldkj",
   "nonce": "n-0S6_WzA2Mj",
   "max_age": 86400
@@ -118,7 +118,7 @@ Host: server.example.com
 GET /authorize?
     response_type=code
     &authorization_details=%5B%7B%22type%22%3A%22org.camaraproject.simswap%22%2C%22purpose%22%3A%22dpv%3AFraudPreventionAndDetection%22%7D%5D
-    &scope=openid%20check-sim-swap%20retrieve-sim-swap-date
+    &scope=openid%20sim-swap:check%20sim-swap:retrieve-date
     &client_id=s6BhdRkqt3
     &state=af0ifjsldkj
     &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb HTTP/1.1
@@ -135,7 +135,7 @@ Host: server.example.com
   "client_id": "s6BhdRkqt3",
   "redirect_uri": "https://client.example.org/cb",
   "authorization_details": "[{"type":"org.camaraproject.simswap","purpose":"dpv:FraudPreventionAndDetection"}]"
-  "scope": "openid check-sim-swap retrieve-sim-swap-date",
+  "scope": "openid sim-swap:check sim-swap:retrieve-date",
   "state": "af0ifjsldkj",
   "nonce": "n-0S6_WzA2Mj",
   "max_age": 86400
@@ -154,7 +154,7 @@ Host: server.example.com
   "active": true,
   "client_id": "s6BhdRkqt3",
   "username": "jdoe",
-  "scope": "dpv:FraudPreventionAndDetection#check-sim-swap dpv:FraudPreventionAndDetection#retrieve-sim-swap-date",
+  "scope": "dpv:FraudPreventionAndDetection#sim-swap:check dpv:FraudPreventionAndDetection#sim-swap:retrieve-date",
   "sub": "Z5O3upPC88QrAjx00dis",
   "aud": "https://protected.example.net/resource",
   "iss": "https://server.example.com/",
@@ -171,8 +171,8 @@ Host: server.example.com
   "client_id": "s6BhdRkqt3",
   "username": "jdoe",
   "scopes": {
-    "check-sim-swap": ["dpv:FraudPreventionAndDetection"],
-    "retrieve-sim-swap-date": ["dpv:FraudPreventionAndDetection"]
+    "sim-swap:check": ["dpv:FraudPreventionAndDetection"],
+    "sim-swap:retrieve-date": ["dpv:FraudPreventionAndDetection"]
   },
   "sub": "Z5O3upPC88QrAjx00dis",
   "aud": "https://protected.example.net/resource",
@@ -199,7 +199,7 @@ Please ignore for now otherwise.
 ```
 GET /authorize?
     response_type=code
-    &scope=openid%20dpv%3AFraudPreventionAndDetection%23check-sim-swap%20dpv%Advertising%23retrieve-sim-swap-date
+    &scope=openid%20dpv%3AFraudPreventionAndDetection%23sim-swap%3Acheck%20dpvvertising%23sim-swap%3Aretrieve-date
     &client_id=s6BhdRkqt3
     &state=af0ifjsldkj
     &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb HTTP/1.1
@@ -215,7 +215,7 @@ Host: server.example.com
   "response_type": "code",
   "client_id": "s6BhdRkqt3",
   "redirect_uri": "https://client.example.org/cb",
-  "scope": "openid dpv:FraudPreventionAndDetection#check-sim-swap dpv:Advertising#retrieve-sim-swap-date",
+  "scope": "openid dpv:FraudPreventionAndDetection#sim-swap:check dpv:Advertising#sim-swap:retrieve-date",
   "state": "af0ifjsldkj",
   "nonce": "n-0S6_WzA2Mj",
   "max_age": 86400
@@ -294,7 +294,7 @@ Please note again that access token content or structure are not part of the OAu
   "active": true,
   "client_id": "s6BhdRkqt3",
   "username": "jdoe",
-  "scope": "dpv:FraudPreventionAndDetection#check-sim-swap dpv:Advertising#retrieve-sim-swap-date",
+  "scope": "dpv:FraudPreventionAndDetection#sim-swap:check dpv:Advertising#sim-swap:retrieve-date",
   "sub": "Z5O3upPC88QrAjx00dis",
   "aud": "https://protected.example.net/resource",
   "iss": "https://server.example.com/",
@@ -313,8 +313,8 @@ Please note again that access token content or structure are not part of the OAu
   "client_id": "s6BhdRkqt3",
   "username": "jdoe",
   "scopes": {
-    "check-sim-swap": ["dpv:FraudPreventionAndDetection"],
-    "retrieve-sim-swap-date": ["dpv:Advertising"]
+    "sim-swap:check": ["dpv:FraudPreventionAndDetection"],
+    "sim-swap:retrieve-date": ["dpv:Advertising"]
   },
   "sub": "Z5O3upPC88QrAjx00dis",
   "aud": "https://protected.example.net/resource",
@@ -335,7 +335,7 @@ Please note again that access token content or structure are not part of the OAu
   "username": "jdoe",
   "locations": {
     "/check": ["dpv:FraudPreventionAndDetection"],
-    "/retrieve-sim-swap-date/retrieve-date": ["dpv:Advertising"]
+    "/retrieve-date": ["dpv:Advertising"]
   },
   "sub": "Z5O3upPC88QrAjx00dis",
   "aud": "https://protected.example.net/resource",
