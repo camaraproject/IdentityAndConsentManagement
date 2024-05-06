@@ -333,14 +333,14 @@ Please note again that access token content or structure are not part of the OAu
   "username": "jdoe",
   "authorization_details": [
     {
-      "type": "org.camaraproject.purpose",
+      "type": "org.camaraproject.sim-swap",
       "purpose": "dpv:Advertising",
-      "location": "/retrieve-date"
+      "locations": ["/retrieve-date"]
     },
     {
-      "type": "org.camaraproject.purpose",
+      "type": "org.camaraproject.sim-swap",
       "purpose": "dpv:FraudPreventionAndDetection",
-      "location": "/check"
+      "locations": ["/check"]
     }
   ],
   "sub": "Z5O3upPC88QrAjx00dis",
