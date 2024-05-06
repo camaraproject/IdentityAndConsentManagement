@@ -117,7 +117,7 @@ Host: server.example.com
 ```
 GET /authorize?
     response_type=code
-    &authorization_details=%5B%7B%22type%22%3A%22org.camaraproject.simswap%22%2C%22purpose%22%3A%22dpv%3AFraudPreventionAndDetection%22%7D%5D
+    &authorization_details=%5B%7B%22type%22%3A%22org.camaraproject.purpose%22%2C%22purpose%22%3A%22dpv%3AFraudPreventionAndDetection%22%7D%5D
     &scope=openid%20sim-swap:check%20sim-swap:retrieve-date
     &client_id=s6BhdRkqt3
     &state=af0ifjsldkj
@@ -134,7 +134,7 @@ Host: server.example.com
   "response_type": "code",
   "client_id": "s6BhdRkqt3",
   "redirect_uri": "https://client.example.org/cb",
-  "authorization_details": "[{"type":"org.camaraproject.simswap","purpose":"dpv:FraudPreventionAndDetection"}]"
+  "authorization_details": "[{"type":"org.camaraproject.purpose","purpose":"dpv:FraudPreventionAndDetection"}]"
   "scope": "openid sim-swap:check sim-swap:retrieve-date",
   "state": "af0ifjsldkj",
   "nonce": "n-0S6_WzA2Mj",
@@ -230,12 +230,12 @@ Host: server.example.com
 ```
 [
   {
-    "type": "org.camaraproject.simswap",
+    "type": "org.camaraproject.purpose",
     "purpose": "dpv:Advertising",
     "location": "/retrieve-date"
   },
   {
-    "type": "org.camaraproject.simswap",
+    "type": "org.camaraproject.purpose",
     "purpose": "dpv:FraudPreventionAndDetection",
     "location": "/check"
   }
@@ -245,7 +245,7 @@ Host: server.example.com
 ```
 GET /authorize?
     response_type=code
-    &authorization_details=%5B%7B%22type%22%3A%22org.camaraproject.simswap%22%2C%22purpose%22%3A%22dpv%3AAdvertising%22%2C%22location%22%3A%22%2Fretrieve-date%22%7D%2C%7B%22type%22%3A%22org.camaraproject.simswap%22%2C%22purpose%22%3A%22dpv%3AFraudPreventionAndDetection%22%2C%22location%22%3A%22%2Fcheck%22%7D%5D
+    &authorization_details=%5B%7B%22type%22%3A%22org.camaraproject.purpose%22%2C%22purpose%22%3A%22dpv%3AAdvertising%22%2C%22location%22%3A%22%2Fretrieve-date%22%7D%2C%7B%22type%22%3A%22org.camaraproject.purpose%22%2C%22purpose%22%3A%22dpv%3AFraudPreventionAndDetection%22%2C%22location%22%3A%22%2Fcheck%22%7D%5D
     &scope=openid
     &client_id=s6BhdRkqt3
     &state=af0ifjsldkj
@@ -264,12 +264,12 @@ Host: server.example.com
   "redirect_uri": "https://client.example.org/cb",
   "authorization_details": [
     {
-      "type": "org.camaraproject.simswap",
+      "type": "org.camaraproject.purpose",
       "purpose": "dpv:Advertising",
       "location": "/retrieve-date"
     },
     {
-      "type": "org.camaraproject.simswap",
+      "type": "org.camaraproject.purpose",
       "purpose": "dpv:FraudPreventionAndDetection",
       "location": "/check"
     }
@@ -333,12 +333,12 @@ Please note again that access token content or structure are not part of the OAu
   "username": "jdoe",
   "authorization_details": [
     {
-      "type": "org.camaraproject.simswap",
+      "type": "org.camaraproject.purpose",
       "purpose": "dpv:Advertising",
       "location": "/retrieve-date"
     },
     {
-      "type": "org.camaraproject.simswap",
+      "type": "org.camaraproject.purpose",
       "purpose": "dpv:FraudPreventionAndDetection",
       "location": "/check"
     }
