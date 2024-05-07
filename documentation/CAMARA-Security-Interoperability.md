@@ -214,15 +214,8 @@ Globally unique identifiers, like the MSISDN, should be avoided for privacy reas
 In Camara `purpose` is used to convey to the user for which purpose an API is used. E.g.: Does the client request the user's location because it wants to show relevant tourist information or is the user's location informat protecting the user when they withdraw money from an ATM?
 Therefore `purpose`is only used in Camara when user consent is required (CIBA or OIDC authorization code flow) and a potential `prompt` parameter's value is NOT `none`.
 
----
 
-*** Note ***
-
-Pick one of the following options
-
----
-
-### Option 1: Purpose as a scope
+### Purpose as a scope
 
 Purpose is one of the scope parameter's values. There MUST be exactly one purpose.
 
@@ -231,24 +224,8 @@ The Authorization Server identifies the purpose using the prefix `dpv:`.
 This scope MUST have the following format: `dpv:<dpvValue>` where `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
 
 
-### Option 2: Purpose encoded in scope
 
-It is OPTIONAL to declare `purpose` in a scope, but then the scope MUST have this format: `dpv:<dpvValue>#<technicalParameter>`
-
-+ `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
-+ `<technicalParameter>` must be either:
-    + one technical scope to limit the request to one API endpoint (this technical scope is described in the API spec YAML file)
-    + one API name to cover the complete API (This API name is not described in the API spec YAML file as technical scope) – In this case the request covers all technical scopes of the API.
-
-There SHOULD not be two scopes that are the same technical scope for different purposes.
-
-### Option 3: Purpose as a Authentication Request Parameter
-
-It is OPTIONAL to declare `purpose` as a request parameter in the authentication request. The `purpose` parameter is an extension of OIDC. 
-If the `purpose` parameter is used then its value MUST be a *single* value coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose).
-Multiple `purpose` parameters are not allowed. 
-
-### Option 4: Use Rich Authorization Request to convey `purpose`
+### Outlook on purpose-handling leveraging Rich Authorization Request
 
 [RFC 9396 OAuth 2.0 Rich Authorization Requests](https://www.rfc-editor.org/rfc/rfc9396) defines a OAuth2 parameter `authorization_details` that is used to carry fine-grained authorization data. The parameter `authorization_details` can be used in all places where OAuth2 allows the `scope` parameter. That means that the parameter `authorization_details` can be used in all places where OIDC and CIBA allow the `scope` parameter.
 
