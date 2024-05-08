@@ -229,7 +229,7 @@ This scope MUST have the following format: `dpv:<dpvValue>` where `<dpvValue>` i
 
 [RFC 9396 OAuth 2.0 Rich Authorization Requests](https://www.rfc-editor.org/rfc/rfc9396) defines a OAuth2 parameter `authorization_details` that is used to carry fine-grained authorization data. The parameter `authorization_details` can be used in all places where OAuth2 allows the `scope` parameter. That means that the parameter `authorization_details` can be used in all places where OIDC and CIBA allow the `scope` parameter.
 
-This document defines exactly one format to be used in Camara for the value of the `authorization_details` parameter that is used additionally to the scope parameter.
+This document proposes a format to be used in Camara for the value of the `authorization_details` parameter that is used additionally to the scope parameter. Further format discussion will happen, before the current purpose handling will be replaced by using the RAR format.
 
 ```
 [
