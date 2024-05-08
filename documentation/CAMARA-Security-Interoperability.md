@@ -211,9 +211,9 @@ Globally unique identifiers, like the MSISDN, should be avoided for privacy reas
 
 ## Purpose
 
-Legal requirements, like GDPR, might make is necessary that the legal basis for processing personal data is provided.
+In Camara `purpose` is used to convey to the user for which purpose an API is used. E.g.: Does the client request the user's location because it wants to show relevant tourist information or is the user's location information protecting the user when they withdraw money from an ATM? 
 
-This document defines `purpose` as a technical means to fulfil this legal requirement.
+Purpose has always to be reflected and audited when personal information is accessed or managed in certain legislations (e.g. in EU GDPR). To ensure interoperability across different legislations this profile requires that the purpose must always be declared within CIBA or OIDC Authorization Code flow token requests if personal information is accessed or managed.
 
 ### Purpose as a scope
 
