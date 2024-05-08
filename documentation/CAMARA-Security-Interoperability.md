@@ -213,7 +213,7 @@ Globally unique identifiers, like the MSISDN, should be avoided for privacy reas
 
 In Camara `purpose` is used to convey to the user for which purpose an API is used. E.g.: Does the client request the user's location because it wants to show relevant tourist information or is the user's location information protecting the user when they withdraw money from an ATM? 
 
-Purpose has always to be reflected and audited when personal information is accessed or managed in certain legislations (e.g. in EU GDPR). To ensure interoperability across different legislations this profile requires that the purpose must always be declared within CIBA or OIDC Authorization Code flow token requests if personal information is accessed or managed.
+Purpose has always to be reflected and audited when personal information is accessed or managed in certain legislations (e.g. in EU GDPR). To ensure interoperability across different legislations this profile requires that the purpose must always be declared within the supported OIDC or OAuth2 token requests if personal information is accessed or managed.
 
 ### Purpose as a scope
 
