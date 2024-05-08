@@ -211,9 +211,9 @@ Globally unique identifiers, like the MSISDN, should be avoided for privacy reas
 
 ## Purpose
 
-In Camara `purpose` is used to convey to the user for which purpose an API is used. E.g.: Does the client request the user's location because it wants to show relevant tourist information or is the user's location informat protecting the user when they withdraw money from an ATM?
-Therefore `purpose`is only used in Camara when user consent is required (CIBA or OIDC authorization code flow) and a potential `prompt` parameter's value is NOT `none`.
+Legal requirements, like GDPR, might make is necessary that the legal basis for processing personal data is provided.
 
+This document defines `purpose` as a technical means to fulfil this legal requirement.
 
 ### Purpose as a scope
 
