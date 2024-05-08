@@ -229,7 +229,7 @@ This scope MUST have the following format: `dpv:<dpvValue>` where `<dpvValue>` i
 
 [RFC 9396 OAuth 2.0 Rich Authorization Requests](https://www.rfc-editor.org/rfc/rfc9396) defines a OAuth2 parameter `authorization_details` that is used to carry fine-grained authorization data. The parameter `authorization_details` can be used in all places where OAuth2 allows the `scope` parameter. That means that the parameter `authorization_details` can be used in all places where OIDC and CIBA allow the `scope` parameter.
 
-Further format discussion will happen, before the current purpose handling will be extending by using the RAR format.
+Further format discussion will happen, e.g. how to handle multiple purposess, before the current purpose handling will be extended by using the RAR format.
 
 ## ID Token
 
