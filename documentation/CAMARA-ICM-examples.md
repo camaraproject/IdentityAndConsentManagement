@@ -59,6 +59,12 @@ Please note that Rich Authorization Request examples are here to help in the dis
 
 ---
 
+Please note that the `type` in the ONE purpose requests is `org.camaraproject.purpose` and thus NOT API-specific.
+
+In the TWO-or-more purpose request the `type` proposed to be API-specific.
+
+---
+
 ### Using Rich Authorization Request to convey one purpose
 
 
