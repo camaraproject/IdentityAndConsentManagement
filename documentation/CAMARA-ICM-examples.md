@@ -50,37 +50,6 @@ Host: server.example.com
 ```
 
 
-### Requesting one purpose, two scopes of the same API with purpose encoded in scope 
-
-#### OIDC authorization code flow with two scopes and one purpose
-
-```
-GET /authorize?
-    response_type=code
-    &scope=openid%20dpv%3AFraudPreventionAndDetection%23sim-swap%3Acheck%20dpv%3AFraudPreventionAndDetection%23sim-swap%3Aretrieve-date
-    &client_id=s6BhdRkqt3
-    &state=af0ifjsldkj
-    &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb HTTP/1.1
-Host: server.example.com
-```
-
-#### RFC9101 request object with two scopes and one purpose
-
-```
-{
-  "iss": "s6BhdRkqt3",
-  "aud": "https://server.example.com",
-  "response_type": "code",
-  "client_id": "s6BhdRkqt3",
-  "redirect_uri": "https://client.example.org/cb",
-  "scope": "openid dpv:FraudPreventionAndDetection#sim-swap:check dpv:FraudPreventionAndDetection#sim-swap:retrieve-date",
-  "state": "af0ifjsldkj",
-  "nonce": "n-0S6_WzA2Mj",
-  "max_age": 86400
-}
-```
-
-
 ### Use Rich Authorization Request to convey one purpose
 
 ---
