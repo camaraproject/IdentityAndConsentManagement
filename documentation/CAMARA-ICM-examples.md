@@ -83,6 +83,13 @@ Host: server.example.com
 
 ### Use Rich Authorization Request to convey one purpose
 
+---
+**Note**
+
+Please note that Rich Authorization Request examples are here to help in the discussion how RAR might be used in Camara **in the FUTURE**
+
+---
+
 ```
 GET /authorize?
     response_type=code
