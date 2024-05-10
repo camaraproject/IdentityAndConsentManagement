@@ -7,7 +7,7 @@
 
 Access tokens content or structure are not part of the OAuth2 nor the OIDC standard. In [RFC7662](https://datatracker.ietf.org/doc/html/rfc7662) only the field `active` is REQUIRED.
 `scope` and all other fields are optional. [JSON Web Token](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) defines some common claims.
-RFC7662 response values serve as an **example** how an access token might look like. These access tokens might contain additional field carrying what Camara needs regarding "purpose"
+RFC7662 response values serve as an **example** how an access token might look like. These access tokens might contain additional fields carrying what Camara needs regarding "purpose"
 
 The scope `openid` is needed only in the request to specify that the request is an OpenId request. The scope `openid` is not needed in the access token.
 
@@ -50,7 +50,7 @@ Host: server.example.com
 ```
 
 
-### Use Rich Authorization Request to convey one purpose
+## Using Rich Authorization Request to convey purpose
 
 ---
 **Note**
@@ -58,6 +58,9 @@ Host: server.example.com
 Please note that Rich Authorization Request examples are here to help in the discussion how RAR might be used in Camara **in the FUTURE**
 
 ---
+
+### Using Rich Authorization Request to convey one purpose
+
 
 ```
 GET /authorize?
@@ -88,19 +91,7 @@ Host: server.example.com
 ```
 
 
-## Specifying two purpose
-
----
-**Note**
-
-These following examples are only here now to demonstrate extensibility of the different options in requesting `purpose`.
-Please ignore for now.
-
----
-
-
-
-#### Two different purpose using RAR
+### Use Rich Authorization Request to convey two purpose
 
 ```
 [
