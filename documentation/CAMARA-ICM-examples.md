@@ -88,89 +88,19 @@ Host: server.example.com
 ```
 
 
-### RFC7662 response with two scopes, one purpose
-
-#### Access Token Variant 1 Response on introspecting an access token with string scope
-
-**Note**: The RS might have to split `purpose` and `technical-scope`.
-
-```
-{
-  "active": true,
-  "client_id": "s6BhdRkqt3",
-  "username": "jdoe",
-  "scope": "dpv:FraudPreventionAndDetection#sim-swap:check dpv:FraudPreventionAndDetection#sim-swap:retrieve-date",
-  "sub": "Z5O3upPC88QrAjx00dis",
-  "aud": "https://protected.example.net/resource",
-  "iss": "https://server.example.com/",
-  "exp": 1419356238,
-  "iat": 1419350238
-}
-```
-
-#### Access Token Variant 2 Response on introspecting an access token with scopes object
-
-```
-{
-  "active": true,
-  "client_id": "s6BhdRkqt3",
-  "username": "jdoe",
-  "scopes": {
-    "sim-swap:check": ["dpv:FraudPreventionAndDetection"],
-    "sim-swap:retrieve-date": ["dpv:FraudPreventionAndDetection"]
-  },
-  "sub": "Z5O3upPC88QrAjx00dis",
-  "aud": "https://protected.example.net/resource",
-  "iss": "https://server.example.com/",
-  "exp": 1419356238,
-  "iat": 1419350238
-}
-```
-
 ## Specifying two purpose
 
 ---
 **Note**
 
 These following examples are only here now to demonstrate extensibility of the different options in requesting `purpose`.
-Please ignore for now otherwise.
+Please ignore for now.
 
 ---
 
-### Requesting two purpose, two scopes of the same API
 
-#### Two different purpose encoded in scope
-
-```
-GET /authorize?
-    response_type=code
-    &scope=openid%20dpv%3AFraudPreventionAndDetection%23sim-swap%3Acheck%20dpvvertising%23sim-swap%3Aretrieve-date
-    &client_id=s6BhdRkqt3
-    &state=af0ifjsldkj
-    &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb HTTP/1.1
-Host: server.example.com
-```
-
-#### RFC9101 request object two purpose
-
-```
-{
-  "iss": "s6BhdRkqt3",
-  "aud": "https://server.example.com",
-  "response_type": "code",
-  "client_id": "s6BhdRkqt3",
-  "redirect_uri": "https://client.example.org/cb",
-  "scope": "openid dpv:FraudPreventionAndDetection#sim-swap:check dpv:Advertising#sim-swap:retrieve-date",
-  "state": "af0ifjsldkj",
-  "nonce": "n-0S6_WzA2Mj",
-  "max_age": 86400
-}
-```
 
 #### Two different purpose using RAR
-
-
-##### Authorization Details JSON two purpose
 
 ```
 [
@@ -226,50 +156,8 @@ Host: server.example.com
 }
 ```
 
-### RFC7662 response: two scopes, two purpose
 
-Please note again that access token content or structure are not part of the OAuth2 nor the OIDC standard. These are examples.
-
-#### Access Token Variant 1 Response on introspecting an access token with two purpose
-
-**Note**: The RS might have to split `purpose` and `technical-scope`.
-
-```
-{
-  "active": true,
-  "client_id": "s6BhdRkqt3",
-  "username": "jdoe",
-  "scope": "dpv:FraudPreventionAndDetection#sim-swap:check dpv:Advertising#sim-swap:retrieve-date",
-  "sub": "Z5O3upPC88QrAjx00dis",
-  "aud": "https://protected.example.net/resource",
-  "iss": "https://server.example.com/",
-  "exp": 1419356238,
-  "iat": 1419350238
-}
-```
-
-#### Access Token Variant 2 Response on introspecting an access token with two purpose
-
-**Note**: The value of the `technical-scope` is an array of `purpose`, so one `technical-scope` can have different `purpose` values.
-
-```
-{
-  "active": true,
-  "client_id": "s6BhdRkqt3",
-  "username": "jdoe",
-  "scopes": {
-    "sim-swap:check": ["dpv:FraudPreventionAndDetection"],
-    "sim-swap:retrieve-date": ["dpv:Advertising"]
-  },
-  "sub": "Z5O3upPC88QrAjx00dis",
-  "aud": "https://protected.example.net/resource",
-  "iss": "https://server.example.com/",
-  "exp": 1419356238,
-  "iat": 1419350238
-}
-```
-
-#### Access Token Variant 3 Response on introspecting an access token with two purpose and RAR
+#### Response on introspecting an access token with two purpose and RAR
 
 ```
 {
