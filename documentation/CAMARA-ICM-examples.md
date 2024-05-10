@@ -80,37 +80,6 @@ Host: server.example.com
 }
 ```
 
-### Purpose as a Authentication Request Parameter
-
-#### OIDC authorization code flow with purpose as a Authentication Request Parameter
-
-```
-GET /authorize?
-    response_type=code
-    &purpose=dpv%3AFraudPreventionAndDetection
-    &scope=openid%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date
-    &client_id=s6BhdRkqt3
-    &state=af0ifjsldkj
-    &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb HTTP/1.1
-Host: server.example.com
-```
-
-#### RFC9101 request object with one purpose
-
-```
-{
-  "iss": "s6BhdRkqt3",
-  "aud": "https://server.example.com",
-  "response_type": "code",
-  "client_id": "s6BhdRkqt3",
-  "redirect_uri": "https://client.example.org/cb",
-  "purpose": "dpv:FraudPreventionAndDetection"
-  "scope": "openid sim-swap:check sim-swap:retrieve-date",
-  "state": "af0ifjsldkj",
-  "nonce": "n-0S6_WzA2Mj",
-  "max_age": 86400
-}
-```
 
 ### Use Rich Authorization Request to convey one purpose
 
