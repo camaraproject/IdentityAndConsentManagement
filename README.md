@@ -15,12 +15,16 @@ Repository to describe, develop, document and test the Identity And Consent Mana
 * Describe, develop, document and test the APIs (with 1-2 Telcos)  
 * Started: March 2023
 
+## Release Information
+
+* The latest public release of guidelines and documentation for CAMARA APIs is available [here](https://github.com/camaraproject/IdentityAndConsentManagement/releases/latest).
+* For previous releases, pre-releases and changes see [CHANGELOG.md](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/CHANGELOG.md)
+
 ## Contributing
 * Meetings
-  * Bi-weekly Wednesday, 16:00 CET/CEST (15:00 UTC, 14:00 UTC during European DST).
+  * Bi-weekly Wednesday, 16:00 CEST (14:00 UTC during European daylight saving time)
   * [Registration / Join](https://zoom-lfx.platform.linuxfoundation.org/meeting/94629188836?password=278b4c8a-f370-43bf-bac1-b30a39f169f3)
+  * Minutes: Access [meeting minutes](https://wiki.camaraproject.org/x/2QBFAQ).
 * Maling List
-  * Subscribe <sp-icm+subscribe@lists.camaraproject.org>
-  * <https://lists.camaraproject.org/g/sp-icm>
-* Lifecycle Status
-  * [CHANGELOG.md](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/CHANGELOG.md)
+  * Subscribe / Unsubscribe to the mailing list of this Sub Project <https://lists.camaraproject.org/g/sp-icm>.
+  * A message to the community of this Sub Project can be sent using <sp-icm@lists.camaraproject.org>.
