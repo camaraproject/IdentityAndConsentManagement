@@ -20,11 +20,6 @@ Repository to describe, develop, document and test the Identity And Consent Mana
 * The latest public release of guidelines and documentation for CAMARA APIs is available [here](https://github.com/camaraproject/IdentityAndConsentManagement/releases/latest).
 * For previous releases, pre-releases and changes see [CHANGELOG.md](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/CHANGELOG.md)
 
-## Status and released versions
-
-* The latest public release of guidelines and documentation for CAMARA APIs is available [here](https://github.com/camaraproject/IdentityAndConsentManagement/releases/latest).
-* For previous releases, pre-releases and changes see [CHANGELOG.md](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/CHANGELOG.md)
-
 ## Contributing
 * Meetings
   * Bi-weekly Wednesday, 16:00 CEST (14:00 UTC during European daylight saving time)
