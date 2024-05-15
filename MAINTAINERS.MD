@@ -1,12 +1,12 @@
-| Org                    | Name                                                |
-| -----------------------| ----------------------------------------------------|
-| Deutsche Telekom | Shilpa Padgaonkar |
-| Deutsche Telekom | Dawid Wroblewski |
-| GSMA | Mark Cornall |
-| Telefonica | Jose A Ordonez Lucena |
-| Telefonica | Diego Gonzalez |
-| Vodafone | Eric Murray |
-| Verizon | Syed Rehman |
-| Vonage | Chris Howell |
-| Ericson | Jan Friman |
-| Vodafone | Sachin Kumar |
+| Org                    | Name                     | GitHub                    |
+| -----------------------| -------------------------|---------------------------|
+| Deutsche Telekom | Shilpa Padgaonkar | shilpa-padgaonkar |
+| Deutsche Telekom | Axel Nennker | AxelNennker |
+| GSMA | Mark Cornall | MarkCornall |
+| Telefonica | Jesus Peña García-Oliva | jpengar |
+| Telefonica | Diego Gonzalez | diegogonmar |
+| Vodafone | Eric Murray | eric-murray |
+| Verizon | Syed Rehman | SyeddR |
+| Vonage | Chris Howell | chrishowell |
+| Ericson | Jan Friman | FrimanJan |
+| Vodafone | Sachin Kumar | sachinvodafone |
