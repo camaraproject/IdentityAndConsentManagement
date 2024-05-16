@@ -10,3 +10,4 @@
 | Vonage | Chris Howell | chrishowell |
 | Ericson | Jan Friman | FrimanJan |
 | Vodafone | Sachin Kumar | sachinvodafone |
+| Orange | Sébastien Dewet | sebdewet |
