@@ -67,11 +67,11 @@ The purpose definition (naming + description) and format for CAMARA follows the 
 
 ### Applying purpose concept in the authorization request
 
-The mechanism for applying the concept of purpose in the authorization request in CAMARA is by using the standard `scope` parameter as defined in [Purpuse as a scope](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-Security-Interoperability.md#purpose-as-a-scope) section of the CAMARA Security and Interoperability Profile.
+The mechanism for applying the concept of purpose in the authorization request in CAMARA is by using the standard `scope` parameter as defined in [Purpose as a scope](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-Security-Interoperability.md#purpose-as-a-scope) section of the CAMARA Security and Interoperability Profile.
 
 ## User Authentication/Authorization & Consent Management
 
-**NOTE: CAMARA User Authentication/Authorization & Consent Management follows [the CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-Security-Interoperability.md) technical specification**
+**CAMARA User Authentication/Authorization & Consent Management follows [the CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-Security-Interoperability.md) technical specification**
 
 ### Authorization flows / grant types
 
@@ -202,7 +202,7 @@ box Operator
 end
 
 Note over FE,BE: Feature needing<br>Operator Capability  
-Note over BE: Select User Identifier:<br> Ip:port / MSISDN  
+Note over BE: Select User Identifier:<br> Ip:port / Phone Number  
 
 alt OIDC Client-Initiated Backchannel Authentication (CIBA) Standard Flow between Invoker and Operator.
   BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope=dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint including User Identifier    
