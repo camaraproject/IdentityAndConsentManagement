@@ -205,9 +205,10 @@ Please refer to [Authentication Error Response](https://openid.net/specs/openid-
 
 If "openid" is missing in the scope value but a claim that is [standardized in OIDC](https://openid.net/specs/openid-connect-core-1_0.html#Claims) is requested, then the Authorization Server returns an HTTP response code of 400 (Bad Request) and an error invalid_request.
 
-Clients SHOULD follow the OIDC standard and SHOULD include `openid` in the list of requested scopes.
-Without id token there is no `sub` field and the privacy features of OIDC are severely crippled. 
-Globally unique identifiers, like the MSISDN, should be avoided for privacy reasons.
+Clients SHOULD follow the OIDC and CIBA standard and SHOULD include `openid` in the list of requested scopes.
+The [id token](https://openid.net/specs/openid-connect-core-1_0.html#IDToken) contains the `sub` field which is the identifier of the subject of the [OIDC authorization code](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) request respectively the [CIBA authentication request](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#auth_request). 
+
+The Camary authorization server creates the `sub` value. Globally unique identifiers, like the MSISDN, should be avoided for privacy reasons.
 
 ## Purpose
 
