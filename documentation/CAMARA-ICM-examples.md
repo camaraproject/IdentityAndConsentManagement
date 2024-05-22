@@ -32,7 +32,35 @@ GET /authorize?
     &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb HTTP/1.1
 Host: server.example.com
 ```
+#### Successful response redirecting the user agent 
+(with line wraps within values for display purposes only)
 
+HTTP/1.1 302 Found 
+Location: https://client.example.com/cb?
+code=SplxlOBeZQQYbYS6WxSbIA&
+state=af0ifjsldkj
+
+#### Access token request
+
+POST /token HTTP/1.1 
+Host: server.example.com 
+Content-Type: application/x-www-form-urlencoded 
+grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA
+    &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
+    &client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer
+    &client_assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi......
+
+#### Successful response
+HTTP/1.1 200 OK
+Content-Type: application/json
+{
+  "access_token": "SlAV32hkKG",
+  "token_type": "Bearer",
+  "refresh_token": "8xLOxBtZp8",
+  "expires_in": 3600,
+  "id_token": "eyJhbGciOiJSUz....",
+  "scope": "openid dpv:FraudPreventionAndDetection sim-swap:check sim-swap:retrieve-date"
+}
 #### RFC9101 request object with one purpose as scope
 
 ```
