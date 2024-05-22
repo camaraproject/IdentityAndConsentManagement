@@ -181,7 +181,9 @@ Host: server.example.com
   "scope": "openid",
   "state": "af0ifjsldkj",
   "nonce": "n-0S6_WzA2Mj",
-  "max_age": 86400
+  "max_age": 86400,
+  "exp": 1419356238,
+  "iat": 1419350238
 }
 ```
 
