@@ -208,7 +208,7 @@ If "openid" is missing in the scope value but a claim that is [standardized in O
 Clients SHOULD follow the OIDC and CIBA standard and SHOULD include `openid` in the list of requested scopes.
 The [id token](https://openid.net/specs/openid-connect-core-1_0.html#IDToken) contains the `sub` field which is the identifier of the subject of the [OIDC authorization code](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) request respectively the [CIBA authentication request](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#auth_request). 
 
-The Camary authorization server creates the `sub` value. Globally unique identifiers, like the MSISDN, should be avoided for privacy reasons.
+The Camara authorization server creates the `sub` value. Globally unique identifiers, like the MSISDN, should be avoided for privacy reasons.
 
 ## Purpose
 
