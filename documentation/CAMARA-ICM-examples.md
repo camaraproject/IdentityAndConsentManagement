@@ -107,9 +107,9 @@ POST /bc-authorize HTTP/1.1
    Host: server.example.com
    Content-Type: application/x-www-form-urlencoded
 
-   scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date&
-   client_notification_token=8d67dc78-7faa-4d41-aabd-67707b374255&
-   login_hint=tel%3A%2B34666666666
+scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date&
+client_notification_token=8d67dc78-7faa-4d41-aabd-67707b374255&
+login_hint=tel%3A%2B34666666666
 ```
 
 
