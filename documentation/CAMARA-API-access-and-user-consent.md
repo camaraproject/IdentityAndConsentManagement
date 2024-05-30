@@ -11,10 +11,7 @@ This document defines guidelines for telco operator exposure platforms to manage
   - [Purposes](#purposes)
     - [Purpose definition](#purpose-definition)
     - [Applying purpose concept in the authorization request](#applying-purpose-concept-in-the-authorization-request)
-  - [User Identity](#user-identity)
   - [User Authentication/Authorization \& Consent Management](#user-authenticationauthorization--consent-management)
-    - [Authentication mechanism/s](#authentication-mechanisms)
-    - [Consent capture and storage](#consent-capture-and-storage)
     - [Authorization flows / grant types](#authorization-flows--grant-types)
       - [Authorization code flow (Frontend flow)](#authorization-code-flow-frontend-flow)
       - [CIBA flow (Backend flow)](#ciba-flow-backend-flow)
@@ -29,9 +26,9 @@ This document defines guidelines for telco operator exposure platforms to manage
 
 Some APIs process personal information and require a “legal basis” to do so (e.g. “legitimate interest”, “contract”, “consent”, etc). Telco operator exposure platforms implementing CAMARA should be built with a privacy-by-design approach to fully comply with data protection regulations, such as the [GDPR regulation](https://gdpr-info.eu/) in Europe, to protect user privacy. This means that a CAMARA API exposed to capability consumers that processes personal data may require user consent (explicit user opt-in), depending on the "legal basis" for processing that data. This consent is given by users to legal entities to process personal data under a specific purpose.
 
-CAMARA API access will be secured using [OpenID Connect](https://openid.net/connect/) on top of OAuth 2.0 protocol. This document defines guidelines for operator exposure platform to manage CAMARA API access and user consent to comply with GDPR or equivalent requirements in an easy way, introducing the concept of "purpose" in CAMARA APIs access. Even being defined based on concepts that maps to GDPR regulation, proposed solution and concepts are generic enough to be used by operators on any country.
+**CAMARA API access will be secured using [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) (OIDC) on top of [OAuth 2.0 protocol](https://datatracker.ietf.org/doc/html/rfc6749) following [the CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-Security-Interoperability.md)**. This document defines guidelines for operator exposure platform to manage CAMARA API access and user consent to comply with GDPR or equivalent requirements in an easy way, introducing the concept of "purpose" in CAMARA APIs access. Even being defined based on concepts that maps to GDPR regulation, proposed solution and concepts are generic enough to be used by operators on any country.
 
-The document details aspects regarding CAMARA APIs access and the user consent management, which includes following concepts:
+The document covers aspects regarding CAMARA APIs access and the user consent management, which includes following concepts:
 
 - User identity. How to identify the user.
 - User authentication and authorization. How to authenticate the user and how to authorize access to CAMARA APIs.
@@ -40,8 +37,6 @@ The document details aspects regarding CAMARA APIs access and the user consent m
 - Policy enforcement to validate existence and validity of consent before authorizing access to a (set of) resources.
 - User consent revocation.
 - Flows detailing CAMARA APIs access and how consent can be collected from the user without degrading the user experience while using a third-party service in an application.
-
->[TO BE EDITED/COMPLETED]
 
 ## Glossary of Terms and Concepts
 
@@ -64,78 +59,31 @@ The list below introduces several key concepts:
 - `3-legged access token`: Access tokens are created by the authorization server to be used by the client at the resource server. If the authorization server authenticates the user and potentially asks for their consent for the API access, then the acccess token is called a 3-legged access token, because of the three involved parties: user (the resource owner), authorization server (operator, i.e. service provider), and the client (third-party application). Typically 3-legged access tokens are created in CAMARA through OIDC Authorization Code flow or CIBA.
 - `2-legged access token`: Unlike the 3-legged access token, which involves user interaction, the 2-legged access token involves only the client and the authorization server, not the user. It is a server-to-server communication, and the authorization server neither authenticates the user nor is the user asked for their consent.
 
->[TO BE EDITED/COMPLETED]
-
 ## Purposes
 
-A purpose declares what the application intends to do with a set of personal information resources...
-
->[TO BE EDITED/COMPLETED]
+A purpose declares what the application intends to do with a set of personal information resources and it must be declared when accessing the CAMARA APIs if the user's personal data is processed. The purpose is a key concept in the context of data protection regulations, such as the GDPR, and it is used to ensure that the user is aware of the processing of their personal information and can exercise their rights.
 
 ### Purpose definition
 
->[TO BE EDITED/COMPLETED] - purpose definition (naming + description) and format. Data privacy vocabulary: https://www.w3.org/community/dpvcg/​ | https://w3c.github.io/dpv/dpv/#vocab-purpose
+The purpose definition (naming + description) and format for CAMARA follows the W3C [Data Privacy Vocabulary](https://www.w3.org/community/dpvcg/)​ (DPV). The way in which purposes are organised within the DPV is specified in [Purpose taxonomy in DPV](https://w3c.github.io/dpv/dpv/#vocab-purposes).
 
 ### Applying purpose concept in the authorization request
 
-A purpose must be declared within the requested scope for the following grant types:
-- authorization_code
-- urn:openid:params:grant-type:ciba
-
-No purpose is required for the client_credentials grant type, as this grant type can only be used when no personal user data is processed. The requested scope must be set directly to the value defined for the relevant endpoint within the OAS ("YAML") specification. "Wild card" scopes (i.e. specifying only the API name) are not valid for this grant type.
-
-In order to declare a purpose when accessing the CAMARA APIs, it is strongly recommended that the `scope' parameter is set to:
-
-`dpv:<dpvValue>#<technicalParameter>`
-
-- `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
-- `<technicalParameter>` must be either:
-  - one **technical scope** to limit the request to one API endpoint (this technical scope is described in the API spec YAML file)
-  - one **API name** to cover the complete API (This API name is not described in the API spec YAML file as technical scope) – In this case the request covers all technical scopes of the API.
-
-<br>
-
-The examples are provided below:
-
-Strong recommendation for format samples:
-
-```
-dpv:FraudPreventionAndDetection#retrieve-sim-swap-date
-
-dpv:FraudPreventionAndDetection#check-sim-swap
-
-dpv:FraudPreventionAndDetection#sim-swap (*)
-```
-_(*)Use api name when all scopes are included_
-
-Strongly discourage the below formats and they do not guarantee interoperability:
-
-```
-dpv:FraudPreventionAndDetection#scope1 (legal-base1) scope2 (legal-base2)
-dpv:FraudPreventionAndDetection#scope1 scope2 (one legal base)*
-```
-_(*)Can be re-opened as an issue later for discussion_
-
->NOTE: Purpose (dpv) to be added as custom claim and other such options for purpose will be discussed with OIDF after they have finalized the formal liaison with CAMARA. They will be asked to provide recommendation as a neutral and OIDF expert party here for this topic*.<br>
-(*)_Can be opened as an issue later_
-
-## User Identity
-
->[TO BE EDITED/COMPLETED] - User identification: Get an identifier for a user from some information. E.g.: IP, phone number, document number...
+The mechanism for applying the concept of purpose in the authorization request in CAMARA is by using the standard `scope` parameter as defined in [Purpose as a scope](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-Security-Interoperability.md#purpose-as-a-scope) section of the CAMARA Security and Interoperability Profile.
 
 ## User Authentication/Authorization & Consent Management
 
->[TO BE EDITED/COMPLETED] - The base standard is OpenID Connect (OIDC). <br>User authentication: Verify that the user is who they say they are. For example: IP/Network authentication, SMS OTP, User/Password, Push to operator application... it depends on the type of authorization (grant type) chosen according to the application use cases, integration model and requirements (B2B/B2C, via aggregator or not...).<br>User authorization: Verify access to the requested resource (OpenID Connect scope, purpose) through policies and rules... user consent is checked at this point as a pre-requisite before issuing an access token.
-
-### Authentication mechanism/s
-
->[TO BE EDITED/COMPLETED] - Authentication mechanism/s to be considered... E.g.: IP/Network authentication, SMS OTP, User/password, Push to operator application​...
-
-### Consent capture and storage
-
->[TO BE EDITED/COMPLETED] - Consent capture by operator and storage in operator (consent master).
+**CAMARA User Authentication/Authorization & Consent Management follows [the CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-Security-Interoperability.md) technical specification**
 
 ### Authorization flows / grant types
+
+This section describes the authorization flows that can be used to access CAMARA APIs:
+
+* Authorization code flow (Frontend flow) - 3-legged
+* CIBA flow (Backend flow) - 3-legged
+* Client Credentials - 2-legged
+
+It is important to remark that in cases where personal user data is processed by the API, and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of 3-legged access tokens becomes mandatory.
 
 #### Authorization code flow (Frontend flow)
 
@@ -151,10 +99,10 @@ box Operator
 end
 
 Note over FE,BE: Use Feature needing<br>Operator Capability  
-BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue>#35;<technicalParameter><br>&redirect_uri=invoker_callback...
+BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=invoker_callback...
 FE->>+FE: Browser /<br> Embedded Browser
 alt Standard OIDC Auth Code Flow between Invoker and API Exposure Platform
-  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue>#35;<technicalParameter><br>&redirect_uri=invoker_callback...
+  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=invoker_callback...
   Note over ExpO: API Exposure Platform applies<br>Network Based Authentication (amr=nba/mnba)
   ExpO->>ExpO: Network Based Authentication:<br>- map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc 
@@ -188,7 +136,7 @@ Note over BE,FE: Response
 
 First, the API invoker (which could potentially be the application backend, an aggregator, etc.) instructs the application frontend in the device to initiate the OIDC authorization code flow with the operator. The authorization request includes the client_id of the final application requesting access to the data and the application redirect_uri (invoker_callback) where the authorization code will be sent.
 
-As per the standard authorization code flow, the device application is redirected to the operator authorization endpoint in API exposure platform (Steps 1-2), providing a redirect_uri (invoker_callback) pointing to the invoker backend (where the auth code will eventually be sent), as well as the purpose for accessing the data.
+As per the standard authorization code flow, the device application is redirected to the operator authorization endpoint in API exposure platform (Steps 1-2), providing a redirect_uri (invoker_callback) pointing to the invoker backend (where the auth code will eventually be sent), as well as the purpose for accessing the data. NOTE: The way to declare a purpose when accessing the CAMARA APIs is defined in [the CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-Security-Interoperability.md#purpose-as-a-scope).
 
 The API exposure platform receives the request from the device application (Step 3) and does the following:
 
@@ -205,7 +153,7 @@ Then, two alternatives may occur:
 - The operator performs the consent capture following Section 3.1.2.4 of the OpenID Connect Core 1.0 specification. Since the authorization code grant involves the frontend, the consent can be captured directly from the user.
 - Once the user has given consent, the authorization code flow continues by redirecting to the API invoker redirect_uri (invoker_callback) and including the authorization code (OperatorCode).
 
-Once the API invoker receives the redirect with the authorization code (OperatorCode - Step 9), it will retrieve the access token from the operator's API exposure platform (OperatorAccessToken) (Steps 10-11). The OperatorAccessToken issued is encrypted so that no relevant information is exposed. If the user has not given consent, the access token will not contain the appropriate scopes, and if no other scopes are granted, the flow will fail.
+Once the API invoker receives the redirect with the authorization code (OperatorCode - Step 9), it will retrieve the access token from the operator's API exposure platform (OperatorAccessToken) (Steps 10-11). If the user has not given consent, the access token will not contain the appropriate scopes, and if no other scopes are granted, the flow will fail.
 
 Now the API invoker has a valid access token that can be used to invoke the CAMARA API offered by the operator (Step 12).
 
@@ -217,12 +165,11 @@ Finally, the operator will provide API response to the API invoker (Step 14).
 
 **Technical ruleset for the Frontend flow**
 
-The technical ruleset is applicable only after a subproject has agreed to use a 3-legged authentication flow. Every time personal user data is processed by an API and the user can exercise their rights either via opt-in and/or opt-out, 3-legged access tokens must be used. This ruleset provides a recommendation which will help API providers to align on the 3-legged flow and help with aggregation.
+_NOTE: The technical ruleset is applicable only after a subproject has agreed to use a 3-legged authentication flow. This ruleset provides a recommendation which will help API providers to align on the 3-legged flow and help with aggregation._
 
 If all API usecases point to the need of On-net scenario and where the consumption device and authentication device are the same, the Frontend flow should be used. eg. NumberVerification
 
 This flow is then applicable to On-net scenarios where the mobile connection of the device needs to be authenticated e.g. This flow is for example the one specified for the [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification/blob/main/documentation/API_documentation/assets/uml_v0.3.jpg) due to the nature of its functionality where a given MSISDN needs to be compared to the MSISDN associated with the mobile connection of the user device. 
-
 
 The device application (front-end) must be able to handle browser redirects.
 
@@ -257,10 +204,10 @@ box Operator
 end
 
 Note over FE,BE: Feature needing<br>Operator Capability  
-Note over BE: Select User Identifier:<br> Ip:port / MSISDN / other TBD  
+Note over BE: Select User Identifier:<br> Ip:port / Phone Number  
 
 alt OIDC Client-Initiated Backchannel Authentication (CIBA) Standard Flow between Invoker and Operator.
-  BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope=dpv:<purposeDpvValue>#35;<technicalParameter>",<br>login_hint including User Identifier    
+  BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope=dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint including User Identifier    
   ExpO->>ExpO: - Validate User Identifier<br>- (Opt) map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc  
   opt If User Consent is required for the legal basis of the purpose  
@@ -289,20 +236,7 @@ Note over BE,FE: Response
 
 First, the API invoker (which could potentially be the application backend, an aggregator, etc.) requests a 3-legged access token to the operator API exposure platform. The process follows the OpenID Connect [Client-Initiated Backchannel Authentication (CIBA)](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html) flow.
 
-The API invoker has to provide in the authorization request (/bc_authorize) a login_hint with a valid user identifier together with the application credentials (the client_id of the final application requesting access to the data) and indicate the purpose for accessing the data (Step 1): 
-
-- One option for the identifier is the public IP and (optionally – when applicable) port of the application. Other options could be the MSISDN or other identifiers. NOTE: In IoT scenarios or, in general, in those cases where the consumption device is different than the authorization device, the IP and port is the one of the consumption device for which the network capabilities will be requested/applied.
-- The login_hint is a hint regarding the user for whom authentication is being requested. It has the format `<type>:<identifier>`, for instance, "ipport:" for IP addresses or "tel:+" for phone numbers. A login_hint example for MSISDN "+346xxxyyyzzz" looks like:
-
-    ```
-    POST /bc-authorize HTTP/1.1
-    Authorization: Basic {Credentials}
-    Content-Type: application/x-www-form-urlencoded
-
-    login_hint=tel%3A%2B346xxyyyzzz&
-    … 
-    ```
-- Purpose under which the personal data associated to API consumption will be processed.
+The API invoker has to provide in the authorization request (/bc_authorize) a login_hint with a valid user identifier together with the application credentials (the client_id of the final application requesting access to the data) and indicate the purpose for accessing the data (Step 1). The login_hint possible values and format for CAMARA and the way to declare a purpose when accessing the CAMARA APIs is defined in [the CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-Security-Interoperability.md).
 
 The operator's API exposure platform will:
 
@@ -335,7 +269,7 @@ Then, the API invoker polls the token endpoint by making an "HTTP POST" request 
     }
     ```
 - When this response is received, the API invoker must wait the seconds of the `interval` value received in the CIBA authorization endpoint and then repeat the request until a final response is received.
-- Once the user has granted consent, the API exposure platform operator will provide the access token (OperatorAccessToken) to the API invoker (Step 8). The OperatorAccessToken issued will be encrypted so no relevant information is disclosed.
+- Once the user has granted consent, the API exposure platform operator will provide the access token (OperatorAccessToken) to the API invoker (Step 8).
 
 <br>
 
@@ -349,7 +283,7 @@ The operator will provide the API response to the API invoker (Step 11).
 
 **Technical ruleset for the Backend flow**
 
-The technical ruleset is applicable only after a subproject has agreed to use a 3-legged authentication flow. Every time personal user data is processed by an API and the user can exercise their rights either via opt-in and/or opt-out, 3-legged access tokens must be used. This ruleset provides a recommendation which will help API providers to align on the 3-legged flow and help with aggregation. 
+_NOTE: The technical ruleset is applicable only after a subproject has agreed to use a 3-legged authentication flow. This ruleset provides a recommendation which will help API providers to align on the 3-legged flow and help with aggregation._ 
 
 If some usecase/s for an API point to off-net scenarios and where consumption and authentication devices could be different, the Backend flow should be used.
 
@@ -371,9 +305,7 @@ If some usecase/s for an API point to off-net scenarios and where consumption an
 
 #### Client Credentials
 
-The Client Credentials grant type is used to obtain a 2-legged access_token that does not represent a user. This grant type can only be used when no personal user data is processed, and it is only a valid option to access the CAMARA APIs for these specific scenarios. 
-
-More details about the standard flow can be found in the official IETF specification [The OAuth 2.0 Authorization Framework](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4).
+The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) grant type is used to obtain a 2-legged access_token that does not represent a user. More details about what CAMARA defines for this grant type and it's usage can be found in the [CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-Security-Interoperability.md).
 
 ## CAMARA API Specification - Authorization and authentication common guidelines
 
@@ -383,8 +315,6 @@ CAMARA guidelines define a set of authorization flows which can grant API Consum
 Which specific authorization flows are to be used will be determined during the onboarding process, happening between the API Consumer (the direct API invoker) and the API producer exposing the API. When API access for an API consumer is ordered,  the declared purpose for accessing the API can be taken into account. This is also being subject to the prevailing legal framework dictated by local legislation and eventually also considers the capabilities of the application (frontend and backend) ultimately involved in the API invocation flow. 
 The authorization flow to be used will therefore be settled when the API access is ordered. 
 The API Consumer is expected to initiate the negotiated authorization flow when requesting ID & access tokens. The AuthZ server is responsible to validate that the authorization flow negotiated between API Invoker and API producer for this application, purpose, API/data scopes is applied.
-
-
 
 ### Use of openIdConnect for `securitySchemes`
 
