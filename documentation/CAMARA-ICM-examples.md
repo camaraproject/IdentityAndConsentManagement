@@ -109,16 +109,7 @@ POST /bc-authorize HTTP/1.1
 
    scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date&
    client_notification_token=8d67dc78-7faa-4d41-aabd-67707b374255&
-   binding_message=W4SCT&
-   login_hint=tel%3A%2B34666666666&
-   client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3A
-   client-assertion-type%3Ajwt-bearer&
-   client_assertion=eyJraWQiOiJsdGFjZXNidyIsImFsZyI6IkVTMjU2In0.eyJ
-   pc3MiOiJzNkJoZFJrcXQzIiwic3ViIjoiczZCaGRSa3F0MyIsImF1ZCI6Imh0dHB
-   zOi8vc2VydmVyLmV4YW1wbGUuY29tIiwianRpIjoiYmRjLVhzX3NmLTNZTW80RlN
-   6SUoyUSIsImlhdCI6MTUzNzgxOTQ4NiwiZXhwIjoxNTM3ODE5Nzc3fQ.Ybr8mg_3
-   E2OptOSsA8rnelYO_y1L-yFaF_j1iemM3ntB61_GN3APe5cl_-5a6cvGlP154XAK
-   7fL-GaZSdnd9kg
+   login_hint=tel%3A%2B34666666666
 ```
 
 
