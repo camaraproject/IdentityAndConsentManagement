@@ -39,8 +39,6 @@ Host: server.example.com
 
 See [OIDC Successful Authentication Response](https://openid.net/specs/openid-connect-core-1_0.html#AuthResponse)
 
-(with line wraps within values for display purposes only)
-
 ```
 HTTP/1.1 302 Found 
 Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA&state=af0ifjsldkj
