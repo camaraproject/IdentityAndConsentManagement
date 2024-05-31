@@ -80,24 +80,6 @@ Content-Type: application/json
 }
 ```
 
-#### RFC9101 request object with one purpose as scope
-
-```
-{
-  "iss": "s6BhdRkqt3",
-  "aud": "https://server.example.com",
-  "response_type": "code",
-  "client_id": "s6BhdRkqt3",
-  "redirect_uri": "https://client.example.org/cb",
-  "scope": "openid dpv:FraudPreventionAndDetection sim-swap:check sim-swap:retrieve-date",
-  "state": "af0ifjsldkj",
-  "nonce": "n-0S6_WzA2Mj",
-  "max_age": 86400,
-  "exp": 1419356238,
-  "iat": 1419350238
-}
-```
-
 #### CIBA authentication request with one purpose and two scopes
 
 See [CIBA authentication request](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.7.1)
