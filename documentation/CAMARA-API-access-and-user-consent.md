@@ -17,7 +17,7 @@ This document defines guidelines for telco operator exposure platforms to manage
       - [CIBA flow (Backend flow)](#ciba-flow-backend-flow)
       - [Client Credentials](#client-credentials)
   - [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
-    - [Use of openIdConnect for `securitySchemes`](#use-of-openidconnect-for-securityschemes)
+    - [OpenAPI security schemes](#openapi-security-schemes)
     - [Use of `security` property](#use-of-security-property)
     - [Mandatory template for `info.description` in CAMARA API specs](#mandatory-template-for-infodescription-in-camara-api-specs)
 
@@ -316,9 +316,30 @@ Which specific authorization flows are to be used will be determined during the 
 The authorization flow to be used will therefore be settled when the API access is ordered. 
 The API Consumer is expected to initiate the negotiated authorization flow when requesting ID & access tokens. The AuthZ server is responsible to validate that the authorization flow negotiated between API Invoker and API producer for this application, purpose, API/data scopes is applied.
 
-### Use of openIdConnect for `securitySchemes`
+### OpenAPI security schemes
 
-In general, OpenID Connect is the protocol to be used for securitization. Each API specification must ONLY define the following openIdConnect entry in `securitySchemes`, as shown below:
+#### oauth2ClientCredentials
+
+Some Camara APIs, like [PopulationDensityData](https://github.com/camaraproject/PopulationDensityData), do not involve personal data and those APIs can use OAuth2 client credentials using the following security scheme:
+
+```
+components:
+  securitySchemes:
+    oauth2ClientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.example.com/oauth/token
+          scopes: {}
+```
+
+The value for `tokenUrl` in the CAMARA spec is an example, that must be substituted by the specific token url.
+
+Specific authentication schemes are defined in [Camara Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-API-access-and-user-consent.md).
+
+#### openIdConnect
+
+OpenID Connect is the protocol to be used for authenticatoin and consent collection. Each API that involves personal information must define the following openIdConnect entry in `securitySchemes` in its OpenAPI yam file, as shown below:
 
 ```
 components:
@@ -333,6 +354,8 @@ The value for `openIdConnectUrl` in the CAMARA spec is an example, that must be 
 ### Use of `security` property
 
 Generally, each operation is protected by a scope and it will include a security property with a single element in the array:
+
+Example how to use the `openId`security scheme:
 
 ```
 paths:
