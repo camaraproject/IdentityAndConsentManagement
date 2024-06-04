@@ -9,7 +9,7 @@ Access tokens content or structure are not part of the OAuth2 nor the OIDC stand
 `scope` and all other fields are optional. [JSON Web Token](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) defines some common claims.
 RFC7662 response values serve as an **example** how an access token might look like. These access tokens might contain additional fields carrying what Camara needs regarding "purpose"
 
-The scope `openid` is needed only in the request to specify that the request is an OpenId request. The scope `openid` is not needed in the access token.
+The `openid` scope is needed in the request to specify that the request is an OpenID Connect request. However, there is no explicit requirement to include the `openid` scope in the response.
 
 ---
 **Note**
