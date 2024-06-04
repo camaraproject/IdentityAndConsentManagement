@@ -339,7 +339,7 @@ Specific authentication schemes are defined in [Camara Security and Interoperabi
 
 #### openIdConnect
 
-OpenID Connect is the protocol to be used for authenticatoin and consent collection. Each API that involves personal information must define the following openIdConnect entry in `securitySchemes` in its OpenAPI yam file, as shown below:
+OpenID Connect is the protocol to be used for authentication and consent collection. Each API that involves personal information must define the following openIdConnect entry in `securitySchemes` in its OpenAPI yam file, as shown below:
 
 ```
 components:
