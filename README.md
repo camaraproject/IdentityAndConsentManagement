@@ -5,6 +5,7 @@
 <a href="https://github.com/camaraproject/IdentityAndConsentManagement" title="Repo Size"><img src="https://img.shields.io/github/repo-size/camaraproject/IdentityAndConsentManagement?style=plastic"></a>
 <a href="https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/LICENSE" title="License"><img src="https://img.shields.io/badge/License-Apache%202.0-green.svg?style=plastic"></a>
 <a href="https://github.com/camaraproject/IdentityAndConsentManagement/releases/latest" title="Latest Release"><img src="https://img.shields.io/github/release/camaraproject/IdentityAndConsentManagement?style=plastic"></a>
+<img src="https://img.shields.io/badge/Working%20Group-red">
 
 # Identity And Consent Management
 Repository to describe, develop, document and test the Identity And Consent Management for CAMARA APIs
@@ -24,5 +25,5 @@ Repository to describe, develop, document and test the Identity And Consent Mana
    * Schedule: Bi-weekly Wednesday, 16:00 CEST (14:00 UTC during European daylight saving time)
   * Minutes: Access [meeting minutes](https://wiki.camaraproject.org/x/2QBFAQ).
 * Maling List
-  * Subscribe / Unsubscribe to the mailing list of this Sub Project <https://lists.camaraproject.org/g/sp-icm>.
-  * A message to the community of this Sub Project can be sent using <sp-icm@lists.camaraproject.org>.
+  * Subscribe / Unsubscribe to the mailing list of this Sub Project <https://lists.camaraproject.org/g/wg-icm>.
+  * A message to the community of this Sub Project can be sent using <wg-icm@lists.camaraproject.org>.
