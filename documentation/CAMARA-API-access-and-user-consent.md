@@ -113,15 +113,15 @@ alt Standard OIDC Auth Code Flow between Invoker and API Exposure Platform
     ExpO-->>FE: 302<br>Location: invoker_callback?code=Operatorcode
   else If Consent is NOT granted - Consent Capture within AuthCode Flow  
     Note over FE,ExpO: Start user consent capture process<br>following Section 3.1.2.4 of the OIDC Core 1.0 spec.    
-    ExpO-->>FE: 302<br>Location: aggregator_callback?code=Operatorcode 
+    alt If the user refuses consent
+      ExpO-->>FE: 400 Bad Request <br> {error: access_denied}
+    else If the user grants consent
+      ExpO-->>FE: 302<br>Location: invoker_callback?code=Operatorcode
+    end
   end
   FE-->>-BE: GET invoker_callback?code=OperatorCode
   BE->>ExpO: POST /token<br> code=OperatorCode
-  alt If Consent is Granted or Consent not needed for legal basis
-    ExpO->>BE: 200 OK <br> {OperatorAccessToken}
-  else If Consent is NOT granted - Flow fails if there is no other granted scope
-    ExpO->>BE: 400 Bad Request <br> {error: invalid_request}
-  end
+  ExpO->>BE: 200 OK <br> {OperatorAccessToken}
 end
 
 BE->>ExpO: Access Operator CAMARA API <br> Authorization: Bearer {OperatorAccessToken}        
@@ -153,13 +153,13 @@ Then, two alternatives may occur:
 - The operator performs the consent capture following Section 3.1.2.4 of the OpenID Connect Core 1.0 specification. Since the authorization code grant involves the frontend, the consent can be captured directly from the user.
 - Once the user has given consent, the authorization code flow continues by redirecting to the API invoker redirect_uri (invoker_callback) and including the authorization code (OperatorCode).
 
-Once the API invoker receives the redirect with the authorization code (OperatorCode - Step 9), it will retrieve the access token from the operator's API exposure platform (OperatorAccessToken) (Steps 10-11). If the user has not given consent, the access token will not contain the appropriate scopes, and if no other scopes are granted, the flow will fail.
+Once the API invoker receives the redirect with the authorization code (OperatorCode - Steps 9-10), it will retrieve the access token from the operator's API exposure platform (OperatorAccessToken) (Steps 11-12).
 
-Now the API invoker has a valid access token that can be used to invoke the CAMARA API offered by the operator (Step 12).
+Now the API invoker has a valid access token that can be used to invoke the CAMARA API offered by the operator (Step 13).
 
-The operator's API exposure platform will validate OperatorAccessToken, grant the access to the API based on the scopes bound to the access token, progress request to the corresponding API backend and retrieve the API response (Step 13).
+The operator's API exposure platform will validate OperatorAccessToken, grant the access to the API based on the scopes bound to the access token, progress request to the corresponding API backend and retrieve the API response (Step 14).
 
-Finally, the operator will provide API response to the API invoker (Step 14).
+Finally, the operator will provide API response to the API invoker (Step 15).
 
 <br>
 
