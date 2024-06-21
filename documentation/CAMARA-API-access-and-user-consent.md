@@ -140,7 +140,7 @@ As per the standard authorization code flow, the device application is redirecte
 
 The API exposure platform receives the request from the device application (Step 3) and does the following:
 
-- Use network based authentication mechanism to obtain the subscription identifier, i.e.: MSISDN or IMSI. Set the id_token sub to some unique user ID and associate the sub with the access token. The id_token sub SHOULD not reveal information to the API consumer that they not already know, e.g. using the MSISDN as a sub might violate privacy. (Step 4).
+- Use network based authentication mechanism to obtain the subscription identifier,e.g.: phone number or IMSI. Set the id_token sub to some unique user ID and associate the sub with the access token. The id_token sub SHOULD NOT reveal information to the API consumer that they not already know, e.g. using the MSISDN as a sub might violate privacy. (Step 4).
 
 - Check if user consent is required, which depends on the legal basis associated with the purpose ("legitimate interest", "contract", "consent", etc). If necessary, it will check in the operator's consent master whether user consent has already been given for this identifier, the application client_id and the requested purpose (Steps 5-6).
 
