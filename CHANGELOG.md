@@ -2,7 +2,7 @@
 
 ## Table of Contents
 
-- [v0.2.0-rc1](#v020-rc)
+- [v0.2.0-rc.1](#v020-rc1)
 - [v0.1.0 - Initial version](#v010---initial-version)
 
 # v0.2.0-rc.1
