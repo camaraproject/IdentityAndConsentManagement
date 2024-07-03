@@ -12,7 +12,7 @@
 ## Please note:
 
 * The working group agreed to proceed directly with a **Release Candidate** version, bypassing the **ALPHA** release, given the stability and closed scope of the 0.2.0 release.
-* The content of the release includes the "Identity And Consent Management" approved deliverables in **[documentation](https://github.com/camaraproject/IdentityAndConsentManagement/tree/release-0.2.0-rc/documentation)** folder.
+* The content of the release includes the "Identity And Consent Management" approved deliverables in **[documentation](https://github.com/camaraproject/IdentityAndConsentManagement/tree/v0.2.0-rc.1/documentation)** folder.
 * The document [Authentication and Authorization Concept for Service APIs](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.1.0/documentation/CAMARA-AuthN-AuthZ-Concept.md) is part of the 0.1.0 release. **It is deprecated**. It will be removed after the 0.2.0 public release of "Identity and Consent Management".
 
 ### Main Changes
