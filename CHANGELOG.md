@@ -5,7 +5,7 @@
 - [v0.2.0-rc](#v020-rc)
 - [v0.1.0 - Initial version](#v010---initial-version)
 
-# v0.2.0-rc
+# v0.2.0-rc.1
 
 **This is the release candidate version for "Identity And Consent Management" release 0.2.0**
 
