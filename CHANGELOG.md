@@ -18,7 +18,7 @@
 ### Main Changes
 * Creation of the [CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/v0.2.0-rc.1/documentation/CAMARA-Security-Interoperability.md) document.
 * Creation of the [Identity and Consent Management Examples](https://github.com/camaraproject/IdentityAndConsentManagement/blob/v0.2.0-rc.1/documentation/CAMARA-ICM-examples.md) document.
-* Aligment of the [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.2.0-rc/documentation/CAMARA-API-access-and-user-consent.md) document with the latest decisions of the working group in the new profile.
+* Aligment of the [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/v0.2.0-rc.1/documentation/CAMARA-API-access-and-user-consent.md) document with the latest decisions of the working group in the new profile.
 
 ### Added
 * Added paragraph describing the handling on authorization flow selection during API product ordering in the [`CAMARA-API-access-and-user-consent.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.2.0-rc/documentation/CAMARA-API-access-and-user-consent.md) document by @Elisabeth-Ericsson in https://github.com/camaraproject/IdentityAndConsentManagement/pull/120
