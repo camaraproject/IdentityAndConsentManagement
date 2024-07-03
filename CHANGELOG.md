@@ -16,7 +16,7 @@
 * The document [Authentication and Authorization Concept for Service APIs](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.1.0/documentation/CAMARA-AuthN-AuthZ-Concept.md) is part of the 0.1.0 release. **It is deprecated**. It will be removed after the 0.2.0 public release of "Identity and Consent Management".
 
 ### Main Changes
-* Creation of the [CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.2.0-rc/documentation/CAMARA-Security-Interoperability.md) document.
+* Creation of the [CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/v0.2.0-rc.1/documentation/CAMARA-Security-Interoperability.md) document.
 * Creation of the [Identity and Consent Management Examples](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.2.0-rc/documentation/CAMARA-ICM-examples.md) document.
 * Aligment of the [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.2.0-rc/documentation/CAMARA-API-access-and-user-consent.md) document with the latest decisions of the working group in the new profile.
 
