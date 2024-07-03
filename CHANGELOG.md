@@ -43,7 +43,7 @@
 * @AxelNennker made their first contribution in https://github.com/camaraproject/IdentityAndConsentManagement/pull/121
 * @hdamker made their first contribution in https://github.com/camaraproject/IdentityAndConsentManagement/pull/147
 
-**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/v0.1.0...v0.2.0-rc
+**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/v0.1.0...v0.2.0-rc.1
 
 
 # v0.1.0 - Initial version
