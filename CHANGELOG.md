@@ -32,7 +32,7 @@
 * Adapted the `info.description` template in [`CAMARA-API-access-and-user-consent.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/v0.2.0-rc.1/documentation/CAMARA-API-access-and-user-consent.md) document to "CAMARA Security and Interoperability Profile" by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/168
 
 ### Fixed
-* Restored [`CAMARA-AuthN-AuthZ-Concept.md`]((https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.1.0/documentation/CAMARA-AuthN-AuthZ-Concept.md)) document with deprecation disclaimer by @hdamker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/147
+* Restored [`CAMARA-AuthN-AuthZ-Concept.md`]((https://github.com/camaraproject/IdentityAndConsentManagement/blob/v0.2.0-rc.1/documentation/CAMARA-AuthN-AuthZ-Concept.md)) document with deprecation disclaimer by @hdamker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/147
 * Fixed Auth code flow error scenario when user refuses consent in [`CAMARA-API-access-and-user-consent.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.2.0-rc/documentation/CAMARA-API-access-and-user-consent.md) document by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/170.
 
 ### Removed
