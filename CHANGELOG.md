@@ -22,9 +22,9 @@
 
 ### Added
 * Added paragraph describing the handling on authorization flow selection during API product ordering in the [`CAMARA-API-access-and-user-consent.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/v0.2.0-rc.1/documentation/CAMARA-API-access-and-user-consent.md) document by @Elisabeth-Ericsson in https://github.com/camaraproject/IdentityAndConsentManagement/pull/120
-* Added the [`CAMARA-Security-Interoperability.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.2.0-rc/documentation/CAMARA-Security-Interoperability.md) profile document by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/121
-* Added the [`CAMARA-ICM-examples.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.2.0-rc/documentation/CAMARA-ICM-examples.md) document by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/148
-* Added 2-legged/3-legged access token definition to [`CAMARA-API-access-and-user-consent.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.2.0-rc/documentation/CAMARA-API-access-and-user-consent.md) document by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/162
+* Added the [`CAMARA-Security-Interoperability.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/v0.2.0-rc.1/documentation/CAMARA-Security-Interoperability.md) profile document by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/121
+* Added the [`CAMARA-ICM-examples.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/v0.2.0-rc.1/documentation/CAMARA-ICM-examples.md) document by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/148
+* Added 2-legged/3-legged access token definition to [`CAMARA-API-access-and-user-consent.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/v0.2.0-rc.1/documentation/CAMARA-API-access-and-user-consent.md) document by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/162
   
 ### Changed
 * Clarified resource server terminology by @Elisabeth-Ericsson in https://github.com/camaraproject/IdentityAndConsentManagement/pull/135
