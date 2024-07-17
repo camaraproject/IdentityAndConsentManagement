@@ -114,7 +114,7 @@ alt Standard OIDC Auth Code Flow between Invoker and API Exposure Platform
   else If Consent is NOT granted - Consent Capture within AuthCode Flow  
     Note over FE,ExpO: Start user consent capture process<br>following Section 3.1.2.4 of the OIDC Core 1.0 spec.    
     alt If the user refuses consent
-      ExpO-->>FE: 400 Bad Request <br> {error: access_denied}
+      ExpO-->>FE: 302<br>Location: invoker_callback?error=access_denied
     else If the user grants consent
       ExpO-->>FE: 302<br>Location: invoker_callback?code=Operatorcode
     end
