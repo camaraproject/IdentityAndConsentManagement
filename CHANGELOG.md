@@ -2,8 +2,38 @@
 
 ## Table of Contents
 
+- [r0.2.0-rc.2](#r020-rc2)
 - [v0.2.0-rc.1](#v020-rc1)
 - [v0.1.0 - Initial version](#v010---initial-version)
+
+# r0.2.0-rc.2
+
+**This is the second release candidate version for "Identity And Consent Management" release 0.2.0**
+
+## Please note:
+
+* This is a bugfix release.
+
+### Main Changes
+* Fixed the release tag according to Release Management Working Group guidelines.
+* Fixed typo in `access_denied` error for authentication code flow.
+
+### Added
+* N/A
+  
+### Changed
+* N/A
+
+### Fixed
+* Fix returned error in authentication code flow by @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/180
+
+### Removed
+* N/A
+
+## New Contributors
+* @garciasolero made their first contribution in https://github.com/camaraproject/IdentityAndConsentManagement/pull/180
+
+**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/v0.2.0-rc.1...r0.2.0-rc.2
 
 # v0.2.0-rc.1
 
