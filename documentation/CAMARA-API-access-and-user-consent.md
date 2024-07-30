@@ -1,4 +1,4 @@
-# CAMARA APIs access and user consent management
+# CAMARA APIs Access and User Consent Management
 
 This document defines guidelines for telco operator exposure platforms to manage CAMARA API access and user consent (when applicable).
 
@@ -13,7 +13,7 @@ This document defines guidelines for telco operator exposure platforms to manage
     - [Applying purpose concept in the authorization request](#applying-purpose-concept-in-the-authorization-request)
   - [User Authentication/Authorization \& Consent Management](#user-authenticationauthorization--consent-management)
     - [Authorization flows / grant types](#authorization-flows--grant-types)
-      - [Authorization code flow (Frontend flow)](#authorization-code-flow-frontend-flow)
+      - [Authorization Code Flow (Frontend Flow)](#authorization-code-flow-frontend-flow)
       - [CIBA flow (Backend flow)](#ciba-flow-backend-flow)
       - [Client Credentials](#client-credentials)
   - [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
@@ -79,13 +79,13 @@ The mechanism for applying the concept of purpose in the authorization request i
 
 This section describes the authorization flows that can be used to access CAMARA APIs:
 
-* Authorization code flow (Frontend flow) - 3-legged
+* Authorization Code Flow (Frontend Flow) - 3-legged
 * CIBA flow (Backend flow) - 3-legged
 * Client Credentials - 2-legged
 
 It is important to remark that in cases where personal user data is processed by the API, and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of 3-legged access tokens becomes mandatory.
 
-#### Authorization code flow (Frontend flow)
+#### Authorization Code Flow (Frontend Flow)
 
 ```mermaid
 sequenceDiagram
@@ -140,9 +140,9 @@ As per the standard authorization code flow, the device application is redirecte
 
 The API exposure platform receives the request from the device application (Step 3) and does the following:
 
-- Use network based authentication mechanism to obtain the subscription identifier,e.g.: phone number or IMSI. Set the id_token sub to some unique user ID and associate the sub with the access token. The id_token sub SHOULD NOT reveal information to the API consumer that they not already know, e.g. using the MSISDN as a sub might violate privacy. (Step 4).
+- Uses network based authentication mechanism to obtain the subscription identifier,e.g.: phone number or IMSI. Set the id_token sub to some unique user ID and associates the sub with the access token. The id_token sub SHOULD NOT reveal information to the API consumer that they not already know, e.g. using the MSISDN as a sub might violate privacy. (Step 4).
 
-- Check if user consent is required, which depends on the legal basis associated with the purpose ("legitimate interest", "contract", "consent", etc). If necessary, it will check in the operator's consent master whether user consent has already been given for this identifier, the application client_id and the requested purpose (Steps 5-6).
+- Checks if user consent is required, which depends on the legal basis associated with the purpose ("legitimate interest", "contract", "consent", etc). If necessary, it will check in the operator's consent master whether user consent has already been given for this identifier, the application client_id and the requested purpose (Steps 5-6).
 
 Then, two alternatives may occur:
 
@@ -343,7 +343,7 @@ paths:
         - openId:
             - {scope}
 ```
-The key is arbitrary in OAS, but convention in CAMARA is to name it `openId`. This key must be same defined in the `components.securitySchemes` section.
+The key is arbitrary in OAS, but the convention in CAMARA is to name it `openId`. This key must be same defined in the `components.securitySchemes` section.
 
 The {scope} is the specific scope defined to protect this operation.
 
