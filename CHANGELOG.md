@@ -15,17 +15,17 @@
 * This is a bugfix release.
 
 ### Main Changes
-* Fixed the release tag according to Release Management Working Group guidelines.
-* Fixed typo in `access_denied` error for authentication code flow.
+* Replaced link into main branch of Identity and Consent Management within "Authorization and authentication" text template (need to be applied to all APIs who have copied the template previously)
 
 ### Added
-* N/A
+* Replaced link into main branch of Identity and Consent Management within "Authorization and authentication" text template (need to be applied to all APIs who have copied the template previously) by @hdamker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/186
   
 ### Changed
 * N/A
 
 ### Fixed
 * Fix returned error in authentication code flow by @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/180
+* Fixed the release tag according to Release Management Working Group guidelines.
 
 ### Removed
 * N/A
