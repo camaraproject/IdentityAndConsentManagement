@@ -355,7 +355,7 @@ The documentation template below must be used as part of the API documentation i
 ```
 ### Authorization and authentication
 
-[Camara Security and Interoperability Profile](CAMARA-Security-Interoperability.md) provides details on how a client requests an access token.
+[Camara Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-Security-Interoperability.md) provides details on how a client requests an access token.
 
 Which specific authorization flows are to be used will be determined during onboarding process, happening between the API Client and the Telco Operator exposing the API, taking into account the declared purpose for accessing the API, while also being subject to the prevailing legal framework dictated by local legislation.
 
