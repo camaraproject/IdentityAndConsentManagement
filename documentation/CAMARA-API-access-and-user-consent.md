@@ -26,7 +26,7 @@ This document defines guidelines for telco operator exposure platforms to manage
 
 Some APIs process personal information and require a “legal basis” to do so (e.g. “legitimate interest”, “contract”, “consent”, etc). Telco operator exposure platforms implementing CAMARA should be built with a privacy-by-design approach to fully comply with data protection regulations, such as the [GDPR regulation](https://gdpr-info.eu/) in Europe, to protect user privacy. This means that a CAMARA API exposed to capability consumers that processes personal data may require user consent (explicit user opt-in), depending on the "legal basis" for processing that data. This consent is given by users to legal entities to process personal data under a specific purpose.
 
-**CAMARA API access will be secured using [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) (OIDC) on top of [OAuth 2.0 protocol](https://datatracker.ietf.org/doc/html/rfc6749) following [the CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsCAMARA-Security-Interoperability.md)**. This document defines guidelines for operator exposure platform to manage CAMARA API access and user consent to comply with GDPR or equivalent requirements in an easy way, introducing the concept of "purpose" in CAMARA APIs access. Even being defined based on concepts that maps to GDPR regulation, proposed solution and concepts are generic enough to be used by operators on any country.
+**CAMARA API access will be secured using [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) (OIDC) on top of [OAuth 2.0 protocol](https://datatracker.ietf.org/doc/html/rfc6749) following [the CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md)**. This document defines guidelines for operator exposure platform to manage CAMARA API access and user consent to comply with GDPR or equivalent requirements in an easy way, introducing the concept of "purpose" in CAMARA APIs access. Even being defined based on concepts that maps to GDPR regulation, proposed solution and concepts are generic enough to be used by operators on any country.
 
 The document covers aspects regarding CAMARA APIs access and the user consent management, which includes following concepts:
 
@@ -69,11 +69,11 @@ The purpose definition (naming + description) and format for CAMARA follows the 
 
 ### Applying purpose concept in the authorization request
 
-The mechanism for applying the concept of purpose in the authorization request in CAMARA is by using the standard `scope` parameter as defined in [Purpose as a scope](https://github.com/camaraproject/IdentityAndConsCAMARA-Security-Interoperability.md#purpose-as-a-scope) section of the CAMARA Security and Interoperability Profile.
+The mechanism for applying the concept of purpose in the authorization request in CAMARA is by using the standard `scope` parameter as defined in [Purpose as a scope](CAMARA-Security-Interoperability.md#purpose-as-a-scope) section of the CAMARA Security and Interoperability Profile.
 
 ## User Authentication/Authorization & Consent Management
 
-**CAMARA User Authentication/Authorization & Consent Management follows [the CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsCAMARA-Security-Interoperability.md) technical specification**
+**CAMARA User Authentication/Authorization & Consent Management follows [the CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md) technical specification**
 
 ### Authorization flows / grant types
 
@@ -136,7 +136,7 @@ Note over BE,FE: Response
 
 First, the API invoker (which could potentially be the application backend, an aggregator, etc.) instructs the application frontend in the device to initiate the OIDC authorization code flow with the operator. The authorization request includes the client_id of the final application requesting access to the data and the application redirect_uri (invoker_callback) where the authorization code will be sent.
 
-As per the standard authorization code flow, the device application is redirected to the operator authorization endpoint in API exposure platform (Steps 1-2), providing a redirect_uri (invoker_callback) pointing to the invoker backend (where the auth code will eventually be sent), as well as the purpose for accessing the data. NOTE: The way to declare a purpose when accessing the CAMARA APIs is defined in [the CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsCAMARA-Security-Interoperability.md#purpose-as-a-scope).
+As per the standard authorization code flow, the device application is redirected to the operator authorization endpoint in API exposure platform (Steps 1-2), providing a redirect_uri (invoker_callback) pointing to the invoker backend (where the auth code will eventually be sent), as well as the purpose for accessing the data. NOTE: The way to declare a purpose when accessing the CAMARA APIs is defined in [the CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md#purpose-as-a-scope).
 
 The API exposure platform receives the request from the device application (Step 3) and does the following:
 
@@ -236,7 +236,7 @@ Note over BE,FE: Response
 
 First, the API invoker (which could potentially be the application backend, an aggregator, etc.) requests a 3-legged access token to the operator API exposure platform. The process follows the OpenID Connect [Client-Initiated Backchannel Authentication (CIBA)](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html) flow.
 
-The API invoker has to provide in the authorization request (/bc_authorize) a login_hint with a valid user identifier together with the application credentials (the client_id of the final application requesting access to the data) and indicate the purpose for accessing the data (Step 1). The login_hint possible values and format for CAMARA and the way to declare a purpose when accessing the CAMARA APIs is defined in [the CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsCAMARA-Security-Interoperability.md).
+The API invoker has to provide in the authorization request (/bc_authorize) a login_hint with a valid user identifier together with the application credentials (the client_id of the final application requesting access to the data) and indicate the purpose for accessing the data (Step 1). The login_hint possible values and format for CAMARA and the way to declare a purpose when accessing the CAMARA APIs is defined in [the CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md).
 
 The operator's API exposure platform will:
 
@@ -305,7 +305,7 @@ If some usecase/s for an API point to off-net scenarios and where consumption an
 
 #### Client Credentials
 
-The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) grant type is used to obtain a 2-legged access_token that does not represent a user. More details about what CAMARA defines for this grant type and it's usage can be found in the [CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsCAMARA-Security-Interoperability.md).
+The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) grant type is used to obtain a 2-legged access_token that does not represent a user. More details about what CAMARA defines for this grant type and it's usage can be found in the [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md).
 
 ## CAMARA API Specification - Authorization and authentication common guidelines
 
@@ -355,7 +355,7 @@ The documentation template below must be used as part of the API documentation i
 ```
 ### Authorization and authentication
 
-[Camara Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsCAMARA-Security-Interoperability.md) provides details on how a client requests an access token.
+[Camara Security and Interoperability Profile](CAMARA-Security-Interoperability.md) provides details on how a client requests an access token.
 
 Which specific authorization flows are to be used will be determined during onboarding process, happening between the API Client and the Telco Operator exposing the API, taking into account the declared purpose for accessing the API, while also being subject to the prevailing legal framework dictated by local legislation.
 
