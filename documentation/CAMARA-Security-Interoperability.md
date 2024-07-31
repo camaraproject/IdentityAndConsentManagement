@@ -2,32 +2,36 @@
 
 ## Table of Contents
 
-   * [Introduction](#introduction)
-   * [Audience](#audience)
-   * [Conventions](#conventions)
-   * [General Considerations](#general-considerations)
-      + [Transport Security](#transport-security)
-   * [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
-      + [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
-   * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
-      + [Optional Parameters](#optional-parameters)
-      + [Authentication Request](#authentication-request)
-   * [Format of `login_hint`](#format-of-login_hint)
-   * [Offline Access](#offline-access)
-         - [Refresh Token Issuance](#refresh-token-issuance)
-      + [Refresh Token Usage](#refresh-token-usage)
-      + [Refresh Token Security](#refresh-token-security)
-   * [Client Credentials Flow](#client-credentials-flow)
-   * [Handling of acr_values](#handling-of-acr_values)
-   * [Access Token Request](#access-token-request)
-   * [The Scope Parameter](#the-scope-parameter)
-   * [Missing "openid" scope](#missing-openid-scope)
-   * [Purpose](#purpose)
-   * [ID Token](#id-token)
-      + [ID Token sub claim](#id-token-sub-claim)
-   * [Client Authentication](#client-authentication)
-   * [OpenId Foundation Certification](#openid-foundation-certification)
-   * [References](#references)
+- [CAMARA Security and Interoperability Profile](#camara-security-and-interoperability-profile)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Audience](#audience)
+  - [Conventions](#conventions)
+  - [General Considerations](#general-considerations)
+    - [Transport Security](#transport-security)
+  - [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
+    - [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
+  - [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
+    - [Optional Parameters](#optional-parameters)
+    - [Authentication Request](#authentication-request)
+  - [Format of `login_hint`](#format-of-login_hint)
+  - [Offline Access](#offline-access)
+      - [Refresh Token Issuance](#refresh-token-issuance)
+    - [Refresh Token Usage](#refresh-token-usage)
+    - [Refresh Token Security](#refresh-token-security)
+  - [Client Credentials Flow](#client-credentials-flow)
+  - [Handling of acr\_values](#handling-of-acr_values)
+  - [Access Token Request](#access-token-request)
+  - [The Scope Parameter](#the-scope-parameter)
+  - [Missing "openid" scope](#missing-openid-scope)
+  - [Purpose](#purpose)
+    - [Purpose as a scope](#purpose-as-a-scope)
+    - [Outlook on purpose-handling leveraging Rich Authorization Request](#outlook-on-purpose-handling-leveraging-rich-authorization-request)
+  - [ID Token](#id-token)
+    - [ID Token sub claim](#id-token-sub-claim)
+  - [Client Authentication](#client-authentication)
+  - [OpenId Foundation Certification](#openid-foundation-certification)
+  - [References](#references)
 
 <!-- TOC end -->
 
@@ -155,7 +159,7 @@ Considering [OAuth2 Refresh Token Protection](https://datatracker.ietf.org/doc/h
 
 ## Client Credentials Flow
 
-The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) grant type is used to obtain a 2-legged Access Token that does not represent a user. The grant-type can only be used if agreed between the API Client and the Telco Operator exposing the API, taking into account the declared purpose for accessing the API (cf. [CAMARA API Specification - Authorization and authentication common guidelines](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-API-access-and-user-consent.md#camara-api-specification---authorization-and-authentication-common-guidelines))
+The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) grant type is used to obtain a 2-legged Access Token that does not represent a user. The grant-type can only be used if agreed between the API Client and the Telco Operator exposing the API, taking into account the declared purpose for accessing the API (cf. [CAMARA API Specification - Authorization and authentication common guidelines](CAMARA-API-access-and-user-consent.md#camara-api-specification---authorization-and-authentication-common-guidelines)).
 
 ## Handling of acr_values
 
