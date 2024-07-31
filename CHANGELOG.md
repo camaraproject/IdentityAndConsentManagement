@@ -21,7 +21,9 @@
 * N/A
   
 ### Changed
+* Editorial changes to CAMARA-API-access-and-user-consent.md by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/183
 * Replaced link into main branch of Identity and Consent Management within "Authorization and authentication" text template (need to be applied to all APIs who have copied the template previously) by @hdamker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/186
+* Replace internal links between icm documents with relative links by @hdamker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/188
 
 ### Fixed
 * Fix returned error in authentication code flow by @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/180
