@@ -18,10 +18,10 @@
 * Replaced link into main branch of Identity and Consent Management within "Authorization and authentication" text template (need to be applied to all APIs who have copied the template previously)
 
 ### Added
-* Replaced link into main branch of Identity and Consent Management within "Authorization and authentication" text template (need to be applied to all APIs who have copied the template previously) by @hdamker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/186
+* N/A
   
 ### Changed
-* N/A
+* Replaced link into main branch of Identity and Consent Management within "Authorization and authentication" text template (need to be applied to all APIs who have copied the template previously) by @hdamker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/186
 
 ### Fixed
 * Fix returned error in authentication code flow by @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/180
