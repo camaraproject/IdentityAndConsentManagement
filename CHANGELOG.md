@@ -2,8 +2,40 @@
 
 ## Table of Contents
 
+- [r0.2.0-rc.2](#r020-rc2)
 - [v0.2.0-rc.1](#v020-rc1)
 - [v0.1.0 - Initial version](#v010---initial-version)
+
+# r0.2.0-rc.2
+
+**This is the second release candidate version for "Identity And Consent Management" release 0.2.0**
+
+## Please note:
+
+* This is a bugfix release.
+
+### Main Changes
+* Replaced link into main branch of Identity and Consent Management within "Authorization and authentication" text template (need to be applied to all APIs who have copied the template previously)
+
+### Added
+* N/A
+  
+### Changed
+* Editorial changes to CAMARA-API-access-and-user-consent.md by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/183
+* Replaced link into main branch of Identity and Consent Management within "Authorization and authentication" text template (need to be applied to all APIs who have copied the template previously) by @hdamker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/186
+* Replace internal links between icm documents with relative links by @hdamker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/188
+
+### Fixed
+* Fix returned error in authentication code flow by @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/180
+* Fixed the release tag according to Release Management Working Group guidelines.
+
+### Removed
+* N/A
+
+## New Contributors
+* @garciasolero made their first contribution in https://github.com/camaraproject/IdentityAndConsentManagement/pull/180
+
+**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/v0.2.0-rc.1...r0.2.0-rc.2
 
 # v0.2.0-rc.1
 
