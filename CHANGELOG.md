@@ -2,9 +2,54 @@
 
 ## Table of Contents
 
+- [r0.2.0](#r020)
 - [r0.2.0-rc.2](#r020-rc2)
 - [v0.2.0-rc.1](#v020-rc1)
 - [v0.1.0 - Initial version](#v010---initial-version)
+
+# r0.2.0
+
+**This is the public release of "Identity And Consent Management" version 0.2.0**
+
+## Please note:
+
+* The content of the release includes the "Identity And Consent Management" approved deliverables in **[documentation](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r0.2.0/documentation)** folder.
+* The document [Authentication and Authorization Concept for Service APIs](https://github.com/camaraproject/IdentityAndConsentManagement/blob/release-0.1.0/documentation/CAMARA-AuthN-AuthZ-Concept.md) was part of the 0.1.0 release. **It is deprecated** and it has been removed after this public release of "Identity and Consent Management" version 0.2.0.
+
+### Main Changes
+* Creation of the [CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0/documentation/CAMARA-Security-Interoperability.md) document.
+* Creation of the [Identity and Consent Management Examples](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0/documentation/CAMARA-ICM-examples.md) document.
+* Aligment of the [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0/documentation/CAMARA-API-access-and-user-consent.md) document with the latest decisions of the working group in the new profile.
+
+### Added
+* Added paragraph describing the handling on authorization flow selection during API product ordering in the [`CAMARA-API-access-and-user-consent.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0/documentation/CAMARA-API-access-and-user-consent.md) document by @Elisabeth-Ericsson in https://github.com/camaraproject/IdentityAndConsentManagement/pull/120
+* Added the [`CAMARA-Security-Interoperability.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0/documentation/CAMARA-Security-Interoperability.md) profile document by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/121
+* Added the [`CAMARA-ICM-examples.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0/documentation/CAMARA-ICM-examples.md) document by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/148
+* Added 2-legged/3-legged access token definition to [`CAMARA-API-access-and-user-consent.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0/documentation/CAMARA-API-access-and-user-consent.md) document by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/162
+  
+### Changed
+* Clarified resource server terminology by @Elisabeth-Ericsson in https://github.com/camaraproject/IdentityAndConsentManagement/pull/135
+* Updated the [`CAMARA-API-access-and-user-consent.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0/documentation/CAMARA-API-access-and-user-consent.md) document with the latest decisions of the working group in the new profile by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/155
+* Adapted the `info.description` template in [`CAMARA-API-access-and-user-consent.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0/documentation/CAMARA-API-access-and-user-consent.md) document to "CAMARA Security and Interoperability Profile" by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/168
+* Editorial changes to CAMARA-API-access-and-user-consent.md by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/183
+* Replaced link into main branch of Identity and Consent Management within "Authorization and authentication" text template (need to be applied to all APIs who have copied the template previously) by @hdamker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/186
+* Replace internal links between icm documents with relative links by @hdamker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/188
+
+### Fixed
+* Fixed Auth code flow error scenario when user refuses consent in [`CAMARA-API-access-and-user-consent.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0/documentation/CAMARA-API-access-and-user-consent.md) document by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/170.
+* Fix returned error in authentication code flow by @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/180
+* Fixed the release tag according to Release Management Working Group guidelines.
+
+### Removed
+* Removed deprecated [`CAMARA-AuthN-AuthZ-Concept.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0-rc.2/documentation/CAMARA-AuthN-AuthZ-Concept.md) document by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/192
+
+## New Contributors
+* @Elisabeth-Ericsson made their first contribution in https://github.com/camaraproject/IdentityAndConsentManagement/pull/120
+* @AxelNennker made their first contribution in https://github.com/camaraproject/IdentityAndConsentManagement/pull/121
+* @hdamker made their first contribution in https://github.com/camaraproject/IdentityAndConsentManagement/pull/147
+* @garciasolero made their first contribution in https://github.com/camaraproject/IdentityAndConsentManagement/pull/180
+
+**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/v0.1.0...r0.2.0
 
 # r0.2.0-rc.2
 
@@ -64,7 +109,7 @@
 * Adapted the `info.description` template in [`CAMARA-API-access-and-user-consent.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/v0.2.0-rc.1/documentation/CAMARA-API-access-and-user-consent.md) document to "CAMARA Security and Interoperability Profile" by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/168
 
 ### Fixed
-* Restored [`CAMARA-AuthN-AuthZ-Concept.md`]((https://github.com/camaraproject/IdentityAndConsentManagement/blob/v0.2.0-rc.1/documentation/CAMARA-AuthN-AuthZ-Concept.md)) document with deprecation disclaimer by @hdamker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/147
+* Restored [`CAMARA-AuthN-AuthZ-Concept.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/v0.2.0-rc.1/documentation/CAMARA-AuthN-AuthZ-Concept.md) document with deprecation disclaimer by @hdamker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/147
 * Fixed Auth code flow error scenario when user refuses consent in [`CAMARA-API-access-and-user-consent.md`](https://github.com/camaraproject/IdentityAndConsentManagement/blob/v0.2.0-rc.1/documentation/CAMARA-API-access-and-user-consent.md) document by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/170.
 
 ### Removed
@@ -76,7 +121,6 @@
 * @hdamker made their first contribution in https://github.com/camaraproject/IdentityAndConsentManagement/pull/147
 
 **Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/v0.1.0...v0.2.0-rc.1
-
 
 # v0.1.0 - Initial version
 
