@@ -222,7 +222,7 @@ Purpose is one of the scope parameter's values. There MUST be exactly one purpos
 
 The Authorization Server identifies the purpose using the prefix `dpv:`.
 
-This scope MUST have the following format: `dpv:<dpvValue>` where `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/dpv/#vocab-purpose)
+This scope MUST have the following format: `dpv:<dpvValue>` where `<dpvValue>` is coming from [W3C DPV purpose definition](https://w3c.github.io/dpv/2.0/dpv/#vocab-purposes)
 
 
 
@@ -267,7 +267,7 @@ Camara recommends that implementations run the OIDF interoperability suite and a
 
 ## References
 
-* [Data Privacy Vocabulary (DPV)](https://w3c.github.io/dpv/dpv/)
+* [Data Privacy Vocabulary (DPV)](https://w3c.github.io/dpv/2.0/dpv/)
 * [E.164 - The international public telecommunication numbering plan](https://www.itu.int/rec/T-REC-E.164-201011-I/en)
 * [OpenID Connect Core 1.0 specification](https://openid.net/specs/openid-connect-core-1_0.html)
 * [OpenID Connect Client-Initiated Backchannel Authentication Flow - Core 1.0](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html)

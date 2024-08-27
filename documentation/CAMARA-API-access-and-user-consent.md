@@ -65,7 +65,7 @@ A purpose declares what the application intends to do with a set of personal inf
 
 ### Purpose definition
 
-The purpose definition (naming + description) and format for CAMARA follows the W3C [Data Privacy Vocabulary](https://www.w3.org/community/dpvcg/)​ (DPV). The way in which purposes are organised within the DPV is specified in [Purpose taxonomy in DPV](https://w3c.github.io/dpv/dpv/#vocab-purposes).
+The purpose definition (naming + description) and format for CAMARA follows the W3C [Data Privacy Vocabulary](https://w3c.github.io/dpv/)​ (DPV). The way in which purposes are organised within the DPV is specified in [Purpose taxonomy in DPV](https://w3c.github.io/dpv/2.0/dpv/#vocab-purposes).
 
 ### Applying purpose concept in the authorization request
 
