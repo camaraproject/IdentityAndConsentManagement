@@ -44,12 +44,12 @@ The CAMARA document sharpens the following for interoperability and security:
 
 * Client Authentication. Specifications for client authentication within CAMARA.
 
-By encapsulating these elements within this document, it aims to provide a comprehensive guide for developers and operators, ensuring consistent implementation and adherence to standardized security measures across the CAMARA ecosystem. The defined OIDC profile not only facilitates the integration process, but also serves as a basic framework for developers wishing to leverage the CAMARA APIs while maintaining security and interoperability.
+By encapsulating these elements within this document, it aims to provide a comprehensive guide for API consumers and API providers, ensuring consistent implementation and adherence to standardized security measures across the CAMARA ecosystem. The defined OIDC profile not only facilitates the integration process, but also serves as a basic framework for developers wishing to leverage the CAMARA APIs while maintaining security and interoperability.
 
 
 ## Audience
 
-The target audience for this document is the service/technical departments of operators exposing network functions via standard CAMARA APIs and the applications or client systems that consume CAMARA standard APIs to make use of the operator's network capabilities.
+The target audience for this document is the service/technical departments of API providers exposing network functions via standard CAMARA APIs and the applications or client systems that consume CAMARA standard APIs to make use of the operator's network capabilities.
 
 
 ## Conventions
@@ -155,7 +155,7 @@ Considering [OAuth2 Refresh Token Protection](https://datatracker.ietf.org/doc/h
 
 ## Client Credentials Flow
 
-The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) grant type is used to obtain a 2-legged Access Token that does not represent a user. The grant-type can only be used if agreed between the API Client and the Telco Operator exposing the API, taking into account the declared purpose for accessing the API (cf. [CAMARA API Specification - Authorization and authentication common guidelines](CAMARA-API-access-and-user-consent.md#camara-api-specification---authorization-and-authentication-common-guidelines)).
+The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) grant type is used to obtain a 2-legged Access Token that does not represent a user. The grant-type can only be used if agreed between the API consumer and the API provider exposing the API, taking into account the declared purpose for accessing the API (cf. [CAMARA API Specification - Authorization and authentication common guidelines](CAMARA-API-access-and-user-consent.md#camara-api-specification---authorization-and-authentication-common-guidelines)).
 
 ## Handling of acr_values
 
