@@ -2,10 +2,24 @@
 
 ## Table of Contents
 
+- [r0.2.1](#r021)
 - [r0.2.0](#r020)
 - [r0.2.0-rc.2](#r020-rc2)
 - [v0.2.0-rc.1](#v020-rc1)
 - [v0.1.0 - Initial version](#v010---initial-version)
+
+# r0.2.1
+
+**This is the public release of "Identity And Consent Management" version 0.2.1, a patch release from r0.2.0**
+
+## Please note:
+
+* The r0.2.1 release is a patch release of r0.2.0. **Please read also the release notes and changes of [r0.2.0](#r020)**.
+
+### Fixed
+* Fixed broken W3C Data Privacy Vocabulary (DPV) reference links in ICM documentation by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/196
+
+**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/r0.2.0...r0.2.1
 
 # r0.2.0
 

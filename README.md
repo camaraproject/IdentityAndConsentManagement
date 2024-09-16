@@ -16,9 +16,9 @@ Repository to describe, develop, document and test the Identity And Consent Mana
 
 ## Release Information
 
-* `NEW`: Release 0.2.0 of the "Identity and Consent Management" guidelines and documentation for the CAMARA APIs is available under the tag [r0.2.0](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r0.2.0). It contains the current version of the documents which are relevant for [Fall24 meta-release](https://wiki.camaraproject.org/display/CAM/Meta-release+Fall24), including:
-  * [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0/documentation/CAMARA-API-access-and-user-consent.md)
-  * [Camara Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0/documentation/CAMARA-Security-Interoperability.md)
+* `NEW`: Release 0.2.0 of the "Identity and Consent Management" guidelines and documentation for the CAMARA APIs is available under the tag [r0.2.1](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r0.2.1). It contains the current version of the documents which are relevant for [Fall24 meta-release](https://wiki.camaraproject.org/display/CAM/Meta-release+Fall24), including:
+  * [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.1/documentation/CAMARA-API-access-and-user-consent.md)
+  * [Camara Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.1/documentation/CAMARA-Security-Interoperability.md)
 * The latest **public release** of guidelines and documentation for CAMARA APIs is available [here](https://github.com/camaraproject/IdentityAndConsentManagement/releases/latest).
 * For previous releases and changes see [CHANGELOG.md](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/CHANGELOG.md)
 
