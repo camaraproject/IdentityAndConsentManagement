@@ -16,7 +16,7 @@ Repository to describe, develop, document and test the Identity And Consent Mana
 
 ## Release Information
 
-* `NEW`: Release 0.2.0 of the "Identity and Consent Management" guidelines and documentation for the CAMARA APIs is available under the tag [r0.2.0](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r0.2.0). It contains the current version of the documents which are relevant for [Fall24 meta-release](https://wiki.camaraproject.org/display/CAM/Meta-release+Fall24), including:
+* `NEW`: Release 0.2.0 of the "Identity and Consent Management" guidelines and documentation for the CAMARA APIs is available under the tag [r0.2.0](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r0.2.0). It contains the current version of the documents which are relevant for [Fall24 meta-release](https://lf-camaraproject.atlassian.net/wiki/x/FwDe), including:
   * [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0/documentation/CAMARA-API-access-and-user-consent.md)
   * [Camara Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.0/documentation/CAMARA-Security-Interoperability.md)
 * The latest **public release** of guidelines and documentation for CAMARA APIs is available [here](https://github.com/camaraproject/IdentityAndConsentManagement/releases/latest).
@@ -26,7 +26,7 @@ Repository to describe, develop, document and test the Identity And Consent Mana
 * Meetings
   * [Registration / Join](https://zoom-lfx.platform.linuxfoundation.org/meeting/94629188836?password=278b4c8a-f370-43bf-bac1-b30a39f169f3)
    * Schedule: Bi-weekly Wednesday, 16:00 CEST (14:00 UTC during European daylight saving time)
-  * Minutes: Access [meeting minutes](https://wiki.camaraproject.org/x/2QBFAQ).
+  * Minutes: Access [meeting minutes](https://lf-camaraproject.atlassian.net/wiki/x/ZzDe).
 * Maling List
   * Subscribe / Unsubscribe to the mailing list of this Sub Project <https://lists.camaraproject.org/g/wg-icm>.
   * A message to the community of this Sub Project can be sent using <wg-icm@lists.camaraproject.org>.
