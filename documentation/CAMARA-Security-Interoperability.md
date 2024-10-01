@@ -83,7 +83,7 @@ The [Client-Initiated Backchannel Authentication (CIBA)](https://openid.net/spec
 
 Communication with the Backchannel Authentication Endpoint MUST utilize TLS.
 
-CIBA allows the Client to get the authentication result in three ways: poll, ping, or push. This profile allows clients to use the *poll* mode. In the Poll mode, the authentication result is retrieved by the Client by polling the OP's token endpoint using the new grant type. 
+CIBA allows the Client to get the authentication result in three ways: poll, ping, or push. This profile allows clients to use the *poll* mode. In the Poll mode, the authentication result is retrieved by the Client by polling the token endpoint using the new grant type. 
 
 ### Optional Parameters
 
