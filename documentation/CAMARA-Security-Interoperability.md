@@ -39,7 +39,7 @@ This document is the CAMARA Security and Interoperability Profile. To ensure int
 The CAMARA document sharpens the following for interoperability and security: 
 
 * Of the flows defined in OIDC, CAMARA uses the [OIDC Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) and [OIDC Client Initiated Backchannel Authentication Flow](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html)
-* Of the flows defined in Oauth2, Camara uses the [Client credentials grant flow](https://www.rfc-editor.org/rfc/rfc6749#section-4.4)
+* Of the flows defined in Oauth2, CAMARA uses the [Client credentials grant flow](https://www.rfc-editor.org/rfc/rfc6749#section-4.4)
 * Scope Parameter. Recommendations about the format of the scope parameter used in  CAMARA APIs.
 
 * Client Authentication. Specifications for client authentication within CAMARA.
@@ -87,7 +87,7 @@ CIBA allows the Client to get the authentication result in three ways: poll, pin
 
 ### Optional Parameters
 
-The parameters `binding_message`, `user_code`, and `requested_expiry` are currently not implemented in Camara and for interoperability this document defines that the authorization server SHOULD ignore them. 
+The parameters `binding_message`, `user_code`, and `requested_expiry` are currently not implemented in CAMARA and for interoperability this document defines that the authorization server SHOULD ignore them. 
 
 
 ### Authentication Request
@@ -116,7 +116,7 @@ This CAMARA document clarifies the values used in login_hint in the following wa
 Neither OIDC, CIBA, nor OAuth2 define a way for clients to indicate whether they need a refresh_token. 
 Refresh token issuance is optional and at the discretion of the AZ.
 
-Camara uses the scope `offline_access` in the authorization request to indicate to the AZ that the client requests a refresh token additionally to the access token for Camara API access.
+CAMARA uses the scope `offline_access` in the authorization request to indicate to the AZ that the client requests a refresh token additionally to the access token for CAMARA API access.
 
 ---
 **NOTE**
@@ -166,11 +166,11 @@ OIDC specifies in [Mandatory to Implement Features for All OpenID Providers](htt
 
 OIDC also defines that the parameter acr_values is OPTIONAL and does not specify possible values. This leads to interoperability issues.
 
-This documents defines that Camara OpenId Providers MUST ignore the parameter acr_values. 
+This documents defines that CAMARA OpenId Providers MUST ignore the parameter acr_values. 
 
-This document defines that Camara Clients SHOULD not use the acr_values parameter. 
+This document defines that CAMARA Clients SHOULD not use the acr_values parameter. 
 
-> To foster interoperability a future version of this document might define values for the acr_values parameter acceptable in Camara.
+> To foster interoperability a future version of this document might define values for the acr_values parameter acceptable in CAMARA.
 
 ## Access Token Request
 
@@ -181,13 +181,13 @@ The client MUST authenticate with the authorization server as described in [Clie
 ## The Scope Parameter
 
 
-Scope values determine the specific CAMARA services being requested by the Service Provider, subject to the SP being registered to use those services. The scope values must be documented in the API OAS files by all Camara API subprojects. This document does not change OIDC definitions of scope values.
+Scope values determine the specific CAMARA services being requested by the Service Provider, subject to the SP being registered to use those services. The scope values must be documented in the API OAS files by all CAMARA API subprojects. This document does not change OIDC definitions of scope values.
 
 
 ---
 **NOTE**
 
-Scope values are an integral part of any OAuth2 and OIDC implementation. The RS enforces API access based on scope (if the Camara API subproject defines scopes).
+Scope values are an integral part of any OAuth2 and OIDC implementation. The RS enforces API access based on scope (if the CAMARA API subproject defines scopes).
 Therefore scopes should be available to API implementations.
 
 ---
@@ -208,11 +208,11 @@ If "openid" is missing in the scope value but a claim that is [standardized in O
 Clients SHOULD follow the OIDC and CIBA standard and SHOULD include `openid` in the list of requested scopes.
 The [id token](https://openid.net/specs/openid-connect-core-1_0.html#IDToken) contains the `sub` field which is the identifier of the subject of the [OIDC authorization code](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) request respectively the [CIBA authentication request](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#auth_request). 
 
-The Camara authorization server creates the `sub` value. Globally unique identifiers, like the MSISDN, should be avoided for privacy reasons.
+The CAMARA authorization server creates the `sub` value. Globally unique identifiers, like the MSISDN, should be avoided for privacy reasons.
 
 ## Purpose
 
-In Camara `purpose` is used to convey to the user for which purpose an API is used. E.g.: Does the client request the user's location because it wants to show relevant tourist information or is the user's location information protecting the user when they withdraw money from an ATM? 
+In CAMARA `purpose` is used to convey to the user for which purpose an API is used. E.g.: Does the client request the user's location because it wants to show relevant tourist information or is the user's location information protecting the user when they withdraw money from an ATM? 
 
 Purpose has always to be reflected and audited when personal information is accessed or managed in certain legislations (e.g. in EU GDPR). To ensure interoperability across different legislations this profile requires that the purpose must always be declared within the supported OIDC or OAuth2 token requests if personal information is accessed or managed.
 
@@ -234,7 +234,7 @@ Further format discussion will happen, e.g. how to handle multiple purposess, be
 
 ## ID Token
 
-Camara uses ID Token as defined in [OpenID Connect Core 1.0 incorporating errata set 2](https://openid.net/specs/openid-connect-core-1_0.html#CodeIDToken). ID token must be a part of a successul response parameter as specified in  [Successful Token Response section](https://openid.net/specs/openid-connect-core-1_0.html#TokenResponse).
+CAMARA uses ID Token as defined in [OpenID Connect Core 1.0 incorporating errata set 2](https://openid.net/specs/openid-connect-core-1_0.html#CodeIDToken). ID token must be a part of a successul response parameter as specified in  [Successful Token Response section](https://openid.net/specs/openid-connect-core-1_0.html#TokenResponse).
 
 ### ID Token sub claim
 
@@ -263,7 +263,7 @@ This document RECOMMENDS that for OIDC CIBA the audience SHOULD be the [Backchan
 
 ## OpenId Foundation Certification
 
-Camara recommends that implementations run the OIDF interoperability suite and achieve [OIDF certification](https://openid.net/certification/).
+CAMARA recommends that implementations run the OIDF interoperability suite and achieve [OIDF certification](https://openid.net/certification/).
 
 ## References
 
