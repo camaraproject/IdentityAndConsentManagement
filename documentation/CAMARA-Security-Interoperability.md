@@ -49,7 +49,7 @@ By encapsulating these elements within this document, it aims to provide a compr
 
 ## Audience
 
-The target audience for this document is the service/technical departments of API providers exposing network functions via standard CAMARA APIs and the applications or client systems that consume CAMARA standard APIs to make use of the operator's network capabilities.
+The target audience for this document is the service/technical departments of API providers exposing network functions via standard CAMARA APIs and the applications or client systems that consume CAMARA APIs to make use of the operator's network capabilities.
 
 
 ## Conventions
