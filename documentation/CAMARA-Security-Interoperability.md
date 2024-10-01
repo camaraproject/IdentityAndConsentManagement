@@ -72,7 +72,7 @@ CAMARA REQUIRES cross-site request forgery protection.
 CAMARA RECOMMENDS PKCE for CSRF protection. 
 CAMARA Authorization Servers SHOULD implement PKCE. If PKCE is not used by the Client then the CAMARA AZ must handle **state** and **nonce** as defined in OAuth2.
 
-CAMARA Clients SHOULD use PKCE if the CAMARA AZ supports PKCE.
+CAMARA API consumers SHOULD use PKCE if the CAMARA AZ supports PKCE.
 
 If nonce for CSRF-protection is used then implementers must ensure that sufficient entropy is present in the nonce value.
 Please see [OAuth 2.0 Security Best Current Practice](https://oauthstuff.github.io/draft-ietf-oauth-security-topics/draft-ietf-oauth-security-topics.html#name-protecting-redirect-based-f).
@@ -168,7 +168,7 @@ OIDC also defines that the parameter acr_values is OPTIONAL and does not specify
 
 This documents defines that CAMARA OpenId Providers MUST ignore the parameter acr_values. 
 
-This document defines that CAMARA Clients SHOULD not use the acr_values parameter. 
+This document defines that CAMARA API consumers SHOULD not use the acr_values parameter. 
 
 > To foster interoperability a future version of this document might define values for the acr_values parameter acceptable in CAMARA.
 
