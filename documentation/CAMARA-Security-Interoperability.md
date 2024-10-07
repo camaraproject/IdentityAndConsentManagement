@@ -203,7 +203,7 @@ This document defines that the authentication server SHOULD not return an id tok
 This document defines the following error handling for a missing "openid" value in scope. 
 Please refer to [Authentication Error Response](https://openid.net/specs/openid-connect-core-1_0.html#AuthError).
 
-If "openid" is missing in the scope value but a claim that is [standardized in OIDC](https://openid.net/specs/openid-connect-core-1_0.html#Claims) is requested, then the Authorization Server returns an HTTP response code of 400 (Bad Request) and an error invalid_request.
+If "openid" is missing in the scope value but a claim that is [standardized in OIDC](https://openid.net/specs/openid-connect-core-1_0.html#Claims) is requested, then the Authorization Server returns an error `invalid_request`.
 
 Clients SHOULD follow the OIDC and CIBA standard and SHOULD include `openid` in the list of requested scopes.
 The [id token](https://openid.net/specs/openid-connect-core-1_0.html#IDToken) contains the `sub` field which is the identifier of the subject of the [OIDC authorization code](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) request respectively the [CIBA authentication request](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#auth_request). 
