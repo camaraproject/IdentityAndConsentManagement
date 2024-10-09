@@ -195,7 +195,7 @@ Therefore scopes should be available to API implementations.
 
 ## Missing "openid" scope
 
-[OIDC Connect Authentication Request](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) states the following about the value of scope.
+[OpenID Connect Core Authentication Request](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) states the following about the value of scope.
 > REQUIRED. OpenID Connect requests MUST contain the openid scope value. If the openid scope value is not present, the behavior is entirely unspecified. Other scope values MAY be present. ...
 
 This document defines that the authentication server SHOULD not return an id token if `openid` is missing in the scope parameter.
