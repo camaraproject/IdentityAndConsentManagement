@@ -195,15 +195,18 @@ Therefore scopes should be available to API implementations.
 
 ## Missing "openid" scope
 
-[OIDC Core Authentication Request](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) states the following about the value of scope.
+[OIDC Connect Authentication Request](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) states the following about the value of scope.
 > REQUIRED. OpenID Connect requests MUST contain the openid scope value. If the openid scope value is not present, the behavior is entirely unspecified. Other scope values MAY be present. ...
 
 This document defines that the authentication server SHOULD not return an id token if `openid` is missing in the scope parameter.
 
 This document defines the following error handling for a missing "openid" value in scope. 
-Please refer to [Authentication Error Response](https://openid.net/specs/openid-connect-core-1_0.html#AuthError).
 
+For OIDC please refer to [OIDC Authentication Error Response](https://openid.net/specs/openid-connect-core-1_0.html#AuthError).
 If "openid" is missing in the scope value but a claim that is [standardized in OIDC](https://openid.net/specs/openid-connect-core-1_0.html#Claims) is requested, then the Authorization Server returns an error `invalid_request`.
+
+For CIBA please refer to [CIBA Authentication Error Response](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#auth_error_response).
+If "openid" is missing in the scope value but a claim that is standardized in OIDC, then the Authorization Server returns an error `invalid_request` with an HTTP status code of 400 BAD_REQUEST.
 
 Clients SHOULD follow the OIDC and CIBA standard and SHOULD include `openid` in the list of requested scopes.
 The [id token](https://openid.net/specs/openid-connect-core-1_0.html#IDToken) contains the `sub` field which is the identifier of the subject of the [OIDC authorization code](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) request respectively the [CIBA authentication request](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#auth_request). 
