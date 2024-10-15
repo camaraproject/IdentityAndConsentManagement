@@ -255,8 +255,9 @@ This document does not mandate a particular PPID algorithm to be used.
 
 ## Client Authentication
 
-This CAMARA document allows **one** client authentication method, `private_key_jwt`, as defined in OIDC
-[OIDC Client Authentication](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication)
+The API consumer MUST authenticate with the authorisation server using `private_key_jwt`, as specified in [OIDC Client Authentication](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication). In addition to the mandated claims, the signed JWT MUST also include the `iat` (issued at) claim.
+
+The difference between the `exp` (expires at) and `iat` (issued at) claims MUST be no more than 300 seconds. JWTs with a longer lifetime SHALL be rejected by the authorisation server using the `invalid_client` error code as specified in [IETF RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749#section-5.2) for the `/token` endpoint, and as specified in [OIDC CIBA Core](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.13) for the `/bc-authorize` endpoint.
 
 This document RECOMMENDS that for [OIDC Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) and [OAuth2 Client Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) the audience SHOULD be the URL of the Authorization Server's [Token Endpoint](https://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint).
 This document RECOMMENDS that for OIDC CIBA the audience SHOULD be the [Backchannel Authentication Endpoint](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#auth_backchannel_endpoint).
