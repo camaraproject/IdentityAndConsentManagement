@@ -2,35 +2,46 @@
 
 ## Table of Contents
 
-   * [Introduction](#introduction)
-   * [Audience](#audience)
-   * [Conventions](#conventions)
-   * [General Considerations](#general-considerations)
-      + [Transport Security](#transport-security)
-   * [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
-      + [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
-   * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
-      + [Optional Parameters](#optional-parameters)
-      + [Authentication Request](#authentication-request)
-   * [Format of `login_hint`](#format-of-login_hint)
-   * [Offline Access](#offline-access)
-         - [Refresh Token Issuance](#refresh-token-issuance)
-      + [Refresh Token Usage](#refresh-token-usage)
-      + [Refresh Token Security](#refresh-token-security)
-   * [Client Credentials Flow](#client-credentials-flow)
-   * [Handling of acr_values](#handling-of-acr_values)
-   * [Access Token Request](#access-token-request)
-   * [The Scope Parameter](#the-scope-parameter)
-   * [Missing "openid" scope](#missing-openid-scope)
-   * [Purpose](#purpose)
-   * [ID Token](#id-token)
-      + [ID Token sub claim](#id-token-sub-claim)
-   * [Client Authentication](#client-authentication)
-   * [OpenId Foundation Certification](#openid-foundation-certification)
-   * [References](#references)
-
-<!-- TOC end -->
-
+<!-- TOC -->
+* [CAMARA Security and Interoperability Profile](#camara-security-and-interoperability-profile)
+  * [Table of Contents](#table-of-contents)
+  * [Introduction](#introduction)
+  * [Audience](#audience)
+  * [Conventions](#conventions)
+  * [General Considerations](#general-considerations)
+    * [Transport Security](#transport-security)
+  * [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
+    * [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
+  * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
+    * [Optional Parameters](#optional-parameters)
+    * [Authentication Request](#authentication-request)
+  * [Format of `login_hint`](#format-of-login_hint)
+  * [Offline Access](#offline-access)
+      * [Refresh Token Issuance](#refresh-token-issuance)
+    * [Refresh Token Usage](#refresh-token-usage)
+    * [Refresh Token Security](#refresh-token-security)
+  * [Client Credentials Flow](#client-credentials-flow)
+  * [Handling of acr_values](#handling-of-acr_values)
+  * [Access Token Request](#access-token-request)
+  * [The Scope Parameter](#the-scope-parameter)
+  * [Missing "openid" scope](#missing-openid-scope)
+  * [Purpose](#purpose)
+    * [Purpose as a scope](#purpose-as-a-scope)
+    * [Outlook on purpose-handling leveraging Rich Authorization Request](#outlook-on-purpose-handling-leveraging-rich-authorization-request)
+  * [ID Token](#id-token)
+    * [ID Token sub claim](#id-token-sub-claim)
+  * [Client Authentication](#client-authentication)
+  * [OpenId Foundation Certification](#openid-foundation-certification)
+  * [References](#references)
+  * [Appendix A: Error Responses](#appendix-a-error-responses)
+    * [Authentication Error Response](#authentication-error-response)
+      * [Authorization Code Flow](#authorization-code-flow)
+      * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow-1)
+    * [Token Error Response](#token-error-response)
+      * [Authorization Code Flow](#authorization-code-flow-1)
+      * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow-2)
+      * [Refresh Token Flow](#refresh-token-flow)
+<!-- TOC -->
 
 ## Introduction
 
@@ -279,6 +290,175 @@ Camara recommends that implementations run the OIDF interoperability suite and a
 * [RFC 7519 - JSON Web Token (JWT)](https://www.rfc-editor.org/info/rfc7519)
 * [RFC 7521 - Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants](https://www.rfc-editor.org/info/rfc7521)
 * [RFC 7523 - JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants](https://www.rfc-editor.org/info/rfc7523)
+* [RFC 7636 - Proof Key for Code Exchange by OAuth Public Clients](https://www.rfc-editor.org/info/rfc7636)
 * [RFC 8259 - The JavaScript Object Notation (JSON) Data Interchange Format](https://www.rfc-editor.org/info/rfc8259)
 * [RFC 8414 - OAuth 2.0 Authorization Server Metadata](https://www.rfc-editor.org/info/rfc8414)
+
+## Appendix A: Error Responses
+
+This section describes the error responses that the Authorization Server MUST return for all flows defined in this profile. Based on the supported functionality, the set of errors and the scenarios that can generate them are defined from the specifications already referenced in this document.
+
+### Authentication Error Response
+
+#### Authorization Code Flow
+
+If the request fails due to a missing, invalid, or mismatching redirection URI, or if the client identifier is missing or invalid,
+the authorization server MUST NOT automatically redirect the user-agent and SHOULD inform the resource owner of the
+error.
+
+In other cases, the authorization server redirects the user-agent to the provided client redirection URI using the HTTP status code `302-Found` and includes the following `error` code parameter within the response:
+
+
+|         Error Code          | Scenario                                                                                                                                                                                                                                                                                                                                      |
+|:---------------------------:|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      `invalid_request`      | The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed.<br/>If the server requires PKCE and the client does not send the `code_challenge` in the request.<br/>If the server supporting PKCE does not support the requested `code_challenge_method`. |
+|    `unauthorized_client`    | The client is not authorized to request an authorization code using this method.                                                                                                                                                                                                                                                              |
+|       `access_denied`       | The user or authorization server denied the request (for example, the user cannot be authenticated or denied the consent).                                                                                                                                                                                                                    |
+| `unsupported_response_type` | The authorization server does not support obtaining an authorization code using this method.                                                                                                                                                                                                                                                  |
+|       `invalid_scope`       | The requested scope is either invalid, unknown, or malformed.                                                                                                                                                                                                                                                                                 |
+|       `server_error`        | The authorization server encountered an unexpected condition that prevented it from fulfilling the request.                                                                                                                                                                                                                                   |
+|  `temporarily_unavailable`  | The authorization server is currently unable to handle the request due to a temporary overloading or maintenance of the server.                                                                                                                                                                                                               |
+|   `request_not_supported`   | The authorization server does not support use of the `request` parameter.                                                                                                                                                                                                                                                                     |
+| `request_uri_not_supported` | The authorization server does not support use of the `request_uri` parameter.                                                                                                                                                                                                                                                                 |
+
+
+#### Client-Initiated Backchannel Authentication Flow
+
+An Authentication Error Response is returned directly from the Backchannel Authentication Endpoint in response to the Authentication Request sent by the Client. The authorization server responds with a status code and includes the following `error` code attribute within the response:
+
+<table>
+  <thead>
+    <tr>
+      <th>Status code</th>
+      <th>Error code</th>
+      <th>Scenario</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="5">400 - Bad Request</td>
+      <td><code>invalid_request</code></td>
+      <td>The request is either missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed.</td>
+    </tr>
+    <tr>
+      <td><code>unauthorized_client</code></td>
+      <td>The authenticated application is not authorized to use this authorization grant type.</td>
+    </tr>
+    <tr>
+      <td><code>unknown_user_id</code></td>
+      <td>Unable to identify which end-user the application wishes to be authenticated by means of the <code>login_hint</code> provided in the request.</td>
+    </tr>
+    <tr>
+      <td><code>invalid_scope</code></td>
+      <td>The requested scope is either invalid, unknown, or malformed.</td>
+    </tr>
+    <tr>
+      <td><code>request_not_supported</code></td>
+      <td>The authorization server does not support use of the <code>request</code> parameter.</td>
+    </tr>
+    <tr>
+      <td>401 - Unauthorized</td>
+      <td><code>invalid_client</code></td>
+      <td>Application authentication failed (as in unknown client, no client authentication included, unsupported authentication method, or <code>client_assertion</code> JWT is not valid).</td>
+    </tr>
+    <tr>
+      <td>403 - Forbidden</td>  
+      <td><code>access_denied</code></td>
+      <td>The user or the authorization server denied the request. Note that as the authentication error response is received prior to any user interaction, such an error would only be received if a user or the Authserver had made a decision to deny a certain type of request or requests from a certain type of client.</td>
+    </tr>
+  </tbody>
+</table>
+
+### Token Error Response
+
+A Token Error Response is returned directly from the Token Endpoint in response to the Token Request sent by the Client. The authorization server responds with a status code and includes the following `error` code attribute within the response:
+
+<table>
+  <thead>
+    <tr>
+      <th>Status Code</th>
+      <th>Error Code</th>
+      <th>Scenario</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="4">400 - Bad Request</td>
+      <td><code>invalid_request</code></td>
+      <td>The request is either missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. In CIBA, if an application receives an <code>invalid_request</code> error it must not make any further requests for the same <code>auth_req_id</code>.</td>
+    </tr>
+    <tr>
+      <td><code>unauthorized_client</code></td>
+      <td>The authenticated client is not authorized to use this authorization grant type.</td>
+    </tr>
+    <tr>
+      <td><code>unsupported_grant_type</code></td>
+      <td>The authorization grant type is not supported by the authorization server.</td>
+    </tr>
+    <tr>
+      <td><code>invalid_scope</code></td>
+      <td>The requested scope is invalid, unknown, malformed, or exceeds the scope granted by the user.</td>
+    </tr>
+    <tr>
+      <td>401 - Unauthorized</td>
+      <td><code>invalid_client</code></td>
+      <td>Client authentication failed (as in unknown client, no client authentication included, unsupported authentication method, or <code>client_assertion</code> JWT is not valid).</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Authorization Code Flow
+
+In addition to the error codes defined in the common [Token Error Response Section](#token-error-response), the following error codes  and scenarios are specific to the Authorization Code flow:
+
+| Status Code       | Error Code      | Scenario                                                                                                                                                                                                                                                                                                                                            |
+|-------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 400 - Bad Request | `invalid_grant` | The provided authorization code is invalid, expired, revoked (for instance, there is no consent from the user), does not match the redirection URI used in the authorization request, or was issued to another client. <br/>If the server requires PKCE, the `code_verifier` does not match the `code_challenge` used in the authorization request. |
+
+#### Client-Initiated Backchannel Authentication Flow
+
+In addition to the error codes defined in the common [Token Error Response Section](#token-error-response), the following error codes  and scenarios are specific to the CIBA flow:
+
+<table>
+  <thead>
+    <tr>
+      <th>Status Code</th>
+      <th>Error Code</th>
+      <th>Scenario</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="5">400 - Bad Request</td>
+      <td><code>access_denied</code></td>
+      <td>The user denied the authorization request (for example, there is no consent from the user).</td>
+    </tr>
+    <tr>
+      <td><code>invalid_grant</code></td>
+      <td>The provided <code>auth_req_id</code> is invalid, revoked or was issued to another client.</td>
+    </tr>
+    <tr>
+      <td><code>authorization_pending</code></td>
+      <td>The authorization request is still pending as the user hasn't yet been authenticated or hasn't authorized the request.</td>
+    </tr>
+    <tr>
+      <td><code>slow_down</code></td>
+      <td>A variant of <code>authorization_pending</code>, the authorization request is still pending and polling should continue, but the interval MUST be increased by at least 5 seconds for this and all subsequent requests.</td>
+    </tr>
+    <tr>
+      <td><code>expired_token</code></td>
+      <td>The <code>auth_req_id</code> has expired. The client will need to make a new Authentication Request.</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Refresh Token Flow
+
+In addition to the error codes defined in the common [Token Error Response Section](#token-error-response), the following error codes and scenarios are specific to the Refresh Token flow:
+
+| Status Code       | Error Code      | Scenario                                                                                                                                    |
+|-------------------|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| 400 - Bad Request | `invalid_grant` | The provided refresh token is invalid, expired, revoked (for instance, there is no consent from the user), or was issued to another client. |
+
+
 
