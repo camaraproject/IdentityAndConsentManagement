@@ -302,9 +302,7 @@ This section describes the error responses that the Authorization Server MUST re
 
 #### Authorization Code Flow
 
-If the request fails due to a missing, invalid, or mismatching redirection URI, or if the client identifier is missing or invalid,
-the authorization server MUST NOT automatically redirect the user-agent and SHOULD inform the resource owner of the
-error.
+If the request fails due to a missing, invalid, or mismatching redirection URI, or if the client identifier is missing or invalid, the authorization server MUST NOT automatically redirect the user-agent and SHOULD inform the resource owner of the error. For instance, the authorization server MAY display a message to the user describing the problem.
 
 In other cases, the authorization server redirects the user-agent to the provided client redirection URI using the HTTP status code `302-Found` and includes the following `error` code parameter within the response:
 
