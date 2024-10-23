@@ -108,12 +108,12 @@ This CAMARA document clarifies the values used in login_hint in the following wa
 
     For IPv4 and IPv6 addresses, that can optionally include a port. For example, `ipport:80.90.34.2:16790`, `ipport:80.90.34.2`, `ipport:[2001:db8::1]:8080` or `ipport:[2001:db8::1]`.
 
-  * **_ot_**
+  * **_operatortoken_**
 
     For operator tokens as defined by [GSMA TS.43](https://www.gsma.com/newsroom/gsma_resources/ts-43-service-entitlement-configuration/) and [GSMA ASAC](https://www.gsma.com/newsroom/gsma_resources/asac-01-v1-0/).
     TS.43 does not specify the format of the operator token and it therefore might contain characters that are not url-safe.
     This document specifies that the API consumer must encode the operator token using [base64url](https://www.rfc-editor.org/rfc/rfc7515.html#appendix-C) encoding to make it urlsafe.
-    For example, `ot:ZXhhbXBsZQ`
+    For example, `operatortoken:ZXhhbXBsZQ`
     
    This document does not specifiy how the API consumer got the operatorToken. 
 
