@@ -113,20 +113,8 @@ This CAMARA document clarifies the values used in login_hint in the following wa
     For operator tokens as defined by [GSMA TS.43](https://www.gsma.com/newsroom/gsma_resources/ts-43-service-entitlement-configuration/) and [GSMA ASAC](https://www.gsma.com/newsroom/gsma_resources/asac-01-v1-0/).
     TS.43 does not specify the format of the operator token and it therefore might contain characters that are not url-safe.
     This document specifies that the API consumer must encode the operator token using [base64url](https://www.rfc-editor.org/rfc/rfc7515.html#appendix-C) encoding to make it urlsafe.
-
-    The following is a non-normative example of an OIDC authorization POST request with an ot-login_hint:
-
-```text
-    POST /authorize HTTP/1.1
-    Host: server.example.com
-    Content-Type: application/x-www-form-urlencoded
-
-    response_type=code
-      &scope=openid%20dpv:FraudPreventionAndDetection%20sim-swap:check%20sim-swap:retrieve-date
-      &client_id=s6BhdRkqt3
-      &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb
-      &login_hint="ot:ZXhhbXBsZQ"
-```
+    For example, `ot:ZXhhbXBsZQ`
+    
    This document does not specifiy how the API consumer got the operatorToken. 
 
 ## Offline Access
