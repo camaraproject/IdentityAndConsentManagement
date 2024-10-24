@@ -304,7 +304,7 @@ This section describes the error responses that the Authorization Server MUST re
 
 If the request fails due to a missing, invalid, or mismatching redirection URI, or if the client identifier is missing or invalid, the authorization server MUST NOT automatically redirect the user-agent and SHOULD inform the resource owner of the error. For instance, the authorization server MAY display a message to the user describing the problem.
 
-In other cases, the authorization server redirects the user-agent to the provided client redirection URI using the HTTP status code `302-Found` and includes the following `error` code parameter within the response:
+In other cases, as defined in [OIDC Authentication Error Response Section](https://openid.net/specs/openid-connect-core-1_0.html#AuthError), the authorization server redirects the user-agent to the provided client redirection URI using the HTTP status code `302-Found` and includes the following `error` code parameter within the response:
 
 
 |         Error Code          | Scenario                                                                                                                                                                                                                                                                                                                                      |
@@ -322,7 +322,7 @@ In other cases, the authorization server redirects the user-agent to the provide
 
 #### Client-Initiated Backchannel Authentication Flow
 
-An Authentication Error Response is returned directly from the Backchannel Authentication Endpoint in response to the Authentication Request sent by the Client. The authorization server responds with a status code and includes the following `error` code attribute within the response:
+As described in [CIBA Authentication Error Response Section](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.13), an Authentication Error Response is returned directly from the Backchannel Authentication Endpoint in response to the Authentication Request sent by the Client. The authorization server responds with a status code and includes the following `error` code attribute within the response:
 
 <table>
   <thead>
@@ -369,7 +369,7 @@ An Authentication Error Response is returned directly from the Backchannel Authe
 
 ### Token Error Response
 
-A Token Error Response is returned directly from the Token Endpoint in response to the Token Request sent by the Client. The authorization server responds with a status code and includes the following `error` code attribute within the response:
+As defined in [OAuth 2.0 Token Error Response Section](https://www.rfc-editor.org/rfc/rfc6749.html#section-5.2), a Token Error Response is returned directly from the Token Endpoint in response to the Token Request sent by the Client. The authorization server responds with a status code and includes the following `error` code attribute within the response:
 
 <table>
   <thead>
@@ -415,7 +415,7 @@ In addition to the error codes defined in the common [Token Error Response Secti
 
 #### Client-Initiated Backchannel Authentication Flow
 
-In addition to the error codes defined in the common [Token Error Response Section](#token-error-response), the following error codes  and scenarios are specific to the CIBA flow:
+As described in [CIBA Token Error Response Section](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.11), in addition to the error codes defined in the common [Token Error Response Section](#token-error-response), the following error codes  and scenarios are specific to the CIBA flow:
 
 <table>
   <thead>
