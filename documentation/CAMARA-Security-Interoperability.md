@@ -61,6 +61,26 @@ The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SH
 ### Transport Security
 All network connections MUST use TLS 1.2 or better.
 
+## User-Interface 
+
+The international standards by the OpenId Foundation or IETF that CAMARA identity and consent management is based on do not specify User-Interface choices. 
+CAMARA documents do not specify how the API Producer implements their User-Interface. The CAMARA Authorization Server is free to implement user authentication and consent collection web pages as is appropriate for the CAMARA use case.
+
+
+### The prompt parameter
+
+OIDC specifies the [prompt](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) parameter and its values as a means for the API Consumer to influence the User-Interface provided by the API Provider.
+
+This document specifies that if the parameter `prompt` has the value `none`, and the CAMARA Authorization Server decides that no **user** consent is needed for the API, purpose, and (e.g. legal) circumstances that network-based authentication of the **subscriber** is enough, that then the Authorization Server uses network-based authentication of the subscriber to identify the parameters to be associated with the access token for the requested scopes.
+
+### The login_hint parameter
+
+In OIDC the usage of the login_hint parameter is left to the Authorization Server's discretion.
+
+This document specifies that if user consent is not required, and the user has not opted-out, and network-authentication identifies a subscriber where the login_hint parameter's value is associated with that subscriber then the login_hint parameter's value is associated with the access token, if one is created, for the requested scopes. Other attributes might be additionally associated with the access token regardless.
+
+This document specifies that if user consent is required, and after the user is authenticated, and the login_hint's parameter value is associated with that user, then the login_hint parameter's value is associated with the access token, if one is created, for the requested scopes. Other attributes might be additionally associated with the access token regardless.
+
 ## OIDC Authorization Code Flow
 
 The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html)
