@@ -2,6 +2,7 @@
 #### What type of PR is this?
 
 <!-- Add one of the following kinds: -->
+
 * bug
 * correction
 * enhancement/feature
@@ -36,7 +37,6 @@ Fixes #
 
 ```
  release-note
-
 ```
 
 #### Additional documentation 
@@ -45,5 +45,4 @@ This section can be blank.
 
 ```
 docs
-
 ```
