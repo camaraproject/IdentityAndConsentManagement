@@ -356,7 +356,7 @@ The documentation template below must be used as part of the API documentation i
 
 The "Camara Security and Interoperability Profile" provides details on how a client requests an access token.
 
-The specific authorization flows to be used will be determined during onboarding process, happening between the API client and the telco operator exposing the API, taking into account the declared purpose for accessing the API, whilst also being subject to the prevailing legal framework dictated by local legislation.
+The specific authorization flows to be used will be determined during the onboarding process, happening between the API client and the operator exposing the API, taking into account the declared purpose for accessing the API, whilst also being subject to the prevailing legal framework dictated by local legislation.
 
 In cases where personal data is processed by the API and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of three-legged access tokens is mandatory. This ensures that the API remains in compliance with privacy regulations, upholding the principles of transparency and user-centric privacy-by-design.
 ```
