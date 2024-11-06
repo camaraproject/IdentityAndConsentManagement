@@ -51,10 +51,11 @@ By encapsulating these elements within this document, it aims to provide a compr
 
 The target audience for this document is the service/technical departments of operators exposing network functions via standard CAMARA APIs and the applications or client systems that consume CAMARA standard APIs to make use of the operator's network capabilities.
 
-
 ## Conventions
 
 The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119.
+
+Unless otherwise noted, all the protocol parameter names and values are case sensitive.
 
 ## General Considerations
 
