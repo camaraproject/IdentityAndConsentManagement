@@ -62,6 +62,10 @@ Unless otherwise noted, all the protocol parameter names and values are case sen
 ### Transport Security
 All network connections MUST use TLS 1.2 or better.
 
+### Sender-Constraint Tokens
+
+Following the recommendation from [OAuth 2.0 Security Best Current Practice](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics#section-2.2.1) authorization and resource servers SHOULD use mechanisms for sender-constraining access tokens. This document RECOMMENDS Demonstrating Proof of Possession (DPoP) [RFC9449](https://datatracker.ietf.org/doc/html/rfc9449), to prevent misuse of stolen and leaked access tokens.
+
 ## OIDC Authorization Code Flow
 
 The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html)
