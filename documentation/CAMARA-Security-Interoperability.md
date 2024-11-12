@@ -66,6 +66,8 @@ All network connections MUST use TLS 1.2 or better.
 
 The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html)
 
+It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC](https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests). The same key MAY be used for signing the authentication request as is used for client authentication.
+
 ### Cross-Site Request Forgery Protection
 
 CAMARA REQUIRES cross-site request forgery (CSRF) protection.
