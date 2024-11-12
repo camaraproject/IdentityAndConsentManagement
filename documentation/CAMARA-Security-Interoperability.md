@@ -294,7 +294,7 @@ Camara recommends that implementations run the OIDF interoperability suite and a
 * [RFC 8259 - The JavaScript Object Notation (JSON) Data Interchange Format](https://www.rfc-editor.org/info/rfc8259)
 * [RFC 8414 - OAuth 2.0 Authorization Server Metadata](https://www.rfc-editor.org/info/rfc8414)
 
-## Appendix A: Error Responses
+## Appendix A (Normative): Error Responses
 
 This section describes the error responses that the Authorization Server MUST return for all flows defined in this profile. Based on the supported functionality, the set of errors and the scenarios that can generate them are defined from the specifications already referenced in this document, such as CIBA, OIDC and OAuth 2.0. This appendix does not change the definition of error responses specified in these standards.
 
