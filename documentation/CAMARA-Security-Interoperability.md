@@ -64,8 +64,7 @@ All network connections MUST use TLS 1.2 or better.
 ## User-Interface 
 
 The international standards by the OpenId Foundation or IETF that CAMARA identity and consent management is based on do not specify User-Interface choices. 
-CAMARA documents do not specify how the API Producer implements their User-Interface. The CAMARA Authorization Server is free to implement user authentication and consent collection web pages as is appropriate for the CAMARA use case.
-
+CAMARA documents do not specify how the API Producer implements their User-Interface. It is important that API Providers under the same regulatory framework adopt a consistend approach to when to show User-Interfaces based on the scope(s) and purpose declared by the API Consumer and aligned with local legislation.
 
 ### The prompt parameter
 
