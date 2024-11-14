@@ -66,6 +66,26 @@ All network connections MUST use TLS 1.2 or better.
 
 The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html)
 
+### Consistent User Authentication and Consent collection
+
+It is up to the operator to make a decision when consent collection is needed or not, based on the scope(s)/purpose declared by the API client and aligned with local legislation, ensuring that all operators under the same regulatory framework adopt a *consistent* approach.
+
+This document defines that if the optional prompt parameter is absent from the OIDC authentication request then the API consumer uses network-based authentication to identify the subscription. 
+* If the subscription belongs to a business contract then the authorization server MUST return an error.
+* If the subscription belongs to a private contract but there are several contracts to the contract holder then the authorization server MUST return an error.
+* If the subscription identifies one MSISDN but other subscriptions for the same MSISDN exist then the authoriztoin server MUST return an error.
+
+The API provider could start User-Interaction to resolve the above cases, but that likely leads to different behaviour by different API producers.
+
+The document defines that if the optional prompt parameter is absent from the OIDC authentication request and network-based authentication identifies one subscription that belongs to one person and that person does not own other subscriptions with that API provider, then the API provider can assume that the subscriber equals the end-user. 
+The decicion whether consent needs to be collected or not is then determined by the API provider 
+* by determining the legal basis of the purpose e.g.: contract, legitimate_interest, consent, etc,
+* and then checking if consent is required for the legal basis of the purpose
+* and then checking whether consent was already granted or revoked out-of-band.
+
+If consent needs to be optained then the API provider optains it according to [OIDC section 3.1.2.4](https://openid.net/specs/openid-connect-core-1_0.html#Consent).
+
+
 ### Cross-Site Request Forgery Protection
 
 CAMARA REQUIRES cross-site request forgery (CSRF) protection.
