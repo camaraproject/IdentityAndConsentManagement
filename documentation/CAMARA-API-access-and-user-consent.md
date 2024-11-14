@@ -69,6 +69,24 @@ The Purpose definition (naming + description) and format within CAMARA follows t
 
 Purpose must be specified in the authorization request for a CAMARA Three-Legged Access Token, this is achieved by extending the `scope` parameter as defined in [Purpose as a Scope](CAMARA-Security-Interoperability.md#purpose-as-a-scope) section of the CAMARA Security and Interoperability Profile.
 
+## Controlling User-Interaction
+
+In CIBA User-Interaction in initiated by the API Producer if Consent is needed and NOT granted. The `login_hint` parameter is mandatory in CIBA and is used to identify the authentication devicde. Consent is captured out-of-band by e.g. sending a push notification, or by sending an SMS with a code or link, or by sending a message by some other means to the authentication devide. CAMARA does not mandate a communication method or any message format or content.
+
+In OIDC Authorization Code flow User-Interaction is initiated by the API Producer if consent is needed. The Authorization Server obtains End-User Consent/Authorization accorinding to [OIDC section 3.2.1.4](https://openid.net/specs/openid-connect-core-1_0.html#Consent).
+
+If the API Consumer wants to make sure that no User-Interaction happens they MUST use the `prompt` parameter with a value of `none`. Authentication Error Response values (`interaction_required`, `login_required`, `account_selection_required`, `consent_required`) for `prompt=none` are defined in [OIDC section 3.1.2.6](https://openid.net/specs/openid-connect-core-1_0.html#AuthError).
+
+It is up to the operator to make a decision when consent collection is needed or not, based on the scope(s)/purpose declared by the API Consumer and aligned with local legislation, ensuring that all operators under the same regulatory framework adopt a **consistent** approach.
+
+The API Consumer can use the `prompt` parameter value `consent` to ask the API producer for End-User Consent collection.
+> The Authorization Server SHOULD prompt the End-User for consent before returning information to the Client. If it cannot obtain consent, it MUST return an error, typically consent_required.
+
+The `prompt` parameter is defined in [OIDC section 3.1.2.1](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest).
+
+OIDC specifies that the `prompt` parameter is [mandatory to implement for all OpenId Providers](https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI).
+
+
 ## User Authentication/Authorization & Consent Management
 
 **CAMARA User Authentication/Authorization & Consent Management follows the [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md) technical specification**
