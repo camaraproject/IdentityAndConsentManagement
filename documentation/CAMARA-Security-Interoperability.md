@@ -73,7 +73,6 @@ It is up to the operator to make a decision when consent collection is needed or
 This document defines that if the optional prompt parameter is absent from the OIDC authentication request then the API consumer uses network-based authentication to identify the subscription. 
 * If the subscription belongs to a business contract then the authorization server MUST return an error.
 * If the subscription belongs to a private contract but there are several contracts to the contract holder then the authorization server MUST return an error.
-* If the subscription identifies one MSISDN but other subscriptions for the same MSISDN exist then the authoriztoin server MUST return an error.
 
 The API provider could start User-Interaction to resolve the above cases, but that likely leads to different behaviour by different API producers.
 
@@ -105,6 +104,8 @@ The [Client-Initiated Backchannel Authentication (CIBA)](https://openid.net/spec
 Communication with the Backchannel Authentication Endpoint MUST utilize TLS.
 
 CIBA allows the Client to get the authentication result in three ways: poll, ping, or push. This profile allows clients to use the *poll* mode. In the Poll mode, the authentication result is retrieved by the Client by polling the token endpoint using the new grant type. 
+
+If the the login_hint is not sufficient to identify one device, e.g. a phone number is specified but several subscriptions for the same phone number exist, then the authoriztion server MUST return an error code `DEVICE_NOT_FOUND` (???).
 
 ### Optional Parameters
 
