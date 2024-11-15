@@ -10,6 +10,7 @@ This document defines guidelines for Operator API Exposure Platforms to manage C
   - [Glossary of Terms and Concepts](#glossary-of-terms-and-concepts)
   - [Purpose within Camara](#purpose-within-camara)
     - [Using Purpose within the authorization request](#using-purpose-within-the-authorization-request)
+  - [Controlling User-Interaction](#controlling-user-interaction)
   - [User Authentication/Authorization \& Consent Management](#user-authenticationauthorization--consent-management)
     - [Authorization flows / grant types](#authorization-flows--grant-types)
       - [Authorization code flow (Frontend flow)](#authorization-code-flow-frontend-flow)
