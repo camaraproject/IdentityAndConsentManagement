@@ -76,7 +76,7 @@ If the API Consumer is using CIBA, User-Interaction MAY be initiated by the API 
 
 In OIDC Authorization Code flow User-Interaction is initiated by the API provider if consent is needed. The Authorization Server obtains End-User Consent/Authorization according to [OIDC section 3.2.1.4](https://openid.net/specs/openid-connect-core-1_0.html#Consent).
 
-If the API Consumer wants to make sure that no User-Interaction happens they MUST use the `prompt` parameter with a value of `none`. Authentication Error Response values (`interaction_required`, `login_required`, `account_selection_required`, `consent_required`) for `prompt=none` are defined in [OIDC section 3.1.2.6](https://openid.net/specs/openid-connect-core-1_0.html#AuthError).
+If the API Consumer wants to make sure that no User-Interaction happens they MUST use the `prompt` parameter with a value of `none`. Authentication error response values (`interaction_required`, `login_required`, `account_selection_required`, `consent_required`) for `prompt=none` are defined in [OIDC section 3.1.2.6](https://openid.net/specs/openid-connect-core-1_0.html#AuthError).
 
 It is up to the operator to make a decision when consent collection is needed or not, based on the scope(s)/purpose declared by the API Consumer and aligned with local legislation, ensuring that all operators under the same regulatory framework adopt a **consistent** approach.
 
