@@ -73,7 +73,7 @@ Purpose must be specified in the authorization request for a CAMARA Three-Legged
 
 If the API Consumer is using CIBA, User-Interaction MAY be initiated by the API Producer if Consent is needed and has NOT been granted. The `login_hint` parameter is mandatory in CIBA, and MAY be used by the API Producer to identify an authentication device for out-of-band consent capture. Consent MAY be captured out-of-band by, for example, sending a push notification, or by sending an SMS with a code or link, or by sending a message by some other means to the identified authentication device. CAMARA does not mandate any communication method nor any message format nor any message content.
 
-In OIDC Authorization Code flow User-Interaction is initiated by the API Producer if consent is needed. The Authorization Server obtains End-User Consent/Authorization accorinding to [OIDC section 3.2.1.4](https://openid.net/specs/openid-connect-core-1_0.html#Consent).
+In OIDC Authorization Code flow User-Interaction is initiated by the API provider if consent is needed. The Authorization Server obtains End-User Consent/Authorization according to [OIDC section 3.2.1.4](https://openid.net/specs/openid-connect-core-1_0.html#Consent).
 
 If the API Consumer wants to make sure that no User-Interaction happens they MUST use the `prompt` parameter with a value of `none`. Authentication Error Response values (`interaction_required`, `login_required`, `account_selection_required`, `consent_required`) for `prompt=none` are defined in [OIDC section 3.1.2.6](https://openid.net/specs/openid-connect-core-1_0.html#AuthError).
 
