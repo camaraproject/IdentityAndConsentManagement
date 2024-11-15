@@ -70,9 +70,14 @@ The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.n
 
 It is up to the operator to make a decision when consent collection is needed or not, based on the scope(s)/purpose declared by the API client and aligned with local legislation, ensuring that all operators under the same regulatory framework adopt a *consistent* approach.
 
-This document defines that if the optional prompt parameter is absent from the OIDC authentication request then the API consumer uses network-based authentication to identify the subscription. 
-* If the subscription belongs to a business contract then the authorization server MUST return an error.
-* If the subscription belongs to a private contract but there are several contracts to the contract holder then the authorization server MUST return an error.
+This document defines that if the optional prompt parameter is absent from the OIDC authentication request then the API consumer uses network-based authentication to identify the subscription. If the subscription identified by network-based authentication cannot assure that the end-user equals the subscriber then an error MUST be returned.
+
+Examples for cases where the authorization server cannot assue that the end-user equals the subscriber:
+```
+* A business owner has one contract that is associated with multiple MSISDNs
+  then the authorization server cannot assume that the end-user is the subscriber.
+* A family has several contracts which all have the same subscriber then the authorization server cannot assume that the end-user is the subscriber.
+```
 
 The API provider could start User-Interaction to resolve the above cases, but that likely leads to different behaviour by different API producers.
 
