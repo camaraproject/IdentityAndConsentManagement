@@ -116,10 +116,10 @@ box Operator
 end
 
 Note over FE,BE: Use Feature needing<br>Operator Capability  
-BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=invoker_callback...
+BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=api_consumer_callback...
 FE->>+FE: Browser /<br> Embedded Browser
 alt Standard OIDC Auth Code Flow between API Consumer and API Exposure Platform
-  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=invoker_callback...
+  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=api_consumer_callback...
   Note over ExpO: API Exposure Platform applies<br>Network Based Authentication (amr=nba/mnba)
   ExpO->>ExpO: Network Based Authentication:<br>- map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc 
@@ -127,16 +127,16 @@ alt Standard OIDC Auth Code Flow between API Consumer and API Exposure Platform
     ExpO->>Consent: Check if Consent is granted    
   end  
   alt If Consent is Granted or Consent not needed for legal basis   
-    ExpO-->>FE: 302<br>Location: invoker_callback?code=Operatorcode
+    ExpO-->>FE: 302<br>Location: api_consumer_callback?code=Operatorcode
   else If Consent is NOT granted - Consent Capture within AuthCode Flow  
     Note over FE,ExpO: Start user consent capture process<br>following Section 3.1.2.4 of the OIDC Core 1.0 spec.    
     alt If the user refuses consent
-      ExpO-->>FE: 302<br>Location: invoker_callback?error=access_denied
+      ExpO-->>FE: 302<br>Location: api_consumer_callback?error=access_denied
     else If the user grants consent
-      ExpO-->>FE: 302<br>Location: invoker_callback?code=Operatorcode
+      ExpO-->>FE: 302<br>Location: api_consumer_callback?code=Operatorcode
     end
   end
-  FE-->>-BE: GET invoker_callback?code=OperatorCode
+  FE-->>-BE: GET api_consumer_callback?code=OperatorCode
   BE->>ExpO: POST /token<br> code=OperatorCode
   ExpO->>BE: 200 OK <br> {OperatorAccessToken}
 end
@@ -149,9 +149,9 @@ Note over BE,FE: Response
 
 **Flow description**:
 
-Firstly, the API Consumer (for example, the Application Backend) instructs the Application on the Consumption Device to initiate the OIDC Authorization Code Flow with the Operator. The authorization request includes the client_id of the ASP's Application requesting access to the API and the Application's redirect_uri (invoker_callback) where the authorization code will be sent.
+Firstly, the API Consumer (for example, the Application Backend) instructs the Application on the Consumption Device to initiate the OIDC Authorization Code Flow with the Operator. The authorization request includes the client_id of the ASP's Application requesting access to the API and the Application's redirect_uri (api_consumer_callback) where the authorization code will be sent.
 
-As per the standard authorization code flow, the Application is redirected to the Operator's Authorization Server in their API Exposure Platform (Steps 1-2), providing a redirect_uri (invoker_callback) pointing to the ASP's Application Backend (where the auth code will eventually be sent), as well as the Purpose for processing Personal Data.
+As per the standard authorization code flow, the Application is redirected to the Operator's Authorization Server in their API Exposure Platform (Steps 1-2), providing a redirect_uri (api_consumer_callback) pointing to the ASP's Application Backend (where the auth code will eventually be sent), as well as the Purpose for processing Personal Data.
 
 The Operator's API Exposure Platform receives the request from the Application (Step 3) and does the following:
 
@@ -161,12 +161,12 @@ The Operator's API Exposure Platform receives the request from the Application (
 
 Then, two alternatives may occur:
 
-**Scenario 1**: User Consent is not required or User Consent has already been given (Step 7). The API Exposure Platform will continue the authorization code flow by redirecting to the Application's redirect_uri (invoker_callback) and including the authorization code (OperatorCode).
+**Scenario 1**: User Consent is not required or User Consent has already been given (Step 7). The API Exposure Platform will continue the authorization code flow by redirecting to the Application's redirect_uri (api_consumer_callback) and including the authorization code (OperatorCode).
 
 **Scenario 2**: Consent is required and has not yet been provided by the User (Step 8)
 
 - The Operator performs the consent capture following Section 3.1.2.4 of the OpenID Connect Core 1.0 specification. Since the Authorization Code Grant involves the Consumption Device, Consent can be captured directly from the User - however this must be done in a manner that does not allow for background loading and acceptance by a malicious Application.
-- Once the User has given Consent, the flow continues by redirecting to the Application's redirect_uri (invoker_callback) and including the authorization code (OperatorCode).
+- Once the User has given Consent, the flow continues by redirecting to the Application's redirect_uri (api_consumer_callback) and including the authorization code (OperatorCode).
 
 Once the Application receives the redirect with the authorization code (OperatorCode - Steps 9-10), it will retrieve the access token from the operator's API exposure platform (OperatorAccessToken) (Steps 11-12).
 
