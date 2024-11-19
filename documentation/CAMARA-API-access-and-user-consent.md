@@ -118,7 +118,7 @@ end
 Note over FE,BE: Use Feature needing<br>Operator Capability  
 BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=invoker_callback...
 FE->>+FE: Browser /<br> Embedded Browser
-alt Standard OIDC Auth Code Flow between Invoker and API Exposure Platform
+alt Standard OIDC Auth Code Flow between API Consumer and API Exposure Platform
   FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=invoker_callback...
   Note over ExpO: API Exposure Platform applies<br>Network Based Authentication (amr=nba/mnba)
   ExpO->>ExpO: Network Based Authentication:<br>- map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
@@ -212,7 +212,7 @@ autonumber
 title Consume a CAMARA API - CIBA flow
 participant User as End User<br>@Authentication Device
 participant FE as Device App<br>(Consumption Device)
-participant BE as Invoker<br>(Application Backend/Aggregator)  
+participant BE as API Consumer<br>(Application Backend/Aggregator)  
 box Operator
   participant ExpO as API Exposure Platform  
   participant Consent as Consent Master
@@ -221,7 +221,7 @@ end
 Note over FE,BE: Feature needing<br>Operator capability  
 Note over BE: Select User Identifier:<br>Ip:port / Phone Number  
 
-alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between Invoker and Operator.
+alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between API Consumer and Operator.
   BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope=dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint including User Identifier    
   ExpO->>ExpO: - Validate User Identifier<br>- (Opt) map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc
@@ -234,7 +234,7 @@ alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between Invoker
     Note over ExpO,User: User Interaction <br> out-of-band capture consent mechanism chosen by the Operator
     ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"}
   end
-  loop Invoker polls until consent is granted or until expires. If granted in advance, token returned in first poll
+  loop API Consumer polls until consent is granted or until expires. If granted in advance, token returned in first poll
     BE->>+ExpO: POST /token <br>Credentials}<br>auth_req_id={OperatorAuthReqId}    
     ExpO->>-BE: HTTP 200 OK <br>{"access_token": "{OperatorAccessToken}"}
   end  
@@ -257,7 +257,7 @@ The Operator's API Exposure Platform will:
 
 Then, two alternatives may occur.
 
-**Scenario 1**: User Consent is not required or Consent is already granted (Step 5). The API Exposure Platform will return a 200 OK response with the CIBA auth request identifier (auth_req_id=OperatorAuthReqId) to the API Consumer. This is a unique identifier to identify the authentication request made by the Invoker.
+**Scenario 1**: User Consent is not required or Consent is already granted (Step 5). The API Exposure Platform will return a 200 OK response with the CIBA auth request identifier (auth_req_id=OperatorAuthReqId) to the API Consumer. This is a unique identifier to identify the authentication request made by the API Consumer.
 
 **Scenario 2**: Consent is required and has not yet been granted by the User (Step 6)
 
