@@ -66,6 +66,22 @@ All network connections MUST use TLS 1.2 or better.
 
 The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html)
 
+### Signed Request Object
+
+It is RECOMMENDED to use signed Request Object, a [JSON Web Token (JWT) \[RFC7519\]](https://www.rfc-editor.org/rfc/rfc7519.html), passed by value, as specified by [OpenID Connect Core](https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests) and [\[RFC9101\]](https://www.rfc-editor.org/rfc/rfc9101.html#name-request-object-2).
+
+The `sub` (Subject) claim in the signed Request Object MUST NOT be present, to prevent [cross-JWT confusion](https://www.rfc-editor.org/rfc/rfc9101.html#name-cross-jwt-confusion).
+
+The value of `aud` (Audience) claim MUST be the Authorization endpoint as RECOMMENDED by [\[RFC9101\]](https://www.rfc-editor.org/rfc/rfc9101.html#name-explicit-endpoints).
+
+The following query string parameters of the authorization request URI are REQUIRED, the rest of the [request parameters](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) are OPTIONAL:
+- `request` 
+- `client_id`
+- `response_type`
+- `scope`
+- `redirect_uri`
+- `state`
+
 ### Cross-Site Request Forgery Protection
 
 CAMARA REQUIRES cross-site request forgery (CSRF) protection.
