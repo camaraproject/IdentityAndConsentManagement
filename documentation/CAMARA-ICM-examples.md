@@ -92,7 +92,59 @@ login_hint=tel%3A%2B34666666666
 ```
 
 
+#### Successful response
+
+See [CIBA Successful Authentication Response](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.7.3)
+
+```
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "auth_req_id": "3f7b2e8a-9cde-4f3b-8b12-1a2b3c4d5e6f",
+      "expires_in": 120,
+      "interval": 2
+    }
+```
+The Client MUST keep the auth_req_id in order to use when making a token request in Poll mode.
+Expires_in and interval can differ
+
+#### Access token request
+
+See [CIBA Token Request](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.10.1)
 
 
+```
+    POST /token HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/x-www-form-urlencoded
+
+    grant_type=urn%3Aopenid%3Aparams%3Agrant-type%3Aciba&
+    auth_req_id=3f7b2e8a-9cde-4f3b-8b12-1a2b3c4d5e6f&
+    client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3A
+    client-assertion-type%3Ajwt-bearer&
+client_assertion=eyJraWQiOiJzYW1wbGUxIiwibmFtZSI6IkV4YW1wbGUifQ.eyJpc3MiOiJ0ZXN0VXNlciIsInN1YiI6InRlc3RzdWJqZWN0IiwidXNlciI6Imh0dHBzOi8vYXBpLmV4YW1wbGUuY29tIiwianRpIjoiLV9wMTZqNkhjaVhvMzE3aHZaMzEyYyIsImlhdCI6MTYwMDAwMDAwMCwiZXhwIjoxNjAwMDAwNjAwfQ.abcD1234-56efG7hI8jK9lM0nPqRstUvwXYZ
+    
+```
+
+#### Successful response
+
+See [CIBA Successful Token Response](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.10.1.1)
+
+```
+            
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+     "access_token": "G5kXH2wHvUra0sHlDy1iTkDJgsgUO1bN",
+     "token_type": "Bearer",
+     "refresh_token": "4bwc0ESC_IAhflf-ACC_vjD_ltc11ne-8gFPfA2Kx16",
+     "expires_in": 120,
+     "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE2NzcyNyJ9.eyJpc3MiOiJodHRwczovL3NlcnZlci5leGFtcGxlLmNvbSIsInN1YiI6IjI0ODI4OTc2MTAwMiIsImF1ZCI6InM2QmhkUmtxdDMiLCJlbWFpbCI6Im1vY2tAZXhhbXBsZS5jb20iLCJleHAiOjE1Mzc4MTk4MDQsImlhdCI6MTUzNzgxOTUwNH0.bVq83mdy72ddIFVJLjlNBX-5JHbjmwK-Sn9Mir-blesfYMceIOw6u4GOrO_ZroDnnbJXNKWAg_dxVynvMHnk3uJc46feaRIL4zfHf6Anbf5_TbgMaVO8iczD16A5gNjSD7yenT5fslrrW-NU_vtmi0s1puoM4EmSaPXCR19vRJyWuStJiRHK5yc3BtBlQ2xwxH1iNP49rGAQe_LHfW1G74NY5DaPv-V23JXDNEIUTY-jT-NbbtNHAxnhNPyn8kcO2WOoeIwANO9BfLF1EFWtjGPPMj6kDVrikec47yK86HArGvsIIwk1uExynJIv_tgZGE0eZI7MtVb2UlCwDQrVlg"
+    }
+```
 
 
