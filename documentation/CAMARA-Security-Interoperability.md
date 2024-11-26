@@ -64,7 +64,9 @@ All network connections MUST use TLS 1.2 or better.
 
 ### Sender-Constraint Tokens
 
-Following the recommendation from [OAuth 2.0 Security Best Current Practice](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics#section-2.2.1) authorization and resource servers SHOULD use mechanisms for sender-constraining access tokens. This document RECOMMENDS Demonstrating Proof of Possession (DPoP) [RFC9449](https://datatracker.ietf.org/doc/html/rfc9449), to prevent misuse of stolen and leaked access tokens.
+[OAuth 2.0 Security Best Current Practice](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics#section-2.2.1) and the [FAPI 2.0 Baseline Profile](https://openid.net/specs/fapi-2_0-baseline-01.html) bothe RECOMMEND that authorization and resource servers use mechanisms for sender-constraining access tokens. This document states that Demonstrating Proof of Possession (DPoP) [RFC9449](https://datatracker.ietf.org/doc/html/rfc9449) MAY be used by API Consumers, to prevent misuse of stolen and leaked access tokens. CAMARA authorization servers MUST not respond with an error if they do not support DPoP. DPoP allows authorization servers to issue tokens that are not sender-constrained even if a valid DPoP header is present in the authorization request. It is up to the API consumer to decide whether none-sender-constrained tokens meets their security requirements.
+Support for DPoP MAY be expressed by the server metadata field `dpop_signing_alg_values_supported`. If the value of that field is the empty list then DPoP is not supported.
+API consumers with high security demands that e.g. want to achieve EIDAS LOA high can be set to be required to always send DPoP requests. This requirement is expressed by the API consumer's metadata in the field `dpop_bound_access_tokens`. This requirement on the API consumer is determined at onboarding time.
 
 ## OIDC Authorization Code Flow
 
