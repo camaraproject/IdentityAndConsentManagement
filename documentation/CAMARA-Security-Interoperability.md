@@ -7,6 +7,7 @@
    * [Conventions](#conventions)
    * [General Considerations](#general-considerations)
       + [Transport Security](#transport-security)
+      + [Sender-Constrained Tokens](sender-constrained-tokens)
    * [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
       + [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
    * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
@@ -62,7 +63,7 @@ Unless otherwise noted, all the protocol parameter names and values are case sen
 ### Transport Security
 All network connections MUST use TLS 1.2 or better.
 
-### Sender-Constraint Tokens
+### Sender-Constrained Tokens
 
 [OAuth 2.0 Security Best Current Practice](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics#section-2.2.1) and the [FAPI 2.0 Baseline Profile](https://openid.net/specs/fapi-2_0-baseline-01.html) bothe RECOMMEND that authorization and resource servers use mechanisms for sender-constraining access tokens. This document states that Demonstrating Proof of Possession (DPoP) [RFC9449](https://datatracker.ietf.org/doc/html/rfc9449) MAY be used by API Consumers, to prevent misuse of stolen and leaked access tokens. CAMARA authorization servers MUST not respond with an error if they do not support DPoP. DPoP allows authorization servers to issue tokens that are not sender-constrained even if a valid DPoP header is present in the authorization request. It is up to the API consumer to decide whether none-sender-constrained tokens meets their security requirements.
 Support for DPoP MAY be expressed by the server metadata field `dpop_signing_alg_values_supported`. If the value of that field is the empty list then DPoP is not supported.
