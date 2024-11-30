@@ -36,7 +36,7 @@ NOTE: The Working Group release numbering has been updated to adopt the same rel
 ### Changed
 
 * Updated the `CAMARA-Security-Interoperability.md` document to replace Telco and Operator terms with API Provider by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/201
-* Updated terms and definitions in the `CAMARA-API-access-and-user-consent.md` for better writing and understanding by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/212
+* Updated terms and definitions in the `CAMARA-API-access-and-user-consent.md` for better writing and understanding by @jpengar and @chrishowell in https://github.com/camaraproject/IdentityAndConsentManagement/pull/212
 * Updated the `CAMARA-API-access-and-user-consent.md` document with editorial and general writing improvements by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/213
 
 ### Fixed
