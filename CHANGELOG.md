@@ -2,11 +2,53 @@
 
 ## Table of Contents
 
-- [r0.2.1](#r021)
-- [r0.2.0](#r020)
-- [r0.2.0-rc.2](#r020-rc2)
-- [v0.2.0-rc.1](#v020-rc1)
-- [v0.1.0 - Initial version](#v010---initial-version)
+- **[r2.1](#r21)**
+- **[r0.2.1](#r021)**
+- **[r0.2.0](#r020)**
+- **[r0.2.0-rc.2](#r020-rc2)**
+- **[v0.2.0-rc.1](#v020-rc1)**
+- **[v0.1.0 - Initial version](#v010---initial-version)**
+
+**Please be aware that the project will have frequent updates to the main branch. There are no compatibility guarantees associated with code in any branch, including main, until it has been released. For example, changes may be reverted before a release is published. For the best results, use the latest published release.**
+
+The below sections record the changes in each release as follows:
+
+* for an alpha release, the delta with respect to the previous release
+* for the first release-candidate, all changes since the last public release
+* for subsequent release-candidate(s), only the delta to the previous release-candidate
+* for a public release, the consolidated changes since the previous public release
+
+# r2.1
+
+## Release Notes
+
+This pre-release contains the definition and documentation of:
+
+* "Identity and Consent Management" v0.3.0-alpha.1
+
+NOTE: The Working Group release numbering has been updated to adopt the same release notation as is used for API sub-projects.
+
+### Added
+
+* Recommend signed authentication requests for CIBA by @eric-murray in https://github.com/camaraproject/IdentityAndConsentManagement/pull/217
+* Operator token login_hint format by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/218
+
+### Changed
+
+* Updated the `CAMARA-Security-Interoperability.md` document to replace Telco and Operator terms with API Provider by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/201
+* Updated terms and definitions in the `CAMARA-API-access-and-user-consent.md` for better writing and understanding by @jpengar and @chrishowell in https://github.com/camaraproject/IdentityAndConsentManagement/pull/212
+* Updated the `CAMARA-API-access-and-user-consent.md` document with editorial and general writing improvements by @jpengar and @chrishowell in https://github.com/camaraproject/IdentityAndConsentManagement/pull/213
+
+### Fixed
+
+* Fixed error description for missing openid scope in the `CAMARA-Security-Interoperability.md` document by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/210
+* Clarify case sensitivity of parameter names and values in the `CAMARA-Security-Interoperability.md` document by @eric-murray in https://github.com/camaraproject/IdentityAndConsentManagement/pull/221
+
+### Removed
+
+N/A
+
+**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/r0.2.1...r2.1
 
 # r0.2.1
 
