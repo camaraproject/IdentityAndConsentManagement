@@ -335,17 +335,16 @@ The {scope} is the specific scope defined to protect this operation.
 
 ### Mandatory template for `info.description` in CAMARA API specs
 
-The documentation template below must be used as part of the API documentation in  `info.description` property in the CAMARA API specs:
-
+The documentation template below must be used as part of the API documentation in `info.description` property in the CAMARA API specs:
 
 ```
 ### Authorization and authentication
 
-The "Camara Security and Interoperability Profile" provides details on how a client requests an access token. Please refer to Identify and Consent Management (https://github.com/camaraproject/IdentityAndConsentManagement/) for the released version of the Profile.
+The "Camara Security and Interoperability Profile" provides details of how an API consumer requests an access token. Please refer to Identity and Consent Management (https://github.com/camaraproject/IdentityAndConsentManagement/) for the released version of the profile.
 
-Which specific authorization flows are to be used will be determined during onboarding process, happening between the API Client and the Telco Operator exposing the API, taking into account the declared purpose for accessing the API, while also being subject to the prevailing legal framework dictated by local legislation.
+The specific authorization flows to be used will be agreed upon during the onboarding process, happening between the provider of the application consuming the API and the operator's API exposure platform, taking into account the declared purpose for accessing the API, whilst also being subject to the prevailing legal framework dictated by local legislation.
 
-It is important to remark that in cases where personal user data is processed by the API, and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of 3-legged access tokens becomes mandatory. This measure ensures that the API remains in strict compliance with user privacy preferences and regulatory obligations, upholding the principles of transparency and user-centric data control.
+In cases where personal data is processed by the API and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of three-legged access tokens is mandatory. This ensures that the API remains in compliance with privacy regulations, upholding the principles of transparency and user-centric privacy-by-design.
 ```
 
-It tells potential API customers why the API specification does not list specific grant types, and how to find out what authorization flows they can use.
+This statement informs potential API customers why the API specification does not list specific grant types and how to find out which authorization flows they can use.
