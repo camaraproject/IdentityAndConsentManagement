@@ -12,7 +12,8 @@ This document defines guidelines for Operator API Exposure Platforms to manage C
     - [Using Purpose within the authorization request](#using-purpose-within-the-authorization-request)
   - [User Authentication/Authorization \& Consent Management](#user-authenticationauthorization--consent-management)
     - [Authorization flows / grant types](#authorization-flows--grant-types)
-      - [Authorization code flow (Frontend flow)](#authorization-code-flow-frontend-flow)
+      - [Authorization Code Flow (Frontend Flow) using Network-based Authentication](#authorization-code-flow-frontend-flow-using-network-based-authentication)
+      - [Authorization Code Flow (Frontend Flow) using Operator Token](#authorization-code-flow-frontend-flow-using-operator_token)
       - [CIBA flow (Backend flow)](#ciba-flow-backend-flow)
       - [Client Credentials](#client-credentials)
   - [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
@@ -83,12 +84,12 @@ This section describes the authorization flows that can be used to access CAMARA
 
 Note: In cases where Personal Data is processed by a CAMARA API, and Users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of Three-Legged Access Tokens is mandatory.
 
-#### Authorization Code Flow (Frontend Flow)
+#### Authorization Code Flow (Frontend Flow) using Network-based Authentication
 
 ```mermaid
 sequenceDiagram
 autonumber
-title Consume a CAMARA API - Authorization Code Flow (FrontEnd)
+title Consume a CAMARA API - Authorization Code Flow (FrontEnd) using Network-based Authentication of the Subscriber
 participant FE as Application on Consumption Device
 participant BE as Application<br>(Application Backend/Aggregator)
 box Operator
@@ -184,6 +185,115 @@ The Application on the Consumption Device must be able to handle browser redirec
     - On-net (with mobile connection) & application front-end (with embedded browser)
     - Off-net scenarios using refresh_token, as long as there was a connection when the first access_token was requested.
 
+#### Authorization Code Flow (Frontend Flow) using Operator Token
+
+This flow describes how an access token can be retrieved even if there is no mobile connection e.g. when the device has a SIM-card and some IP  connection (WiFi).
+
+```mermaid
+sequenceDiagram
+autonumber
+title Consume a CAMARA API - Authorization Code Flow (FrontEnd) using Operator Token
+participant FE as Application on Consumption Device
+participant BE as Application<br>(Application Backend/Aggregator)
+box API provider
+  participant ExpO as API Exposure Platform
+  participant Consent as Consent Master
+end
+
+Note over FE,FE: Get Operator Token  
+
+Note over FE,BE: Use CAMARA API
+BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&login_hint=operatortoken:ey...a0&redirect_uri=api_consumer_callback...
+FE->>+FE: Browser /<br> Embedded Browser
+alt Standard OIDC Auth Code Flow between API Consumer and API Exposure Platform
+  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&login_hint=operatortoken:ey...a0<br>&redirect_uri=api_consumer_callback...
+  ExpO->>ExpO: Decrypt and Validate the Operator Token:<br>- map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
+  ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc 
+  opt If User Consent is required for the legal basis of the purpose  
+    ExpO->>Consent: Check if Consent is granted    
+  end  
+  alt If Consent is Granted or Consent not needed for legal basis   
+    ExpO-->>FE: 302<br>Location: api_consumer_callback?code=Operatorcode
+  else If Consent is NOT granted - Consent Capture within AuthCode Flow  
+    Note over FE,ExpO: Start user consent capture process<br>following Section 3.1.2.4 of the OIDC Core 1.0 spec.    
+    alt If the user refuses consent
+      ExpO-->>FE: 302<br>Location: api_consumer_callback?error=access_denied
+    else If the user grants consent
+      ExpO-->>FE: 302<br>Location: api_consumer_callback?code=Operatorcode
+    end
+  end
+  FE-->>-BE: GET api_consumer_callback?code=OperatorCode
+  BE->>ExpO: POST /token<br> code=OperatorCode
+  ExpO->>BE: 200 OK <br> {OperatorAccessToken}
+end
+
+BE->>ExpO: Access Operator CAMARA API <br> Authorization: Bearer {OperatorAccessToken}        
+ExpO->>ExpO: Decrypt OperatorAccessToken,<br>grants Access,<br>progresses request to API Backend,<br>gets API response  
+ExpO->>BE: CAMARA API Response
+Note over BE,FE: Response
+```
+
+**Flow description**:
+
+How the Operator Token is retrieved from the API provider is out of scope of this document. There might be a mobile operating system method allowing mobile applications to retrieve an operator token, or an operator provided application that allows any mobile application to retrieve an operator token, or some other mechanism. 
+
+The format of the Operator Token is out of scope fo this document. If the Operator Token contains personal information that confidential information must be protected. If the Operator Token contains routing information that e.g. the Aggregator needs to know then that routing information can be encrypted to the Aggregator and the personal information of the User can be encrytpted to the API Exposure platform.
+
+Operator Token is standardized be GSMA in [TS.43](https://www.gsma.com/newsroom/gsma_resources/ts-43-service-entitlement-configuration/) and [ASAC](https://www.gsma.com/newsroom/gsma_resources/asac-01/).
+
+The API Consumer (for example, the Application Backend) instructs the Application on the Consumption Device to initiate the OIDC Authorization Code Flow with the Operator. The authorization request includes the client_id of the ASP's Application requesting access to the API and the Application's redirect_uri (api_consumer_callback) where the authorization code will be sent. The authorization request includes the operator token in the `login_hint` OIDC parameter.
+
+As per the standard authorization code flow, the Application is redirected to the Authorization Server in their API Exposure Platform (Steps 1-2), providing a redirect_uri (api_consumer_callback) pointing to the ASP's Application Backend (where the auth code will eventually be sent), as well as the Purpose for processing Personal Data.
+
+The API Exposure Platform receives the request from the Application (Step 3) and does the following:
+
+- Decrypt and validate the operator token. Obtain the Subscriber's unique identifier,e.g.: phone number or IMSI. Sets the id_token sub to a unique user ID and associates the sub with the access token. The id_token sub MUST NOT reveal information to the Application, as authentication has not yet been performed. (Step 4).
+
+- Checks if User Consent is required, which depends on the legal basis associated with the Scope and Purpose. If necessary, it will check in the API Provider's Consent Master whether User Consent has already been given for this Application, Scope and Purpose (Steps 5-6).
+
+Then, two alternatives may occur:
+
+**Scenario 1**: User Consent is not required or User Consent has already been given (Step 7). The API Exposure Platform will continue the authorization code flow by redirecting to the Application's redirect_uri (api_consumer_callback) and including the authorization code (OperatorCode).
+
+**Scenario 2**: Consent is required and has not yet been provided by the User (Step 8)
+
+- The API provider performs the consent capture following Section 3.1.2.4 of the OpenID Connect Core 1.0 specification. Since the Authorization Code Grant involves the Consumption Device, Consent can be captured directly from the User - however this must be done in a manner that does not allow for background loading and acceptance by a malicious Application.
+- Once the User has given Consent, the flow continues by redirecting to the Application's redirect_uri (api_consumer_callback) and including the authorization code (OperatorCode).
+
+Once the Application receives the redirect with the authorization code (OperatorCode - Steps 9-10), it will retrieve the access token from the operator's API exposure platform (OperatorAccessToken) (Steps 11-12).
+
+Now the Application has a valid access token that can be used to invoke the CAMARA API offered by the Operator (Step 13).
+
+The API Exposure Platform will validate OperatorAccessToken, grant the access to the API based on the Scopes bound to the access token, progress the request to the corresponding API backend and retrieve the API response (Step 14).
+
+Finally, the API response is provided to the Application (Step 15).
+
+<br>
+
+**Technical ruleset for the Frontend flow**
+
+_NOTE: The technical ruleset is applicable only after a subproject has agreed to use a Three-Legged Access Token authentication flow. This ruleset provides a recommendation which will help API providers to align on the Three-Legged Access Token Flow and help with aggregation._
+
+If all API usecases point to the need of an 'On-Net' scenario and where the Consumption Device and Authentication Device are the same, the Frontend flow SHOULD be used. eg. NumberVerification
+
+This flow is then applicable to scenarios where the subscriber of the Consumption Device needs to be authenticated e.g. [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification/blob/main/documentation/API_documentation/assets/uml_v0.3.jpg) due to the nature of its functionality where a User's MSISDN needs to be compared to the MSISDN associated with the mobile connection of the Consumption Device. 
+
+The Application on the Consumption Device must be able to handle browser redirects.
+
+  - Identity: 
+    - Identification of the subscriber by operator token.
+  - AuthZ/AuthN:
+    - Standard OIDC Authorization Code Grant flow
+    - Operator token based authentication.
+      - The operator token is based on hardware-based authentication by the SIM-card (EAP-AKA). The operator token is associated with the subscriber and the subscriber data can thus be associated with the access token. Set the id_token sub to the unique user ID of the operator.
+    - Three-Legged Access Token. Each access session is associated with the Operator, a client_id (which must be the final application using the information) and the corresponding User identifier.
+  - Consent management:
+    - Check if User Consent is required as the lawful basis associated with the declared Scope and Purpose. 
+      - If necessary, it will be checked in the API provider's consent master whether User Consent has already been given to the application for the user identifier and declared purpose.
+    - If NOT granted, the operator performs the consent capture. Since the authorization code grant involves the interaction with application front-end, consent can be captured directly from the user through the application browser.
+  - Covered scenarios:
+    - All scenatios where the device has a SIM-card and an IP connection e.g. WiFi to the operator's entitlement configuration server & application front-end (with embedded browser)
+    - Off-net scenarios using refresh_token, as long as there was a sim-based authentication when the first access_token was requested.
 
 #### CIBA flow (Backend flow)
 
