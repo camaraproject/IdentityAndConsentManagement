@@ -72,7 +72,6 @@ This document states that Demonstrating Proof of Possession (DPoP) [RFC9449](htt
 CAMARA authorization servers MUST NOT respond with an error if they do not support DPoP. DPoP allows authorization servers to issue tokens that are not sender-constrained even if a valid DPoP header is present in the authorization request. It is up to the API consumer to decide whether none-sender-constrained tokens meet their security requirements.
 
 If the API Provider supports DPoP, support for it MAY be expressed by the server metadata field `dpop_signing_alg_values_supported` or alternate API documentation.
-If the API Provider supports DPoP, the API Consumer MUST use DPoP.
 
 API consumers with high security demands that e.g. want to achieve EIDAS LOA high can be set to be required to always send DPoP requests. This requirement is expressed by the API consumer's metadata in the field `dpop_bound_access_tokens`. This requirement on the API consumer is determined at onboarding time.
 
