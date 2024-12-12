@@ -76,6 +76,23 @@ If the API Provider supports DPoP, the API Consumer MUST use DPoP.
 
 API consumers with high security demands that e.g. want to achieve EIDAS LOA high can be set to be required to always send DPoP requests. This requirement is expressed by the API consumer's metadata in the field `dpop_bound_access_tokens`. This requirement on the API consumer is determined at onboarding time.
 
+The following table illustrated the expected behaviour of the API Provider at the API endpoint.
+
+| API Consumer   | API Provider    |Proof Presented?     | Provider Behavior          |
+| -------------- | --------------  |----------| -------------------------------------------------------------------------------------|                                                                               
+| Supports DPoP  | Supports DPoP   | Yes      | MUST process the proof                                                      |
+| Supports DPoP  | Supports DPoP   | No       | MUST validate the bearer token                                              |
+| Supports DPoP  | Requires DPoP   | Yes      | MUST process the proof                                                      |                                                                                       
+| Supports DPoP  | Requires DPoP   | No       | MUST return an appropriate HTTP error with details in the custom message text        |
+| Supports DPoP  | No DPoP Support | Yes      | MUST drop the HTTP parameter                                                         |
+| Supports DPoP  | No DPoP Support | No       | MUST validate the bearer token                          |
+| Requires DPoP  | Supports DPoP   | Yes      | MUST process the Proof                                                      |
+| Requires DPoP  | Requires DPoP   | Yes      | MUST process the Proof                                                      |
+| Requires DPoP  | No DPoP Support | Yes      | MUST drop the unrecognized HTTP header                                      |
+| No DPoP Support| Supports DPoP   | No       | MUST validate the bearer token                          |
+| No DPoP Support| Requires DPoP   | No       | MUST return an appropriate HTTP error with details in the custom message text        |
+| No DPoP Support| No DPoP Support | No       | MUST validate the bearer token                        |
+
 ## OIDC Authorization Code Flow
 
 The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html)
