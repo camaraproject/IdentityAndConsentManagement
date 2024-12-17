@@ -33,7 +33,7 @@
   * [Client Authentication](#client-authentication)
   * [OpenId Foundation Certification](#openid-foundation-certification)
   * [References](#references)
-  * [Appendix A: Error Responses](#appendix-a-error-responses)
+  * [Appendix A (Normative): Error Responses](#appendix-a-normative-error-responses)
     * [Authentication Error Response](#authentication-error-response)
       * [Authorization Code Flow](#authorization-code-flow)
       * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow-1)
