@@ -73,7 +73,7 @@ The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.n
 
 ### Optional Parameters
 
-The [OIDC Authentication Request](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) defines `login_hint` as an OPTIONAL request parameter. CAMARA does not define any additional handling for this parameter in OIDC Authorization Code Flow. To ensure better interoperability, CAMARA RECOMMENDS that if `login_hint` parameter is present in the authentication request and the athorization server does not use it, it SHOULD ignore it.  
+The [OIDC Authentication Request](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) defines `login_hint` as an OPTIONAL request parameter. CAMARA does not define a specific handling for this parameter in OIDC Authorization Code Flow. To ensure better interoperability, CAMARA RECOMMENDS that if `login_hint` parameter is present in the authentication request and the athorization server does not use it, it SHOULD ignore it.  
 
 ### Cross-Site Request Forgery Protection
 
