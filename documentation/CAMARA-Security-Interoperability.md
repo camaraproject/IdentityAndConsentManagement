@@ -2,32 +2,37 @@
 
 ## Table of Contents
 
-   * [Introduction](#introduction)
-   * [Audience](#audience)
-   * [Conventions](#conventions)
-   * [General Considerations](#general-considerations)
-      + [Transport Security](#transport-security)
-   * [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
-      + [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
-   * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
-      + [Optional Parameters](#optional-parameters)
-      + [Authentication Request](#authentication-request)
-   * [Format of `login_hint`](#format-of-login_hint)
-   * [Offline Access](#offline-access)
-         - [Refresh Token Issuance](#refresh-token-issuance)
-      + [Refresh Token Usage](#refresh-token-usage)
-      + [Refresh Token Security](#refresh-token-security)
-   * [Client Credentials Flow](#client-credentials-flow)
-   * [Handling of acr_values](#handling-of-acr_values)
-   * [Access Token Request](#access-token-request)
-   * [The Scope Parameter](#the-scope-parameter)
-   * [Missing "openid" scope](#missing-openid-scope)
-   * [Purpose](#purpose)
-   * [ID Token](#id-token)
-      + [ID Token sub claim](#id-token-sub-claim)
-   * [Client Authentication](#client-authentication)
-   * [OpenId Foundation Certification](#openid-foundation-certification)
-   * [References](#references)
+- [CAMARA Security and Interoperability Profile](#camara-security-and-interoperability-profile)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Audience](#audience)
+  - [Conventions](#conventions)
+  - [General Considerations](#general-considerations)
+    - [Transport Security](#transport-security)
+  - [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
+    - [Optional Parameters](#optional-parameters)
+    - [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
+  - [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
+    - [Optional Parameters](#optional-parameters-1)
+    - [Authentication Request](#authentication-request)
+  - [Format of `login_hint`](#format-of-login_hint)
+  - [Offline Access](#offline-access)
+      - [Refresh Token Issuance](#refresh-token-issuance)
+    - [Refresh Token Usage](#refresh-token-usage)
+    - [Refresh Token Security](#refresh-token-security)
+  - [Client Credentials Flow](#client-credentials-flow)
+  - [Handling of acr\_values](#handling-of-acr_values)
+  - [Access Token Request](#access-token-request)
+  - [The Scope Parameter](#the-scope-parameter)
+  - [Missing "openid" scope](#missing-openid-scope)
+  - [Purpose](#purpose)
+    - [Purpose as a scope](#purpose-as-a-scope)
+    - [Outlook on purpose-handling leveraging Rich Authorization Request](#outlook-on-purpose-handling-leveraging-rich-authorization-request)
+  - [ID Token](#id-token)
+    - [ID Token sub claim](#id-token-sub-claim)
+  - [Client Authentication](#client-authentication)
+  - [OpenId Foundation Certification](#openid-foundation-certification)
+  - [References](#references)
 
 <!-- TOC end -->
 
@@ -65,6 +70,10 @@ All network connections MUST use TLS 1.2 or better.
 ## OIDC Authorization Code Flow
 
 The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html)
+
+### Optional Parameters
+
+The [OIDC Authentication Request](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) defines `login_hint` as an OPTIONAL request parameter. CAMARA does not define any additional handling for this parameter in OIDC Authorization Code Flow. To ensure better interoperability, CAMARA RECOMMENDS that if `login_hint` parameter is present in the authentication request and the athorization server does not use it, it SHOULD ignore it.  
 
 ### Cross-Site Request Forgery Protection
 
