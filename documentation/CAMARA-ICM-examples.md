@@ -74,7 +74,7 @@ Content-Type: application/json
   "refresh_token": "8xLOxBtZp8",
   "expires_in": 3600,
   "id_token": "eyJhbGciOiJSUz....",
-  "scope": "dpv:FraudPreventionAndDetection sim-swap:check sim-swap:retrieve-date"
+  "scope": "dpv:FraudPreventionAndDetection sim-swap:retrieve-date"
 }
 ```
 
