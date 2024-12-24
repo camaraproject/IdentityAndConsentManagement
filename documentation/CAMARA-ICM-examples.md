@@ -83,12 +83,17 @@ Content-Type: application/json
 See [CIBA authentication request](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.7.1)
 
 ```
-POST /bc-authorize HTTP/1.1
+   POST /bc-authorize HTTP/1.1
    Host: server.example.com
    Content-Type: application/x-www-form-urlencoded
 
-scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date&
-login_hint=tel%3A%2B34666666666
+   scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date&
+   client_notification_token=8d67dc78-7faa-4d41-aabd-67707b374255&
+   binding_message=W4SCT&
+   login_hint_token=tel%3A%2B34666666666&
+   client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3A
+   client-assertion-type%3Ajwt-bearer&
+client_assertion=eyJraWQiOiJleGFtcGxlS2V5IiwibmFtZSI6IkpvaG4gRG9lIiwic3ViIjoiVXNlciIsImF1ZCI6Imh0dHBzOi8vZXhhbXBsZS5jb20iLCJpYXQiOjE2MzQ5MjM0NTYsImV4cCI6MTYzNDkyNzA1Nn0.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjM0OTIzNDU2fQ.5eym8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q
 ```
 
 
