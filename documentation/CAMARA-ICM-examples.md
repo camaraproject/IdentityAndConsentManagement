@@ -77,6 +77,8 @@ Content-Type: application/json
   "scope": "dpv:FraudPreventionAndDetection sim-swap:retrieve-date"
 }
 ```
+In this example, scopes differs from the one defined in the /authorize. If scopes are identical in /authorize and in the successful response, parameter scope isn't returned.
+
 
 #### CIBA authentication request with one purpose and two scopes
 
