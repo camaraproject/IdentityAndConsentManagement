@@ -7,7 +7,7 @@
    * [Conventions](#conventions)
    * [General Considerations](#general-considerations)
       + [Transport Security](#transport-security)
-      + [Sender-Constrained Tokens](sender-constrained-tokens)
+      + [Sender-Constrained Tokens](#sender-constrained-tokens)
    * [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
       + [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
    * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
