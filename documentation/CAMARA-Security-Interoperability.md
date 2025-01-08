@@ -75,22 +75,16 @@ If the API Provider supports DPoP, support for it MAY be expressed by the server
 
 API consumers with high security demands that e.g. want to achieve EIDAS LOA high can be set to be required to always send DPoP requests. This requirement is expressed by the API consumer's metadata in the field `dpop_bound_access_tokens`. This requirement on the API consumer is determined at onboarding time.
 
-The following table illustrated the expected behaviour of the API Provider at the API endpoint.
+The following table defines the REQUIRED behaviour of the API Provider for the `/token` endpoint, dependent on whether a DPoP proof is provided, and the API Provider's own level of DPoP support.
 
-| API Consumer   | API Provider    |Proof Presented?     | Provider Behavior          |
-| -------------- | --------------  |----------| -------------------------------------------------------------------------------------|                                                                               
-| Supports DPoP  | Supports DPoP   | Yes      | MUST process the proof                                                      |
-| Supports DPoP  | Supports DPoP   | No       | MUST validate the bearer token                                              |
-| Supports DPoP  | Requires DPoP   | Yes      | MUST process the proof                                                      |                                                                                       
-| Supports DPoP  | Requires DPoP   | No       | MUST return an appropriate HTTP error with details in the custom message text        |
-| Supports DPoP  | No DPoP Support | Yes      | MUST drop the HTTP parameter                                                         |
-| Supports DPoP  | No DPoP Support | No       | MUST validate the bearer token                          |
-| Requires DPoP  | Supports DPoP   | Yes      | MUST process the Proof                                                      |
-| Requires DPoP  | Requires DPoP   | Yes      | MUST process the Proof                                                      |
-| Requires DPoP  | No DPoP Support | Yes      | MUST drop the unrecognized HTTP header                                      |
-| No DPoP Support| Supports DPoP   | No       | MUST validate the bearer token                          |
-| No DPoP Support| Requires DPoP   | No       | MUST return an appropriate HTTP error with details in the custom message text        |
-| No DPoP Support| No DPoP Support | No       | MUST validate the bearer token                        |
+| DPoP Proof Provided | API Provider DPoP Support  | Token Type Issued  |
+|:-----------------------:|:-------------------------------:|:-------------------:|                                                                               
+| Yes                              | No DPoP Support                  | Bearer token        |
+| Yes                              | Supports DPoP                      | DPoP token          |
+| Yes                              | Requires DPoP                       | DPoP token          |                                                                                       
+| No                               | No DPoP Support                 | Bearer token         |
+| No                               | Supports DPoP                     | Bearer token         |
+| No                               | Requires DPoP                      | HTTP 400 `invalid_dpop_proof`<br>(see RFC [9449](https://www.rfc-editor.org/rfc/rfc9449.html#name-oauth-extensions-error-regi)) |
 
 ## OIDC Authorization Code Flow
 
