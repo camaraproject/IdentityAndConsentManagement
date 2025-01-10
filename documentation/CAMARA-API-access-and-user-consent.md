@@ -80,7 +80,7 @@ If the API Consumer wants to make sure that no User-Interaction happens they MUS
 
 It is up to the operator to make a decision when consent collection is needed or not, based on the scope(s)/purpose declared by the API Consumer and aligned with local legislation, ensuring that all operators under the same regulatory framework adopt a **consistent** approach.
 
-The API Consumer can use the `prompt` parameter value `consent` to ask the API Provider for End-User Consent collection.
+The API Consumer MAY use the `prompt` parameter value `consent` to ask the API Provider for End-User Consent collection.
 > The Authorization Server SHOULD prompt the End-User for consent before returning information to the Client. If it cannot obtain consent, it MUST return an error, typically consent_required.
 
 The `prompt` parameter is defined in [OIDC section 3.1.2.1](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest).
