@@ -100,7 +100,7 @@ Note over FE,BE: Use Feature needing<br>Operator Capability
 BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=invoker_callback...
 FE->>+FE: Browser /<br> Embedded Browser
 alt Standard OIDC Auth Code Flow between Invoker and API Exposure Platform
-  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=invoker_callback...
+  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&acr_values=https%3A%2F%2Fcamaraproject.org%2Facr%2Fnetworkbasedauthentication<br>&redirect_uri=invoker_callback...
   Note over ExpO: API Exposure Platform applies<br>Network Based Authentication (amr=nba/mnba)
   ExpO->>ExpO: Network Based Authentication:<br>- map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc 
@@ -136,7 +136,7 @@ As per the standard authorization code flow, the Application is redirected to th
 
 The Operator's API Exposure Platform receives the request from the Application (Step 3) and does the following:
 
-- Uses network based authentication to obtain the Subscriber's unique identifier,e.g.: phone number or IMSI. Sets the id_token sub to a unique user ID and associates the sub with the access token. The id_token sub MUST NOT reveal information to the Application, as authentication has not yet been performed. (Step 4).
+- If the parameter `acr_values=https%3A%2F%2Fcamaraproject.org%2Facr%2Fnetworkbasedauthentication` is received, then the authorization server uses network based authentication to obtain the Subscriber's unique identifier,e.g.: phone number or IMSI. Sets the id_token sub to a unique user ID and associates the sub with the access token. The id_token sub MUST NOT reveal information to the Application, as authentication has not yet been performed. (Step 4). If network-based authentication is not requested, then  the authorization server continues with the flow as defined in the OIDC standard.
 
 - Checks if User Consent is required, which depends on the legal basis associated with the Scope and Purpose. If necessary, it will check in the Operator's Consent Master whether User Consent has already been given for this Application, Scope and Purpose (Steps 5-6).
 
