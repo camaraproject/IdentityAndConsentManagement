@@ -112,7 +112,7 @@ See [CIBA Successful Authentication Response](https://openid.net/specs/openid-cl
     }
 ```
 The Client MUST keep the `auth_req_id` in order to use it when making a token request in Poll mode.
-Please note that the values for `expires_in` and `interval` may differ.
+Please note that the values for `expires_in` and `interval` may be different from those in the example.
 
 #### Access token request
 
