@@ -8,6 +8,7 @@
    * [General Considerations](#general-considerations)
       + [Transport Security](#transport-security)
    * [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
+      + [Signed Authentication Requests](#signed-authentication-requests)
       + [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
    * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
       + [Optional Parameters](#optional-parameters)
@@ -66,7 +67,15 @@ All network connections MUST use TLS 1.2 or better.
 
 The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html)
 
-It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC](https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests). The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication). This document recommends in the [client credentials section](#client-authentication) that the `aud` value SHOULD be the URL of the Authorization Server's [Token Endpoint](https://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint). The same recommendation is given for the `aud` value of the signed request object.
+### Signed Authentication Requests
+
+It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC](https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests). The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication). 
+
+It is RECOMMENDED that the value of the `aud` field of the signed authentication request is the URL of the [Authorization Endpoint](https://openid.net/specs/openid-connect-core-1_0.html#AuthorizationEndpoint).
+The authorization server MAY accept different values of the `aud` field e.g. the `issuer` field of its [OpenID Provider Metadata](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata). 
+The authorization server MUST check the value of the `aud` field and reject signed authentication requests if the value of the `aud` is not associated with the authorization server.
+
+Note: Care must be taken in a multi-tenant environment that a signed authentication request for one tenant is not accepted at another tenant endpoint.
 
 ### Cross-Site Request Forgery Protection
 
