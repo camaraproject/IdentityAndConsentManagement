@@ -181,7 +181,7 @@ This documents defines that CAMARA OpenId Providers MUST ignore the parameter ac
 If the [OIDC Authentication Request](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) has the `acr_values` parameter with the value "https://camaraproject.org/acr/networkbasedauthentication" then the authorization server MUST try to identify the subscriber through network-based authentication. The [ID Token](https://openid.net/specs/openid-connect-core-1_0.html#IDToken) returned from the token endpoint SHALL then contain an Authentication Methods References field `amr` which MUST contain the value "https://camaraproject.org/acr/networkbasedauthentication". 
 If the OIDC authentication request is not made over a connection where the API provider can do network-based authentication, then the error code of the [Authentication Error Response](https://openid.net/specs/openid-connect-core-1_0.html#AuthError) is REQUIRED to be `400`. The error_description SHOULD be "network-based authentication was not possible".
 
-This document defines that CAMARA Clients SHOULD not send acr_values parameters with values different from `https://camaraproject.org/acr/networkbasedauthentication`. 
+This document defines that CAMARA API Consumers SHOULD not send acr_values parameters with values different from `https://camaraproject.org/acr/networkbasedauthentication`. 
 
 > To foster interoperability a future version of this document might define other values for the acr_values parameter acceptable in CAMARA.
 
