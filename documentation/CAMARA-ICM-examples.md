@@ -80,7 +80,7 @@ Content-Type: application/json
 In this example, scopes differ from the one defined in the /authorize. If scopes are identical in /authorize and in the successful response, parameter scope may not be returned.
 
 
-#### CIBA authentication request with one purpose and two scopes
+#### CIBA (unsigned) authentication request with one purpose and two scopes
 
 See [CIBA authentication request](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.7.1)
 
