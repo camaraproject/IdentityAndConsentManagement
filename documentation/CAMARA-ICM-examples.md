@@ -147,7 +147,7 @@ See [CIBA Successful Token Response](https://openid.net/specs/openid-client-init
      "token_type": "Bearer",
      "refresh_token": "4bwc0ESC_IAhflf-ACC_vjD_ltc11ne-8gFPfA2Kx16",
      "expires_in": 120,
-     "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE2NzcyNyJ9.eyJpc3MiOiJodHRwczovL3NlcnZlci5leGFtcGxlLmNvbSIsInN1YiI6IjI0ODI4OTc2MTAwMiIsImF1ZCI6InM2QmhkUmtxdDMiLCJlbWFpbCI6Im1vY2tAZXhhbXBsZS5jb20iLCJleHAiOjE1Mzc4MTk4MDQsImlhdCI6MTUzNzgxOTUwNH0.bVq83mdy72ddIFVJLjlNBX-5JHbjmwK-Sn9Mir-blesfYMceIOw6u4GOrO_ZroDnnbJXNKWAg_dxVynvMHnk3uJc46feaRIL4zfHf6Anbf5_TbgMaVO8iczD16A5gNjSD7yenT5fslrrW-NU_vtmi0s1puoM4EmSaPXCR19vRJyWuStJiRHK5yc3BtBlQ2xwxH1iNP49rGAQe_LHfW1G74NY5DaPv-V23JXDNEIUTY-jT-NbbtNHAxnhNPyn8kcO2WOoeIwANO9BfLF1EFWtjGPPMj6kDVrikec47yK86HArGvsIIwk1uExynJIv_tgZGE0eZI7MtVb2UlCwDQrVlg"
+     "id_token": "eyJhbGciOiJSUzI1NiIsImtp...."
     }
 ```
 
