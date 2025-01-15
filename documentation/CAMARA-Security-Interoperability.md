@@ -9,6 +9,7 @@
   - [Conventions](#conventions)
   - [General Considerations](#general-considerations)
     - [Transport Security](#transport-security)
+    - [Sender-Constrained Tokens](#sender-constrained-tokens)
   - [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
     - [Optional Parameters](#optional-parameters)
     - [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
@@ -33,9 +34,6 @@
   - [Client Authentication](#client-authentication)
   - [OpenId Foundation Certification](#openid-foundation-certification)
   - [References](#references)
-
-<!-- TOC end -->
-
 
 ## Introduction
 
@@ -67,6 +65,29 @@ Unless otherwise noted, all the protocol parameter names and values are case sen
 ### Transport Security
 All network connections MUST use TLS 1.2 or better.
 
+### Sender-Constrained Tokens
+
+[OAuth 2.0 Security Best Current Practice](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics#section-2.2.1) and the [FAPI 2.0 Baseline Profile](https://openid.net/specs/fapi-2_0-baseline-01.html) both RECOMMEND that authorization and resource servers use mechanisms for sender-constraining access tokens. 
+
+This document states that Demonstrating Proof of Possession (DPoP) [RFC9449](https://datatracker.ietf.org/doc/html/rfc9449) MAY be used by API Consumers, to prevent misuse of stolen and leaked access tokens. 
+
+CAMARA authorization servers MUST NOT respond with an error if they do not support DPoP. DPoP allows authorization servers to issue tokens that are not sender-constrained even if a valid DPoP header is present in the authorization request. It is up to the API consumer to decide whether none-sender-constrained tokens meet their security requirements.
+
+If the API Provider supports DPoP, support for it MAY be expressed by the server metadata field `dpop_signing_alg_values_supported` or alternate API documentation.
+
+API consumers with high security demands that e.g. want to achieve EIDAS LOA high can be set to be required to always send DPoP requests. This requirement is expressed by the API consumer's metadata in the field `dpop_bound_access_tokens`. This requirement on the API consumer is determined at onboarding time.
+
+The following table defines the REQUIRED behaviour of the API Provider for the `/token` endpoint, dependent on whether a DPoP proof is provided, and the API Provider's own level of DPoP support.
+
+| DPoP Proof Provided | API Provider DPoP Support  | Token Type Issued  |
+|:-----------------------:|:-------------------------------:|:-------------------:|                                                                               
+| Yes                              | No DPoP Support                  | Bearer token        |
+| Yes                              | Supports DPoP                      | DPoP token          |
+| Yes                              | Requires DPoP                       | DPoP token          |                                                                                       
+| No                               | No DPoP Support                 | Bearer token         |
+| No                               | Supports DPoP                     | Bearer token         |
+| No                               | Requires DPoP                      | HTTP 400 `invalid_dpop_proof`<br>(see RFC [9449](https://www.rfc-editor.org/rfc/rfc9449.html#name-oauth-extensions-error-regi)) |
+
 ## OIDC Authorization Code Flow
 
 The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html)
@@ -74,6 +95,7 @@ The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.n
 ### Optional Parameters
 
 The OIDC Authentication Request defines login_hint as an OPTIONAL request parameter. CAMARA does not define a specific handling for this parameter in OIDC Authorization Code Flow. To ensure better interoperability, CAMARA clarifies that, if login_hint parameter is present in the authentication request and the authorization server does not support it, it MAY ignore it. It is RECOMMENDED that the authorization server does not return an error if the login_hint is not supported.
+
 ### Cross-Site Request Forgery Protection
 
 CAMARA REQUIRES cross-site request forgery (CSRF) protection.
@@ -303,6 +325,7 @@ CAMARA recommends that implementations run the OIDF interoperability suite and a
 * [RFC 7523 - JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants](https://www.rfc-editor.org/info/rfc7523)
 * [RFC 8259 - The JavaScript Object Notation (JSON) Data Interchange Format](https://www.rfc-editor.org/info/rfc8259)
 * [RFC 8414 - OAuth 2.0 Authorization Server Metadata](https://www.rfc-editor.org/info/rfc8414)
+* [RFC 9449 - OAuth 2.0 Demonstrating Proof of Possession (DPoP)](https://www.rfc-editor.org/info/rfc9449)
 * [GSMA GSMA Authorization Server – Authenticator capabilities](https://www.gsma.com/newsroom/gsma_resources/asac-01-v1-0/)
 * [GSMA TS.43 Service Entitlement Configuration](https://www.gsma.com/newsroom/gsma_resources/ts-43-service-entitlement-configuration/)
 
