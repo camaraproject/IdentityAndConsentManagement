@@ -124,11 +124,10 @@ See [CIBA Token Request](https://openid.net/specs/openid-client-initiated-backch
     Host: server.example.com
     Content-Type: application/x-www-form-urlencoded
 
-    grant_type=urn%3Aopenid%3Aparams%3Agrant-type%3Aciba&
-    auth_req_id=3f7b2e8a-9cde-4f3b-8b12-1a2b3c4d5e6f&
-    client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3A
-    client-assertion-type%3Ajwt-bearer&
-client_assertion=eyJraWQiOiJzYW1wbGUxIiwibmFtZSI6IkV4YW1wbGUifQ.eyJpc3MiOiJ0ZXN0VXNlciIsInN1YiI6InRlc3RzdWJqZWN0IiwidXNlciI6Imh0dHBzOi8vYXBpLmV4YW1wbGUuY29tIiwianRpIjoiLV9wMTZqNkhjaVhvMzE3aHZaMzEyYyIsImlhdCI6MTYwMDAwMDAwMCwiZXhwIjoxNjAwMDAwNjAwfQ.abcD1234-56efG7hI8jK9lM0nPqRstUvwXYZ
+    grant_type=urn%3Aopenid%3Aparams%3Agrant-type%3Aciba
+    &auth_req_id=3f7b2e8a-9cde-4f3b-8b12-1a2b3c4d5e6f
+    &client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer
+    &client_assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi......
     
 ```
 
