@@ -295,7 +295,7 @@ This document does not mandate a particular PPID algorithm to be used.
 
 The API consumer MUST authenticate with the authorisation server using `private_key_jwt`, as specified in [OIDC Client Authentication](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication). In addition to the required claims, the signed JWT SHOULD also include the `iat` (issued at) claim.
 
-The JWT lifetime MUST be no more than 300 seconds, measured as the difference between the `exp` (expires at) claim and the token creation time, which will also be the value of the `iat` claim if present. JWTs with a longer lifetime SHALL be rejected by the authorisation server. If the JWT does not include the `iat` claim, token lifetime SHALL be measured relative to time of receipt.
+The JWT lifetime MUST be no more than 300 seconds, calculated as the difference between the `exp` (expires at) claim and the token creation time, which will also be the value of the `iat` claim if present. JWTs with a longer lifetime SHALL be rejected by the authorisation server. If the JWT does not include the `iat` claim, token lifetime SHALL be measured relative to time of receipt.
 
 This document RECOMMENDS that for [OIDC Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) and [OAuth2 Client Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) the audience SHOULD be the URL of the Authorization Server's [Token Endpoint](https://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint).
 This document RECOMMENDS that for OIDC CIBA the audience SHOULD be the [Backchannel Authentication Endpoint](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#auth_backchannel_endpoint).
