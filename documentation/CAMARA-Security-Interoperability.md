@@ -77,6 +77,8 @@ The authorization server MUST check the value of the `aud` field and reject sign
 
 Note: Care must be taken in a multi-tenant environment that a signed authentication request for one tenant is not accepted at another tenant endpoint.
 
+Note: For security reasons it is recommended that the API consumer never includes a `sub` field in the signed request object, because otherwise the signed request object might be used for client authenticaton.
+
 ### Cross-Site Request Forgery Protection
 
 CAMARA REQUIRES cross-site request forgery (CSRF) protection.
@@ -203,13 +205,13 @@ The client MUST authenticate with the authorization server as described in [Clie
 ## The Scope Parameter
 
 
-Scope values determine the specific CAMARA services being requested by the Service Provider, subject to the SP being registered to use those services. The scope values must be documented in the API OAS files by all CAMARA API subprojects. This document does not change OIDC definitions of scope values.
+Scope values determine the specific CAMARA services being requested by the Service Provider, ject to the SP being registered to use those services. The scope values must be documented in the API OAS files by all CAMARA API projects. This document does not change OIDC definitions of scope values.
 
 
 ---
 **NOTE**
 
-Scope values are an integral part of any OAuth2 and OIDC implementation. The API implementation enforces API access based on scope (if the CAMARA API subproject defines scopes).
+Scope values are an integral part of any OAuth2 and OIDC implementation. The API implementation enforces API access based on scope (if the CAMARA API project defines scopes).
 Therefore scopes should be available to API implementations.
 
 ---
