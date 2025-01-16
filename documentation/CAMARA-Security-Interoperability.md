@@ -211,7 +211,7 @@ Scope values determine the specific CAMARA services being requested by the Servi
 ---
 **NOTE**
 
-Scope values are an integral part of any OAuth2 and OIDC implementation. The API implementation enforces API access based on scope (if the CAMARA API project defines scopes).
+Scope values are an integral part of any OAuth2 and OIDC implementation. The API implementation enforces API access based on scope (if the CAMARA API subproject defines scopes).
 Therefore scopes should be available to API implementations.
 
 ---
