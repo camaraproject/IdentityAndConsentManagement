@@ -302,7 +302,7 @@ This section describes the error responses that the Authorization Server MUST re
 
 #### Authorization Code Flow
 
-If the request fails due to a missing, invalid, or mismatching redirection URI, or if the client identifier is missing or invalid, the authorization server MUST NOT automatically redirect the user-agent and SHOULD inform the resource owner of the error. For instance, the authorization server MAY display a message to the user describing the problem.
+If the request fails due to a missing, invalid, or mismatching redirection URI, or if the client identifier is missing or invalid, the authorization server MUST NOT redirect the user-agent and SHOULD inform the resource owner of the error. For instance, the authorization server MAY display a message to the user describing the problem.
 
 In other cases, as defined in [OIDC Authentication Error Response Section](https://openid.net/specs/openid-connect-core-1_0.html#AuthError), the authorization server redirects the user-agent to the provided client redirection URI using the HTTP status code `302-Found` and includes the following `error` code parameter within the response:
 
