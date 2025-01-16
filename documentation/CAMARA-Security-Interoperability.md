@@ -205,7 +205,7 @@ The client MUST authenticate with the authorization server as described in [Clie
 ## The Scope Parameter
 
 
-Scope values determine the specific CAMARA services being requested by the Service Provider, ject to the SP being registered to use those services. The scope values must be documented in the API OAS files by all CAMARA API projects. This document does not change OIDC definitions of scope values.
+Scope values determine the specific CAMARA services being requested by the Service Provider, subject to the SP being registered to use those services. The scope values must be documented in the API OAS files by all CAMARA API projects. This document does not change OIDC definitions of scope values.
 
 
 ---
