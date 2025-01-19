@@ -2,47 +2,37 @@
 
 ## Table of Contents
 
-<!-- TOC -->
-* [CAMARA Security and Interoperability Profile](#camara-security-and-interoperability-profile)
-  * [Table of Contents](#table-of-contents)
   * [Introduction](#introduction)
   * [Audience](#audience)
   * [Conventions](#conventions)
   * [General Considerations](#general-considerations)
-    * [Transport Security](#transport-security)
-    * [Sender-Constrained Tokens](#sender-constrained-tokens)
+    + [Transport Security](#transport-security)
+    + [Sender-Constrained Tokens](#sender-constrained-tokens)
   * [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
-    * [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
+    + [Optional Parameters](#optional-parameters)
+    + [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
   * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
-    * [Optional Parameters](#optional-parameters)
-    * [Authentication Request](#authentication-request)
+    + [Optional Parameters](#optional-parameters-1)
+    + [Authentication Request](#authentication-request)
   * [Format of `login_hint`](#format-of-login_hint)
   * [Offline Access](#offline-access)
-      * [Refresh Token Issuance](#refresh-token-issuance)
-    * [Refresh Token Usage](#refresh-token-usage)
-    * [Refresh Token Security](#refresh-token-security)
+      - [Refresh Token Issuance](#refresh-token-issuance)
+    + [Refresh Token Usage](#refresh-token-usage)
+    + [Refresh Token Security](#refresh-token-security)
   * [Client Credentials Flow](#client-credentials-flow)
-  * [Handling of acr_values](#handling-of-acr_values)
+  * [Handling of acr\_values](#handling-of-acr_values)
   * [Access Token Request](#access-token-request)
   * [The Scope Parameter](#the-scope-parameter)
   * [Missing "openid" scope](#missing-openid-scope)
   * [Purpose](#purpose)
-    * [Purpose as a scope](#purpose-as-a-scope)
-    * [Outlook on purpose-handling leveraging Rich Authorization Request](#outlook-on-purpose-handling-leveraging-rich-authorization-request)
+    + [Purpose as a scope](#purpose-as-a-scope)
+    + [Outlook on purpose-handling leveraging Rich Authorization Request](#outlook-on-purpose-handling-leveraging-rich-authorization-request)
   * [ID Token](#id-token)
-    * [ID Token sub claim](#id-token-sub-claim)
+    + [ID Token sub claim](#id-token-sub-claim)
   * [Client Authentication](#client-authentication)
   * [OpenId Foundation Certification](#openid-foundation-certification)
   * [References](#references)
-  * [Appendix A (Normative): Error Responses](#appendix-a-normative-error-responses)
-    * [Authentication Error Response](#authentication-error-response)
-      * [Authorization Code Flow](#authorization-code-flow)
-      * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow-1)
-    * [Token Error Response](#token-error-response)
-      * [Authorization Code Flow](#authorization-code-flow-1)
-      * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow-2)
-      * [Refresh Token Flow](#refresh-token-flow)
-<!-- TOC -->
+  * [Appendix A (Normative): Error Responses](#appendix-a-normative-error-responses)>
 
 ## Introduction
 
@@ -100,6 +90,10 @@ The following table defines the REQUIRED behaviour of the API Provider for the `
 ## OIDC Authorization Code Flow
 
 The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html)
+
+### Optional Parameters
+
+The OIDC Authentication Request defines login_hint as an OPTIONAL request parameter. CAMARA does not define a specific handling for this parameter in OIDC Authorization Code Flow. To ensure better interoperability, CAMARA clarifies that, if login_hint parameter is present in the authentication request and the authorization server does not support it, it MAY ignore it. It is RECOMMENDED that the authorization server does not return an error if the login_hint is not supported.
 
 ### Cross-Site Request Forgery Protection
 
@@ -331,6 +325,7 @@ CAMARA recommends that implementations run the OIDF interoperability suite and a
 * [RFC 7636 - Proof Key for Code Exchange by OAuth Public Clients](https://www.rfc-editor.org/info/rfc7636)
 * [RFC 8259 - The JavaScript Object Notation (JSON) Data Interchange Format](https://www.rfc-editor.org/info/rfc8259)
 * [RFC 8414 - OAuth 2.0 Authorization Server Metadata](https://www.rfc-editor.org/info/rfc8414)
+* [RFC 9449 - OAuth 2.0 Demonstrating Proof of Possession (DPoP)](https://www.rfc-editor.org/info/rfc9449)
 * [GSMA GSMA Authorization Server – Authenticator capabilities](https://www.gsma.com/newsroom/gsma_resources/asac-01-v1-0/)
 * [GSMA TS.43 Service Entitlement Configuration](https://www.gsma.com/newsroom/gsma_resources/ts-43-service-entitlement-configuration/)
 
