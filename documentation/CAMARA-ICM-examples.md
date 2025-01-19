@@ -74,25 +74,80 @@ Content-Type: application/json
   "refresh_token": "8xLOxBtZp8",
   "expires_in": 3600,
   "id_token": "eyJhbGciOiJSUz....",
-  "scope": "dpv:FraudPreventionAndDetection sim-swap:check sim-swap:retrieve-date"
+  "scope": "dpv:FraudPreventionAndDetection sim-swap:retrieve-date"
 }
 ```
+In this example, scopes differ from the one defined in the /authorize. If scopes are identical in /authorize and in the successful response, parameter scope may not be returned.
 
-#### CIBA authentication request with one purpose and two scopes
+
+#### CIBA (unsigned) authentication request with one purpose and two scopes
 
 See [CIBA authentication request](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.7.1)
 
 ```
-POST /bc-authorize HTTP/1.1
+   POST /bc-authorize HTTP/1.1
    Host: server.example.com
    Content-Type: application/x-www-form-urlencoded
 
-scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date&
-login_hint=tel%3A%2B34666666666
+   scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date
+   &login_hint=tel%3A%2B34666666666
+   &client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer
+   &client_assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi......
 ```
 
 
+#### Successful response
+
+See [CIBA Successful Authentication Response](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.7.3)
+
+```
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "auth_req_id": "3f7b2e8a-9cde-4f3b-8b12-1a2b3c4d5e6f",
+      "expires_in": 120,
+      "interval": 2
+    }
+```
+The Client MUST keep the `auth_req_id` in order to use it when making a token request in Poll mode.
+Please note that the values for `expires_in` and `interval` may be different from those in the example.
+
+#### Access token request
+
+See [CIBA Token Request](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.10.1)
 
 
+```
+    POST /token HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/x-www-form-urlencoded
+
+    grant_type=urn%3Aopenid%3Aparams%3Agrant-type%3Aciba
+    &auth_req_id=3f7b2e8a-9cde-4f3b-8b12-1a2b3c4d5e6f
+    &client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer
+    &client_assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi......
+    
+```
+
+#### Successful response
+
+See [CIBA Successful Token Response](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.10.1.1)
+
+```
+            
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+     "access_token": "G5kXH2wHvUra0sHlDy1iTkDJgsgUO1bN",
+     "token_type": "Bearer",
+     "refresh_token": "4bwc0ESC_IAhflf-ACC_vjD_ltc11ne-8gFPfA2Kx16",
+     "expires_in": 120,
+     "id_token": "eyJhbGciOiJSUzI1NiIsImtp...."
+    }
+```
 
 
