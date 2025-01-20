@@ -9,7 +9,8 @@
     + [Transport Security](#transport-security)
     + [Sender-Constrained Tokens](#sender-constrained-tokens)
   * [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
-    + [Optional Parameters](#optional-parameters)
+      + [Signed Authentication Requests](#signed-authentication-requests)
+      + [Optional Parameters](#optional-parameters)
     + [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
   * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
     + [Optional Parameters](#optional-parameters-1)
@@ -89,6 +90,18 @@ The following table defines the REQUIRED behaviour of the API Provider for the `
 ## OIDC Authorization Code Flow
 
 The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html)
+
+### Signed Authentication Requests
+
+It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC](https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests). The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication). 
+
+It is RECOMMENDED that the value of the `aud` field of the signed authentication request is the URL of the [Authorization Endpoint](https://openid.net/specs/openid-connect-core-1_0.html#AuthorizationEndpoint).
+The authorization server MAY accept different values of the `aud` field e.g. the `issuer` field of its [OpenID Provider Metadata](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata). 
+The authorization server MUST check the value of the `aud` field and reject signed authentication requests if the value of the `aud` is not associated with the authorization server.
+
+Note: Care must be taken in a multi-tenant environment that a signed authentication request for one tenant is not accepted at another tenant endpoint.
+
+Note: For security reasons it is recommended that the API consumer never includes a `sub` field in the signed request object, because otherwise the signed request object might be used for client authenticaton.
 
 ### Optional Parameters
 
