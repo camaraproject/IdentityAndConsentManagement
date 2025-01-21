@@ -101,7 +101,7 @@ The authorization server MUST check the value of the `aud` field and reject sign
 
 Note: Care must be taken in a multi-tenant environment that a signed authentication request for one tenant is not accepted at another tenant endpoint.
 
-Note: For security reasons it is recommended that the API consumer never includes a `sub` field in the signed request object, because otherwise the signed request object might be used for client authenticaton.
+Note: The [Security Considerations](https://www.rfc-editor.org/rfc/rfc9101.html#section-10) of RFC9191 apply.It is recommended that the API consumer never includes a `sub` field in the signed request object, because otherwise the signed request object might be used for client authenticaton. For security reasons the endpoint receiving the request is explicitly named in the `aud` field.
 
 ### Optional Parameters
 
