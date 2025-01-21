@@ -299,7 +299,7 @@ This document does not mandate a particular PPID algorithm to be used.
 
 The API consumer MUST authenticate with the authorisation server using `private_key_jwt`, as specified in [OIDC Client Authentication](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication). In addition to the required claims, the signed JWT SHOULD also include the `iat` (issued at) claim.
 
-The JWT lifetime MUST be no more than 300 seconds when created, calculated as the difference between the `exp` (expires at) claim and the token creation time (which SHALL also be the value of the `iat` claim if present).
+The API consumer MUST NOT create client assertions with a lifetime of more than 300 seconds, calculated as the difference between the `exp` (expires at) claim and the token creation time (which SHALL also be the value of the `iat` claim if present).
 
 The request SHALL be rejected by the authorisation server if the `exp` claim is more than 300 seconds later than the time of receipt. Additionally, if the `iat` claim is present, the request SHALL be rejected if the difference between the `exp` claim and `iat` claim is more than 300 seconds.
 
