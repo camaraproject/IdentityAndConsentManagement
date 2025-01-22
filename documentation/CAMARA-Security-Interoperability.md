@@ -88,9 +88,9 @@ The following table defines the REQUIRED behaviour of the API Provider for the `
 
 ## OIDC Authorization Code Flow
 
-The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html). CAMARA REQUIRES API providers to use network-based authentication in the Authorization Code Flow. Therefore, access tokens are issued for the network authenticated identifier.
+The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html). CAMARA REQUIRES API Providers to use network-based authentication in the Authorization Code Flow. Therefore, access tokens are issued for the network authenticated identifier.
 
-It is up to the API Provider to make a decision when consent collection is needed or not, based on the scope(s)/purpose declared by the API consumer and aligned with local legislation, ensuring that all operators under the same regulatory framework adopt a consistent approach. If consent is required, the API provider SHALL obtain it according to [OIDC section 3.1.2.4](https://openid.net/specs/openid-connect-core-1_0.html#Consent). CAMARA does not prevent the API Provider from using additional authentication methods as part of the in-band consent capture process if consent is required.
+It is up to the API Provider to make a decision when consent collection is needed or not, based on the scope(s)/purpose declared by the API Consumer and aligned with local legislation, ensuring that all API Providers under the same regulatory framework adopt a consistent approach. If consent is required, the API Provider SHALL obtain it according to [OIDC section 3.1.2.4](https://openid.net/specs/openid-connect-core-1_0.html#Consent). CAMARA does not prevent the API Provider from using additional authentication methods as part of the in-band consent capture process if consent is required.
 
 ---
 **NOTE**
