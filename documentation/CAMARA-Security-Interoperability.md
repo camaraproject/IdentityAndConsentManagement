@@ -3,8 +3,6 @@
 ## Table of Contents
 
 <!-- TOC -->
-* [CAMARA Security and Interoperability Profile](#camara-security-and-interoperability-profile)
-  * [Table of Contents](#table-of-contents)
   * [Introduction](#introduction)
   * [Audience](#audience)
   * [Conventions](#conventions)
