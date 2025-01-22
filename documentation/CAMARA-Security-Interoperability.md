@@ -3,6 +3,8 @@
 ## Table of Contents
 
 <!-- TOC -->
+* [CAMARA Security and Interoperability Profile](#camara-security-and-interoperability-profile)
+  * [Table of Contents](#table-of-contents)
   * [Introduction](#introduction)
   * [Audience](#audience)
   * [Conventions](#conventions)
@@ -10,7 +12,6 @@
     * [Transport Security](#transport-security)
     * [Sender-Constrained Tokens](#sender-constrained-tokens)
   * [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
-    * [Signed Authentication Requests](#signed-authentication-requests)
     * [Optional Parameters](#optional-parameters)
     * [Cross-Site Request Forgery Protection](#cross-site-request-forgery-protection)
   * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow)
@@ -88,30 +89,18 @@ API consumers with high security demands that e.g. want to achieve EIDAS LOA hig
 
 The following table defines the REQUIRED behaviour of the API Provider for the `/token` endpoint, dependent on whether a DPoP proof is provided, and the API Provider's own level of DPoP support.
 
-| DPoP Proof Provided | API Provider DPoP Support |                                                        Token Type Issued                                                        |
-|:-------------------:|:-------------------------:|:-------------------------------------------------------------------------------------------------------------------------------:|                                                                               
-|         Yes         |      No DPoP Support      |                                                          Bearer token                                                           |
-|         Yes         |       Supports DPoP       |                                                           DPoP token                                                            |
-|         Yes         |       Requires DPoP       |                                                           DPoP token                                                            |                                                                                       
-|         No          |      No DPoP Support      |                                                          Bearer token                                                           |
-|         No          |       Supports DPoP       |                                                          Bearer token                                                           |
-|         No          |       Requires DPoP       | HTTP 400 `invalid_dpop_proof`<br>(see RFC [9449](https://www.rfc-editor.org/rfc/rfc9449.html#name-oauth-extensions-error-regi)) |
+| DPoP Proof Provided | API Provider DPoP Support  | Token Type Issued  |
+|:-----------------------:|:-------------------------------:|:-------------------:|                                                                               
+| Yes                              | No DPoP Support                  | Bearer token        |
+| Yes                              | Supports DPoP                      | DPoP token          |
+| Yes                              | Requires DPoP                       | DPoP token          |                                                                                       
+| No                               | No DPoP Support                 | Bearer token         |
+| No                               | Supports DPoP                     | Bearer token         |
+| No                               | Requires DPoP                      | HTTP 400 `invalid_dpop_proof`<br>(see RFC [9449](https://www.rfc-editor.org/rfc/rfc9449.html#name-oauth-extensions-error-regi)) |
 
 ## OIDC Authorization Code Flow
 
 The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html)
-
-### Signed Authentication Requests
-
-It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC](https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests). The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication). 
-
-It is RECOMMENDED that the value of the `aud` field of the signed authentication request is the URL of the [Authorization Endpoint](https://openid.net/specs/openid-connect-core-1_0.html#AuthorizationEndpoint).
-The authorization server MAY accept different values of the `aud` field e.g. the `issuer` field of its [OpenID Provider Metadata](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata). 
-The authorization server MUST check the value of the `aud` field and reject signed authentication requests if the value of the `aud` is not associated with the authorization server.
-
-Note: Care must be taken in a multi-tenant environment that a signed authentication request for one tenant is not accepted at another tenant endpoint.
-
-Note: For security reasons it is recommended that the API consumer never includes a `sub` field in the signed request object, because otherwise the signed request object might be used for client authenticaton.
 
 ### Optional Parameters
 
@@ -320,8 +309,11 @@ This document does not mandate a particular PPID algorithm to be used.
 
 ## Client Authentication
 
-This CAMARA document allows **one** client authentication method, `private_key_jwt`, as defined in OIDC
-[OIDC Client Authentication](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication)
+The API consumer MUST authenticate with the authorisation server using `private_key_jwt`, as specified in [OIDC Client Authentication](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication). In addition to the required claims, the signed JWT SHOULD also include the `iat` (issued at) claim.
+
+The API consumer MUST NOT create client assertions with a lifetime of more than 300 seconds, calculated as the difference between the `exp` (expires at) claim and the token creation time (which SHALL also be the value of the `iat` claim if present).
+
+The request SHALL be rejected by the authorisation server if the `exp` claim is more than 300 seconds later than the time of receipt. Additionally, if the `iat` claim is present, the request SHALL be rejected if the difference between the `exp` claim and `iat` claim is more than 300 seconds.
 
 This document RECOMMENDS that for [OIDC Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) and [OAuth2 Client Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) the audience SHOULD be the URL of the Authorization Server's [Token Endpoint](https://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint).
 This document RECOMMENDS that for OIDC CIBA the audience SHOULD be the [Backchannel Authentication Endpoint](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#auth_backchannel_endpoint).
