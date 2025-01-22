@@ -343,7 +343,7 @@ CAMARA recommends that implementations run the OIDF interoperability suite and a
 
 ## Appendix A (Normative): Error Responses
 
-This section describes the error responses that the Authorization Server MUST return for all flows defined in this profile. Based on the supported functionality, the set of errors and the scenarios that can generate them are defined from the specifications already referenced in this document, such as CIBA, OIDC and OAuth 2.0. This appendix does not change the definition of error responses specified in these standards.
+This section describes the error responses that the Authorization Server MUST return for all flows profiled by this document. Based on the supported functionality, the set of errors and the scenarios that can generate them are defined from the specifications already referenced in this document, such as CIBA, OIDC and OAuth 2.0. This appendix does not change the definition of error responses specified in these standards.
 
 ### Authentication Error Response
 
