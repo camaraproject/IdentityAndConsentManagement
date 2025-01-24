@@ -28,6 +28,7 @@ This pre-release contains the definition and documentation of:
 * "Identity and Consent Management" v0.3.0-rc.1
 
 The content of the release includes the "Identity And Consent Management" approved deliverables in **[documentation](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r2.2/documentation)** folder.
+  > The mandatory `info.description` template defined for "Authorization and authentication" has been modified and will eventually need to be adopted by all API definitions.
 
 NOTE: The Working Group release numbering has been updated to adopt the same release notation as is used for API sub-projects.
 
