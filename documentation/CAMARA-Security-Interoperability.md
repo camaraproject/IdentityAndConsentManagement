@@ -177,9 +177,29 @@ OIDC specifies in [Mandatory to Implement Features for All OpenID Providers](htt
 
 OIDC also defines that the parameter acr_values is OPTIONAL and does not specify possible values. This leads to interoperability issues.
 
-This documents defines that CAMARA OpenId Providers MUST ignore the parameter acr_values with a value different from "https://camaraproject.org/acr/networkbasedauthentication".
-If the [OIDC Authentication Request](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) has the `acr_values` parameter with the value "https://camaraproject.org/acr/networkbasedauthentication" then the authorization server MUST try to identify the subscriber through network-based authentication. The [ID Token](https://openid.net/specs/openid-connect-core-1_0.html#IDToken) returned from the token endpoint SHALL then contain an Authentication Methods References field `amr` which MUST contain the value "https://camaraproject.org/acr/networkbasedauthentication". 
+This documents defines that CAMARA OpenId Providers MUST ignore the parameter acr_values other than the following case-sensitive values:
+- "https://camaraproject.org/acr/networkbasedauthentication"
+- "https://camaraproject.org/acr/nonetworkbasedauthentication"
+
 If the OIDC authentication request is not made over a connection where the API provider can do network-based authentication, then the error code of the [Authentication Error Response](https://openid.net/specs/openid-connect-core-1_0.html#AuthError) is REQUIRED to be `400`. The error_description SHOULD be "network-based authentication was not possible".
+
+The acr_value of "https://camaraproject.org/acr/networkbasedauthentication" signifies that network-based authentication MUST be done and if it fails the error above is returned.
+The acr_value of "https://camaraproject.org/acr/nonetworkbasedauthentication" signifies that network-based authentication CAN be done but if it fails no error is returned. The use of result of a successful network-based authentication is left to the API Providers's discretion. This acr_value MUST be used if the API Consumer expects that the devise issuing the authentication request is not the target device of the CAMARA API.
+
+Example use case: A sim-enabled dogtracker-device is registered at the API Consumer's webpage but the mobile phone used to register the dog tracker should not be the target of CAMARA's device-location API. 
+<br/>How the API Provider identifies the target device is out-of-scope of this document.
+
+If network-based authentication was successful, then the [ID Token](https://openid.net/specs/openid-connect-core-1_0.html#IDToken) returned from the token endpoint SHOULD then contain an Authentication Methods References field `amr` with the value "https://camaraproject.org/acr/networkbasedauthentication". It is RECOMMENDED that the API Provider only includes `amr` fields with the value "https://camaraproject.org/acr/networkbasedauthentication" and no other values.
+
+The API Consumer SHOULD specify in their [metadata document](https://openid.net/specs/openid-connect-discovery-1_0.html) that they support acr_values defined in this document by putting these values into the field `acr_values_supported`.
+<br/>Example: `acr_values_supported=["https://camaraproject.org/acr/networkbasedauthentication"]`
+
+The API Consumer MUST specify in their meta-data document that network-based authentication is the default for `acr_values`:
+<br/>Example: `default_acr_values=["https://camaraproject.org/acr/networkbasedauthentication"]`
+
+If the API Provider does not publish metadata, then the API Consumer SHOULD assume the following values:
+<br/>acr_values_supported=["https://camaraproject.org/acr/networkbasedauthentication"]
+<br/>default_acr_values=["https://camaraproject.org/acr/networkbasedauthentication"]
 
 This document defines that CAMARA API Consumers SHOULD not send acr_values parameters with values different from `https://camaraproject.org/acr/networkbasedauthentication`. 
 
