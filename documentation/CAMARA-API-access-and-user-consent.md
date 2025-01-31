@@ -182,7 +182,7 @@ The Application on the Consumption Device must be able to handle browser redirec
     - Check if User Consent is required as the lawful basis associated with the declared Scope and Purpose. 
       - If necessary, it will be checked in the operator's consent master whether user consent has already been given to the application for the user identifier and declared purpose.
     - If NOT granted, the operator performs the consent capture. Since the authorization code grant involves the interaction with application front-end, consent can be captured directly from the user through the application browser.
-  - Covered scenarios: (note again: Consumption device must be equal to target device of subsequent API call(s))
+  - Covered scenarios: (Note: Consumption device must be equal to target device of subsequent API call(s))
     - On-net (with mobile connection) & application front-end (with embedded browser)
     - Off-net scenarios using refresh_token, as long as there was a connection when the first access_token was requested.
 
