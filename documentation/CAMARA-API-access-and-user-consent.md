@@ -182,7 +182,7 @@ The Application on the Consumption Device must be able to handle browser redirec
     - Check if User Consent is required as the lawful basis associated with the declared Scope and Purpose. 
       - If necessary, it will be checked in the operator's consent master whether user consent has already been given to the application for the user identifier and declared purpose.
     - If NOT granted, the operator performs the consent capture. Since the authorization code grant involves the interaction with application front-end, consent can be captured directly from the user through the application browser.
-  - Covered scenarios: Consumption device must be equal to target device of subsequent API call(s)
+  - Covered scenarios: (note again: Consumption device must be equal to target device of subsequent API call(s))
     - On-net (with mobile connection) & application front-end (with embedded browser)
     - Off-net scenarios using refresh_token, as long as there was a connection when the first access_token was requested.
 
@@ -285,7 +285,7 @@ If some use case(s) for an API point to "Off-net" scenarios and where Consumptio
     - Check if user consent is required by lawful basis associated with the declared purpose. 
       - If necessary, it will be checked **in the operator's consent master** whether user consent has already been given to the application for the user identifier and declared purpose.
       - If NOT granted, **the operator’s consent capture procedure is triggered**. Out-of-band consent capture as part of asynchronous CIBA flow (e.g. push notification with fallback to SMS, etc...). **Operators can choose the consent capture mechanism that best suits their capabilities, preferences and needs**.
-  - Covered scenarios:
+  - Covered scenarios: (Note: Consumption device and target device of subsequent API call(s) can be differnt, access token is generated for the target device)
     - No front-end developer software in user device
     - Back-end services (e.g. bank BE anti-fraud validation using MSISDN).
     - Off-net scenarios (no mobile connection)
