@@ -4,21 +4,19 @@ This document defines guidelines for Operator API Exposure Platforms to manage C
 
 ## Table of Contents
 
-- [CAMARA APIs access and user consent management](#camara-apis-access-and-user-consent-management)
-  - [Table of Contents](#table-of-contents)
-  - [Introduction](#introduction)
-  - [Glossary of Terms and Concepts](#glossary-of-terms-and-concepts)
-  - [Purpose within Camara](#purpose-within-camara)
-    - [Using Purpose within the authorization request](#using-purpose-within-the-authorization-request)
-  - [User Authentication/Authorization \& Consent Management](#user-authenticationauthorization--consent-management)
-    - [Authorization flows / grant types](#authorization-flows--grant-types)
-      - [Authorization code flow (Frontend flow)](#authorization-code-flow-frontend-flow)
-      - [CIBA flow (Backend flow)](#ciba-flow-backend-flow)
-      - [Client Credentials](#client-credentials)
-  - [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
-    - [Use of openIdConnect for `securitySchemes`](#use-of-openidconnect-for-securityschemes)
-    - [Use of `security` property](#use-of-security-property)
-    - [Mandatory template for `info.description` in CAMARA API specs](#mandatory-template-for-infodescription-in-camara-api-specs)
+- [Introduction](#introduction)
+- [Glossary of Terms and Concepts](#glossary-of-terms-and-concepts)
+- [Purpose within Camara](#purpose-within-camara)
+  - [Using Purpose within the authorization request](#using-purpose-within-the-authorization-request)
+- [User Authentication/Authorization \& Consent Management](#user-authenticationauthorization--consent-management)
+  - [Authorization flows / grant types](#authorization-flows--grant-types)
+    - [Authorization code flow (Frontend flow)](#authorization-code-flow-frontend-flow)
+    - [CIBA flow (Backend flow)](#ciba-flow-backend-flow)
+    - [Client Credentials](#client-credentials)
+- [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
+  - [Use of openIdConnect for `securitySchemes`](#use-of-openidconnect-for-securityschemes)
+  - [Use of `security` property](#use-of-security-property)
+  - [Mandatory template for `info.description` in CAMARA API specs](#mandatory-template-for-infodescription-in-camara-api-specs)
 
 
 ## Introduction
