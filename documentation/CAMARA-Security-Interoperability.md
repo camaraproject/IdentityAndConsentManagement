@@ -175,10 +175,7 @@ This CAMARA document clarifies the values used in login_hint in the following wa
 
   * **_operatortoken_**
 
-    For operator tokens as defined by [GSMA TS.43](https://www.gsma.com/newsroom/gsma_resources/ts-43-service-entitlement-configuration/) and [GSMA ASAC](https://www.gsma.com/newsroom/gsma_resources/asac-01-v1-0/).
-    TS.43 does not specify the format of the operator token and it therefore might contain characters that are not url-safe.
-    The API consumer MUST encode the operator token using [base64url](https://www.rfc-editor.org/rfc/rfc7515.html#appendix-C) encoding to make it URL safe.
-    For example, `operatortoken:ZXhhbXBsZQ`
+    For operator tokens as defined by [GSMA TS.43](https://www.gsma.com/newsroom/gsma_resources/ts-43-service-entitlement-configuration/) and [GSMA ASAC](https://www.gsma.com/newsroom/gsma_resources/asac-01-v1-0/). TS.43 does not specify the format of the operator token.
     
    This document does not specifiy how the API consumer got the operatorToken. 
 
