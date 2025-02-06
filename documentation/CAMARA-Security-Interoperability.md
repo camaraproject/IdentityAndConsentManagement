@@ -76,7 +76,7 @@ All network connections MUST use TLS 1.2 or better.
 
 ### Sender-Constrained Tokens
 
-[OAuth 2.0 Security Best Current Practice](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics#section-2.2.1) and the [FAPI 2.0 Baseline Profile](https://openid.net/specs/fapi-2_0-baseline-01.html) both RECOMMEND that authorization and resource servers use mechanisms for sender-constraining access tokens. 
+[RFC 9700 Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700#name-sender-constrained-access-t) and the [FAPI 2.0 Baseline Profile](https://openid.net/specs/fapi-2_0-baseline-01.html) both RECOMMEND that authorization and resource servers use mechanisms for sender-constraining access tokens. 
 
 This document states that Demonstrating Proof of Possession (DPoP) [RFC9449](https://datatracker.ietf.org/doc/html/rfc9449) MAY be used by API Consumers, to prevent misuse of stolen and leaked access tokens. 
 
@@ -138,7 +138,7 @@ CAMARA Authorization Servers SHOULD implement PKCE. If PKCE is not used by the A
 CAMARA API consumers SHOULD use PKCE if the CAMARA authorization server supports PKCE.
 
 If nonce for CSRF-protection is used then implementers must ensure that sufficient entropy is present in the nonce value.
-Please see [OAuth 2.0 Security Best Current Practice](https://oauthstuff.github.io/draft-ietf-oauth-security-topics/draft-ietf-oauth-security-topics.html#name-protecting-redirect-based-f).
+Please see [RFC 9700 Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700#name-protecting-redirect-based-f).
 
 ## Client-Initiated Backchannel Authentication Flow
 
@@ -359,6 +359,7 @@ CAMARA recommends that implementations run the OIDF interoperability suite and a
 * [RFC 8259 - The JavaScript Object Notation (JSON) Data Interchange Format](https://www.rfc-editor.org/info/rfc8259)
 * [RFC 8414 - OAuth 2.0 Authorization Server Metadata](https://www.rfc-editor.org/info/rfc8414)
 * [RFC 9449 - OAuth 2.0 Demonstrating Proof of Possession (DPoP)](https://www.rfc-editor.org/info/rfc9449)
+* [RFC 9700 - Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700)
 * [GSMA GSMA Authorization Server – Authenticator capabilities](https://www.gsma.com/newsroom/gsma_resources/asac-01-v1-0/)
 * [GSMA TS.43 Service Entitlement Configuration](https://www.gsma.com/newsroom/gsma_resources/ts-43-service-entitlement-configuration/)
 
