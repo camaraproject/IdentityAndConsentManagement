@@ -185,6 +185,15 @@ The Application on the Consumption Device must be able to handle browser redirec
 
 #### CIBA flow (Backend flow)
 
+The three-legged CIBA flow is necessary if Consumption Device and Authentication Device are different devices. If Consumption Device and Authentication Device are the same, then OIDC Authentication Code Flow SHOULD be used.
+
+The Authentication Server MUST send a message to the Authentication Device, identified by login_hint, because otherwise there would be no authentication at all.
+
+Note: In cases where personal data is processed by the API and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of three-legged access tokens is mandatory. This ensures that the API remains in compliance with privacy regulations, upholding the principles of transparency and user-centric privacy-by-design.
+
+User consent cannot be checked based on the login_hint value alone and without sending a message, because then CIBA would be a two-legged flow.
+
+
 ```mermaid
 sequenceDiagram
 autonumber
@@ -204,16 +213,9 @@ alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between Invoker
   BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope=dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint including User Identifier    
   ExpO->>ExpO: - Validate User Identifier<br>- (Opt) map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc
-  opt If User Consent is required for the legal basis of the purpose  
-    ExpO->>Consent: Check if Consent is granted
-  end
-  alt If Consent is Granted or Consent not needed for legal basis   
-    ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"  
-  else If Consent is needed and is NOT granted - Out Of Band Consent Capture (Push/SMS/other)
-    Note over ExpO,User: User Interaction <br> out-of-band capture consent mechanism chosen by the Operator
-    ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"}
-  end
-  loop Invoker polls until consent is granted or until expires. If granted in advance, token returned in first poll
+  Exp0->>FE: Out-of-band consent capture Push/SMS/Email/other
+  ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"}
+  loop Invoker polls until consent is granted or until expires.
     BE->>+ExpO: POST /token <br>Credentials}<br>auth_req_id={OperatorAuthReqId}    
     ExpO->>-BE: HTTP 200 OK <br>{"access_token": "{OperatorAccessToken}"}
   end  
