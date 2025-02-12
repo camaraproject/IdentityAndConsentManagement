@@ -185,7 +185,7 @@ The Application on the Consumption Device must be able to handle browser redirec
   - Covered scenarios: 
     - On-net (with mobile connection) & application front-end (with embedded browser)
     - Off-net scenarios using refresh_token, as long as there was a connection when the first access_token was requested.
-    - Note: Consumption device must be equal to target device of subsequent API call(s).
+    - Note: The Consumption Device must be equal to the Target Device of subsequent API call(s).
 
 
 #### CIBA flow (Backend flow)
