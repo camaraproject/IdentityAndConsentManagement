@@ -189,7 +189,7 @@ The Application on the Consumption Device must be able to handle browser redirec
 
 
 #### CIBA flow (Backend flow)
-The CIBA flow is applicable if the consumption device is equal to or different from the target device of the intented Network API call(s).
+The CIBA flow is applicable if the Consumption Device is equal to or different from the Target Device of the intended CAMARA API call(s).
 
 ```mermaid
 sequenceDiagram
