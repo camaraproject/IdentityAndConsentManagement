@@ -85,7 +85,7 @@ This section describes the authorization flows that can be used to access CAMARA
 Note: In cases where Personal Data is processed by a CAMARA API, and Users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of Three-Legged Access Tokens is mandatory.
 
 #### Authorization Code Flow (Frontend Flow)
-The authorization code flow is only applicable if the consumption device, which initiates the process of obtaining a Three-Legged-Access token from the Authorization Server, is also the target device of the intented Network API call(s) .
+The Authorization Code Flow is only applicable if the Consumption Device that initiates the process of obtaining a Three-Legged Access Token from the Authorization Server is also the Target Device of the intended CAMARA API call(s).
 
 ```mermaid
 sequenceDiagram
