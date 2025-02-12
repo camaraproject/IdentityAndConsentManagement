@@ -85,6 +85,14 @@ Note: In cases where Personal Data is processed by a CAMARA API, and Users can e
 
 #### Authorization Code Flow (Frontend Flow)
 
+Being able to identify the device sending the Authentication Request is one of the biggest assets CSP bring to CAMARA.<br/>
+**Currently** network-based authentication is the default method implementing device authentication.
+Some CAMARA APIs, like NumberVerification, require the device to be identified by network-based authentication.
+
+There are use-cases where an API Consumer where network-based authentication is not necessary and the API Consumer still benefits from the end-user to API Produser relationship e.g. if the end-user authenticates to the API Provider and grants their consent for a CAMARA API.
+
+CAMARA does not intend to limit the Authorization Code Flow to just network-based authentication in the future.
+
 ```mermaid
 sequenceDiagram
 autonumber
