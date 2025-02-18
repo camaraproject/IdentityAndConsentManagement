@@ -163,7 +163,7 @@ _NOTE: The technical ruleset is applicable only after a subproject has agreed to
 
 If all API usecases point to the need of an 'On-Net' scenario and where the Consumption Device and Authentication Device are the same, the Frontend flow SHOULD be used. eg. NumberVerification
 
-This flow is then applicable to On-Net scenarios where the mobile connection of the Consumption Device needs to be authenticated e.g. [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification/blob/main/documentation/API_documentation/assets/uml_v0.3.jpg) due to the nature of its functionality where a User's MSISDN needs to be compared to the MSISDN associated with the mobile connection of the Consumption Device. 
+This flow is then applicable to On-Net scenarios where the mobile connection of the Consumption Device needs to be authenticated e.g. [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification) due to the nature of its functionality where a User's MSISDN needs to be compared to the MSISDN associated with the mobile connection of the Consumption Device. 
 
 The Application on the Consumption Device must be able to handle browser redirects.
 
