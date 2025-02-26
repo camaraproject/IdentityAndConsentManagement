@@ -17,7 +17,9 @@ info:
 
     # API Functionality
 
-    This API enables an API Consumer to determine whether user Consent is required, in the applicable legislation, for the requested actions based on the provide scope(s) and Purpose. Specifically, the API:
+    This API enables an API Consumer to determine whether user Consent is required, in the applicable legislation, for the requested actions based on the provide scope(s) and Purpose. NOTE: It may be required more than one User Consent for the requested scope(s) and Purpose (e.g. when the requested scopes are related to multiple APIs).
+    
+    Specifically, the API:
 
     * Determines the need for Consent: Evaluates whether user Consent is necessary according to the specified parameters and relevant legal requirements.
     * Provides the current Consent status: If Consent is required, the API returns the current status (e.g., active, revoked, expired...) so the API Consumer can understand the current User's consent status.
@@ -34,6 +36,20 @@ info:
     The specific authorization flows to be used will be agreed upon during the onboarding process, happening between the API consumer and the API provider, taking into account the declared purpose for accessing the API, whilst also being subject to the prevailing legal framework dictated by local legislation.
 
     In cases where personal data is processed by the API and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of three-legged access tokens is mandatory. This ensures that the API remains in compliance with privacy regulations, upholding the principles of transparency and user-centric privacy-by-design.
+    
+    # Identifying the phone number from the access token
+
+    This API requires the API consumer to identify a phone number as the subject of the API as follows:
+    - When the API is invoked using a two-legged access token, the subject will be identified from the optional `phoneNumber` field, which therefore MUST be provided.
+    - When a three-legged access token is used however, this optional identifier MUST NOT be provided, as the subject will be uniquely identified from the access token.
+
+    This approach simplifies API usage for API consumers using a three-legged access token to invoke the API by relying on the information that is associated with the access token and was identified during the authentication process.
+
+    ## Error handling:
+
+    - If the subject cannot be identified from the access token and the optional `phoneNumber` field is not included in the request, then the server will return an error with the `422 MISSING_IDENTIFIER` error code.
+
+    - If the subject can be identified from the access token and the optional `phoneNumber` field is also included in the request, then the server will return an error with the `422 UNNECESSARY_IDENTIFIER` error code. This will be the case even if the same phone number is identified by these two methods, as the server is unable to make this comparison.
     
     # Further info and support
 
@@ -57,7 +73,7 @@ paths:
     post:
       summary: Create a request to verify the Consent status
       description: |
-        Create a request to verify the Consent status of a specific User to the API Consumer for the requested scope(s) and Purpose. The User is identified by the `phoneNumber` parameter in the request body. The API Consumer is identified by the `client_id` parameter deduced from the access token.
+        Create a request to verify the Consent status of a specific User to the API Consumer for the requested scope(s) and Purpose. The API Consumer is identified by the `client_id` parameter deduced from the access token.
       operationId: verifyConsentStatus
       security:
         - openId:
@@ -74,12 +90,42 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/VerifyConsentStatusRequestBody"
-            example:
-              phoneNumber: "+123456789"
-              scopes:
-                - "location-verification:verify"
-              purpose: "dpv:FraudPreventionAndDetection"
-              requestCaptureUrl: true
+            examples:
+              ONE_SCOPE_ONE_API:
+                summary: One scope
+                description: |
+                  Request with one scope corresponding to one API
+                value:
+                  phoneNumber: "+123456789"
+                  scopes:
+                    - "location-verification:verify"
+                  purpose: "dpv:FraudPreventionAndDetection"
+                  requestCaptureUrl: true
+              MULTIPLE_SCOPES_ONE_API:
+                summary: Multiple scopes for one API
+                description: |
+                  Request with multiple scopes corresponding to one API
+                value:
+                  phoneNumber: "+123456789"
+                  scopes:
+                    - "quality-on-demand:sessions:create"
+                    - "quality-on-demand:sessions:read"
+                    - "quality-on-demand:sessions:update"
+                    - "quality-on-demand:sessions:delete"
+                    - "quality-on-demand:sessions:retrieve-by-device"
+                  purpose: "dpv:RequestedServiceProvision"
+                  requestCaptureUrl: true
+              MULTIPLE_SCOPES_MULTIPLE_APIS:
+                summary: Multiple scopes for multiple APIs
+                description: |
+                  Request with multiple scopes corresponding to multiple APIs
+                value:
+                  phoneNumber: "+123456789"
+                  scopes:
+                    - "location-verification:verify"
+                    - "device-roaming-status:read"
+                  purpose: "dpv:FraudPreventionAndDetection"
+                  requestCaptureUrl: true
       responses:
         "200":
           description: OK
@@ -96,21 +142,66 @@ paths:
                   description: |
                     Consent is not required for the requested scope(s) and Purpose
                   value:
-                    consentRequired: false
+                    privacyStatus:
+                      - scopes:
+                          - "number-verification:verify"
+                        purpose: "dpv:LegitimateInterest"
+                        consentRequired: false
                 CONSENT_REQUIRED_ACTIVE:
                   summary: Consent is required and active
                   description: |
                     Consent is required for the requested scope(s) and Purpose and it is provided by the User
                   value:
-                    consentRequired: true
-                    consentStatus: ACTIVE
+                    privacyStatus:
+                      - scopes:
+                          - "location-verification:verify"
+                        purpose: "dpv:FraudPreventionAndDetection"
+                        consentRequired: true
+                        consentStatus: ACTIVE
                 CONSENT_REQUIRED_CAPTURE_URL:
                   summary: Consent is required and capture URL provided
                   description: |
                     Consent is required for the requested scope(s) and Purpose but it is not provided by the User.
                   value:
-                    consentRequired: true
-                    consentStatus: PENDING
+                    privacyStatus:
+                      - scopes:
+                          - "location-verification:verify"
+                        purpose: "dpv:FraudPreventionAndDetection"
+                        consentRequired: true
+                        consentStatus: PENDING
+                    captureUrl: 'https://example.org/consent-capture-url'
+                CONSENT_REQUIRED_MULTIPLE_SCOPES_ONE_API:
+                  summary: Multiple scopes for one API
+                  description: |
+                    Consent is required for the requested scope(s) and Purpose but it is not provided by the User. Request with multiple scopes corresponding to one API. 
+                  value:
+                    privacyStatus:
+                      - scopes:
+                        - "quality-on-demand:sessions:create"
+                        - "quality-on-demand:sessions:read"
+                        - "quality-on-demand:sessions:update"
+                        - "quality-on-demand:sessions:delete"
+                        - "quality-on-demand:sessions:retrieve-by-device"
+                        purpose: "dpv:RequestedServiceProvision"
+                        consentRequired: true
+                        consentStatus: PENDING
+                    captureUrl: 'https://example.org/consent-capture-url'
+                CONSENT_REQUIRED_MULTIPLE_SCOPES_MULTIPLE_APIS:
+                  summary: Multiple scopes for multiple APIs
+                  description: |
+                    Consent is required for the requested scope(s) and Purpose but it is not provided by the User. Request with multiple scopes corresponding to multiple APIs.
+                  value:
+                    privacyStatus:
+                      - scopes:
+                          - "location-verification:verify"
+                        purpose: "dpv:FraudPreventionAndDetection"
+                        consentRequired: true
+                        consentStatus: PENDING
+                      - scopes:
+                          - "device-roaming-status:read"
+                        purpose: "dpv:FraudPreventionAndDetection"
+                        consentRequired: true
+                        consentStatus: PENDING
                     captureUrl: 'https://example.org/consent-capture-url'
         "400":
           $ref: "#/components/responses/Generic400"
@@ -147,7 +238,6 @@ components:
     VerifyConsentStatusRequestBody:
       type: object
       required:
-        - phoneNumber
         - scopes
         - purpose
         - requestCaptureUrl
@@ -155,19 +245,9 @@ components:
         phoneNumber:
           $ref: "#/components/schemas/PhoneNumber"
         scopes:
-          type: array
-          minItems: 1
-          items:
-            type: string
-          description: |
-            List of scopes for which the Consent status is requested. The scope is a string that represents the access rights that the API Consumer is requesting from the User.
-          example:
-            - "location-verification:verify"
+          $ref: "#/components/schemas/Scopes"
         purpose:
-          type: string
-          description: |
-            The reason for which Personal Data will be processed by the API Consumer. CAMARA defines a standard set of Purposes which can be used by API Consumers to specify the reason for their intended Personal Data processing.
-          example: "dpv:FraudPreventionAndDetection"
+          $ref: "#/components/schemas/Purpose"
         requestCaptureUrl:
           type: boolean
           description: |
@@ -175,11 +255,52 @@ components:
             * `true` - If set to `true` the API will include a `captureUrl` in the response body if applicable.
             * `false` - The API will omit the consent capture URL from the response.
           example: true
+    Scopes:
+      type: array
+      minItems: 1
+      items:
+        type: string
+      description: |
+        List of scopes for which the Consent status is requested. The scope is a string that represents the access rights that the API Consumer is requesting from the User.
+      example:
+        - "location-verification:verify"      
+    Purpose:
+      type: string
+      description: |
+        The reason for which Personal Data will be processed by the API Consumer. CAMARA defines a standard set of Purposes which can be used by API Consumers to specify the reason for their intended Personal Data processing.
+      example: "dpv:FraudPreventionAndDetection"
     VerifyConsentStatusResponseBody:
       type: object
       required:
-        - consentRequired
+        - privacyStatus
       properties:
+        privacyStatus:
+          $ref: "#/components/schemas/PrivacyStatus"
+        captureUrl:
+          type: string
+          format: url
+          description: |
+            URL where the User can provide the necessary Consent. This field is only present when API Consumer requested it and if `consentRequired` is `true` and the `consentStatus` is `PENDING` or `EXPIRED`.
+          example: 'https://example.org/consent-capture-url'
+    PrivacyStatus:
+      type: array
+      description: |
+        The PrivacyStatus contains the information about the Consent status for the requested scope(s) and Purpose. It may be required more than one User Consent for the requested scope(s) and Purpose (e.g. when the requested scopes are related to multiple APIs).
+      items:
+        $ref: "#/components/schemas/PrivacyStatusObject"
+      minItems: 1
+    PrivacyStatusObject:
+      type: object
+      required:
+        - scopes
+        - purpose
+        - consentRequired
+        - consentStatus
+      properties:
+        scopes:
+          $ref: "#/components/schemas/Scopes"
+        purpose:
+          $ref: "#/components/schemas/Purpose"
         consentRequired:
           type: boolean
           description: |
@@ -198,12 +319,6 @@ components:
             - `ACTIVE`: The User has provided the necessary Consent.
             - `REVOKED`: The User has revoked the necessary Consent.
             - `EXPIRED`: The Consent provided by the User has expired.
-        captureUrl:
-          type: string
-          format: url
-          description: |
-            URL where the User can provide the necessary Consent. This field is only present when API Consumer requested it and if `consentRequired` is `true` and the `consentStatus` is `PENDING` or `EXPIRED`.
-          example: 'https://example.org/consent-capture-url'
     ErrorInfo:
       type: object
       required:
