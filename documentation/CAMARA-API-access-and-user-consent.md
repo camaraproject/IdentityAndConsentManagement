@@ -191,13 +191,12 @@ The Application on the Consumption Device must be able to handle browser redirec
 
 #### CIBA flow (Backend flow)
 
-The three-legged CIBA flow is necessary if Consumption Device and Authentication Device are different devices. If Consumption Device and Authentication Device are the same and this fact is known to the application, then it should be considered to use OIDC Authentication Code Flow instead.
+The three-legged CIBA flow is necessary if Consumption Device and Authentication Device are different devices. If Consumption Device and Authentication Device are the same and this fact is known to the application, then it should be considered to use OIDC Authentication Code Flow instead. If the legal basis allows it e.g. because of a `purpose` that is based on `legitimate interest` then the API Consumer should use a [client credentials-based two-legged flow](CAMARA-Security-Interoperability.md#client-credentials-flow).
 
-The Authentication Server MUST send a message to the Authentication Device, identified by login_hint, because otherwise there would be no User authentication at all and CIBA would become a two-legged flow.
+Neither MSISDN nor ipport as User identifiers are considered sufficient for User authentication.
+Because consent status cannot meaningfully be checked without User authentication the Authentication Server MUST send a message to the Authentication Device.
 
-User consent cannot be checked based on the login_hint value alone and without sending a message, because without a message being sent there would be no User authentication and without user authentication consent cannot be collected or checked.
-
-If the legal basis allows it e.g. because of a `purpose` that is based on `legitimate interest` then the API Consumer should use a [client credentials-based two-legged flow](CAMARA-Security-Interoperability.md#client-credentials-flow).
+Other mechanisms, like `id_token_hint`, to specify the User identifier are going to be considerend in the future.
 
 ```mermaid
 sequenceDiagram
