@@ -191,7 +191,7 @@ The Application on the Consumption Device must be able to handle browser redirec
 
 #### CIBA flow (Backend flow)
 
-The three-legged CIBA flow is necessary if Consumption Device and Authentication Device are different devices. If Consumption Device and Authentication Device are the same, then OIDC Authentication Code Flow SHOULD be used.
+The three-legged CIBA flow is necessary if Consumption Device and Authentication Device are different devices. If Consumption Device and Authentication Device are the same and this fact is known to the application, then it should be considered to use OIDC Authentication Code Flow instead.
 
 Note: In cases where personal data is processed by the API and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of three-legged access tokens is mandatory. This ensures that the API remains in compliance with privacy regulations, upholding the principles of transparency and user-centric privacy-by-design.
 
