@@ -220,7 +220,7 @@ alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between Invoker
   BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope=dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint including User Identifier    
   ExpO->>ExpO: - Validate User Identifier<br>- (Opt) map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc
-  Exp0->>FE: Out-of-band consent capture Push/SMS/Email/other
+  ExpO->>FE: Out-of-band consent capture Push/SMS/Email/other
   ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"}
   loop Invoker polls until consent is granted or until expires.
     BE->>+ExpO: POST /token <br>Credentials}<br>auth_req_id={OperatorAuthReqId}    
