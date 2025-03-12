@@ -23,7 +23,13 @@ This document defines guidelines for Operator API Exposure Platforms to manage C
 
 Some CAMARA APIs process Personal Data and according to local regulations may require a “legal basis” to do so (e.g. "legitimate interest”, “contract”, “consent”). Operator API Exposure Platforms exposing CAMARA APIs should be built with a privacy-by-design approach to fully comply with any relevant data protection requirements and regulations, such as [GDPR](https://gdpr-info.eu/) in Europe.
 
-**CAMARA API access will be secured using [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) (OIDC) on top of [OAuth 2.0 protocol](https://datatracker.ietf.org/doc/html/rfc6749) following the [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md)**.
+**CAMARA API access will be secured by the protocols described in the [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md).**
+- [OpenID Connect Authorization Code Flow](CAMARA-Security-Interoperability.md#oidc-authorization-code-flow) (OIDC) adds User authentication and consent collection on top of the [OAuth 2.0 protocol](https://datatracker.ietf.org/doc/html/rfc6749) in typical use cases where end-user's device sends an Authentication request to the Authorization Server starting User authentication and consent collection.
+- [OpenId Connect Client-Initiated Backend Authentication](CAMARA-Security-Interoperability.md#client-initiated-backchannel-authentication-flow) (CIBA) adds User authentication and consent collection in typical cases where the API Consumer's backend sends an Authorization Request to the Authorization Server starting User authentication and consent collection.
+- [OAuth2 Client-Credentials Flow](CAMARA-Security-Interoperability.md#client-credentials-flow) is typically used if the legal basis allows API usage without user consent. Use cases that have to consider that the end-user opted-out must check for opt-out when the access token created.
+
+The concept common to all flows is that the API access_token is created at the Authentication Server and that the API endpoint (Resource Server) grants access to the API based on the access_token alone.
+This separation of concern puts all the responsibility for implementing legal and business concerns under the authority of the Authentication Server and thus frees the Resource Server from the need to care about those. The API Provider's developers who implement the API can concentrate on the API which simplifies the service exposure platform implementation.
 
 This document defines guidelines for the Operator's API Exposure Platform to manage CAMARA API access and when applicable, User Consent to comply with data protection requirements, and it introduces the formal concept of Purpose within an API invocation. Note that the document is predominantly based on concepts defined within GDPR regulations, however the proposed solution and concepts are generic and can by mapped to any relevant local data protection regulations.
 
@@ -185,6 +191,13 @@ The Application on the Consumption Device must be able to handle browser redirec
 
 #### CIBA flow (Backend flow)
 
+The three-legged CIBA flow is necessary if Consumption Device and Authentication Device are different devices. If Consumption Device and Authentication Device are the same and this fact is known to the application, then it should be considered to use OIDC Authentication Code Flow instead. If the legal basis allows it e.g. because of a `purpose` that is based on `legitimate interest` then the API Consumer should use a [client credentials-based two-legged flow](CAMARA-Security-Interoperability.md#client-credentials-flow).
+
+Neither MSISDN nor ipport as User identifiers are considered sufficient for User authentication.
+Because consent status cannot meaningfully be checked without User authentication the Authentication Server MUST send a message to the Authentication Device.
+
+Other mechanisms, like `id_token_hint`, to specify the User identifier are going to be considerend in the future.
+
 ```mermaid
 sequenceDiagram
 autonumber
@@ -204,16 +217,9 @@ alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between Invoker
   BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope=dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint including User Identifier    
   ExpO->>ExpO: - Validate User Identifier<br>- (Opt) map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc
-  opt If User Consent is required for the legal basis of the purpose  
-    ExpO->>Consent: Check if Consent is granted
-  end
-  alt If Consent is Granted or Consent not needed for legal basis   
-    ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"  
-  else If Consent is needed and is NOT granted - Out Of Band Consent Capture (Push/SMS/other)
-    Note over ExpO,User: User Interaction <br> out-of-band capture consent mechanism chosen by the Operator
-    ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"}
-  end
-  loop Invoker polls until consent is granted or until expires. If granted in advance, token returned in first poll
+  ExpO->>User: Out-of-band consent capture<br>Push/SMS/Email/other to Authentication Device
+  ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"}
+  loop Invoker polls until consent is granted or until expires.
     BE->>+ExpO: POST /token <br>Credentials}<br>auth_req_id={OperatorAuthReqId}    
     ExpO->>-BE: HTTP 200 OK <br>{"access_token": "{OperatorAccessToken}"}
   end  
