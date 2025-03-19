@@ -1,6 +1,6 @@
 # CAMARA APIs Access and User Consent Management
 
-This document defines guidelines for Operator API Exposure Platforms to manage CAMARA API access and when applicable, User Consent.
+This document defines guidelines for API Providers to manage CAMARA API access and when applicable, User Consent.
 
 ## Table of Contents
 
@@ -21,17 +21,17 @@ This document defines guidelines for Operator API Exposure Platforms to manage C
 
 ## Introduction
 
-Some CAMARA APIs process Personal Data and according to local regulations may require a “legal basis” to do so (e.g. "legitimate interest”, “contract”, “consent”). Operator API Exposure Platforms exposing CAMARA APIs should be built with a privacy-by-design approach to fully comply with any relevant data protection requirements and regulations, such as [GDPR](https://gdpr-info.eu/) in Europe.
+Some CAMARA APIs process Personal Data and according to local regulations may require a “legal basis” to do so (e.g. "legitimate interest”, “contract”, “consent”). API Providers exposing CAMARA APIs should be built with a privacy-by-design approach to fully comply with any relevant data protection requirements and regulations, such as [GDPR](https://gdpr-info.eu/) in Europe.
 
 **CAMARA API access will be secured using [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) (OIDC) on top of [OAuth 2.0 protocol](https://datatracker.ietf.org/doc/html/rfc6749) following the [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md)**.
 
-This document defines guidelines for the Operator's API Exposure Platform to manage CAMARA API access and when applicable, User Consent to comply with data protection requirements, and it introduces the formal concept of Purpose within an API invocation. Note that the document is predominantly based on concepts defined within GDPR regulations, however the proposed solution and concepts are generic and can by mapped to any relevant local data protection regulations.
+This document defines guidelines for the API Exposure Platform to manage CAMARA API access and when applicable, User Consent to comply with data protection requirements, and it introduces the formal concept of Purpose within an API invocation. Note that the document is predominantly based on concepts defined within GDPR regulations, however the proposed solution and concepts are generic and can by mapped to any relevant local data protection regulations.
 
 This document includes following concepts:
 - User identity, and how to identify the User.
-- Application Service Provider (ASP) authentication and authorization, and how to authenticate the ASP's applications and authorize their access to CAMARA APIs.
+- API Consumer authentication and authorization, and how to authenticate the Applications and authorize their access to CAMARA APIs.
 - How Purpose applies to CAMARA APIs.
-- How to capture and store Consent when required, without materially degrading the End-User's experience of an ASP's Application.
+- How to capture and store Consent when required, without materially degrading the End-User's experience of an Application.
 - Policy enforcement to validate the existence and/or validity of Consent before authorizing access to a CAMARA API.
 - Revocation of Consent.
 
@@ -88,34 +88,34 @@ sequenceDiagram
 autonumber
 title Consume a CAMARA API - Authorization Code Flow (FrontEnd)
 participant FE as Application on Consumption Device
-participant BE as Application<br>(Application Backend/Aggregator)
-box Operator
+participant BE as API Consumer<br>(Application Backend/Aggregator)
+box API Provider / Operator
   participant ExpO as API Exposure Platform
   participant Consent as Consent Master
 end
 
 Note over FE,BE: Use Feature needing<br>Operator Capability  
-BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=invoker_callback...
+BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=consumer_callback...
 FE->>+FE: Browser /<br> Embedded Browser
-alt Standard OIDC Auth Code Flow between Invoker and API Exposure Platform
-  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=invoker_callback...
+alt Standard OIDC Auth Code Flow between API Consumer and API Exposure Platform
+  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=consumer_callback...
   Note over ExpO: API Exposure Platform applies<br>Network Based Authentication (amr=nba/mnba)
-  ExpO->>ExpO: Network Based Authentication:<br>- map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
+  ExpO->>ExpO: Network Based Authentication:<br>- map to Operator subscription Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc 
   opt If User Consent is required for the legal basis of the purpose  
     ExpO->>Consent: Check if Consent is granted    
   end  
   alt If Consent is Granted or Consent not needed for legal basis   
-    ExpO-->>FE: 302<br>Location: invoker_callback?code=Operatorcode
+    ExpO-->>FE: 302<br>Location: consumer_callback?code=Operatorcode
   else If Consent is NOT granted - Consent Capture within AuthCode Flow  
     Note over FE,ExpO: Start user consent capture process<br>following Section 3.1.2.4 of the OIDC Core 1.0 spec.    
     alt If the user refuses consent
-      ExpO-->>FE: 302<br>Location: invoker_callback?error=access_denied
+      ExpO-->>FE: 302<br>Location: consumer_callback?error=access_denied
     else If the user grants consent
-      ExpO-->>FE: 302<br>Location: invoker_callback?code=Operatorcode
+      ExpO-->>FE: 302<br>Location: consumer_callback?code=Operatorcode
     end
   end
-  FE-->>-BE: GET invoker_callback?code=OperatorCode
+  FE-->>-BE: GET consumer_callback?code=OperatorCode
   BE->>ExpO: POST /token<br> code=OperatorCode
   ExpO->>BE: 200 OK <br> {OperatorAccessToken}
 end
@@ -128,9 +128,9 @@ Note over BE,FE: Response
 
 **Flow description**:
 
-Firstly, the API invoker (for example, the Application Backend) instructs the Application on the Consumption Device to initiate the OIDC Authorization Code Flow with the Operator. The authorization request includes the client_id of the ASP's Application requesting access to the API and the Application's redirect_uri (invoker_callback) where the authorization code will be sent.
+Firstly, the API Consumer (for example, the Application Backend) instructs the Application on the Consumption Device to initiate the OIDC Authorization Code Flow with the API Provider (for example, the Operator). The authorization request includes the client_id of the ASP's Application requesting access to the API and the Application's redirect_uri (consumer_callback) where the authorization code will be sent.
 
-As per the standard authorization code flow, the Application is redirected to the Operator's Authorization Server in their API Exposure Platform (Steps 1-2), providing a redirect_uri (invoker_callback) pointing to the ASP's Application Backend (where the auth code will eventually be sent), as well as the Purpose for processing Personal Data.
+As per the standard authorization code flow, the Application is redirected to the Operator's Authorization Server in their API Exposure Platform (Steps 1-2), providing a redirect_uri (consumer_callback) pointing to the ASP's Application Backend (where the auth code will eventually be sent), as well as the Purpose for processing Personal Data.
 
 The Operator's API Exposure Platform receives the request from the Application (Step 3) and does the following:
 
@@ -140,12 +140,12 @@ The Operator's API Exposure Platform receives the request from the Application (
 
 Then, two alternatives may occur:
 
-**Scenario 1**: User Consent is not required or User Consent has already been given (Step 7). The API Exposure Platform will continue the authorization code flow by redirecting to the Application's redirect_uri (invoker_callback) and including the authorization code (OperatorCode).
+**Scenario 1**: User Consent is not required or User Consent has already been given (Step 7). The API Exposure Platform will continue the authorization code flow by redirecting to the Application's redirect_uri (consumer_callback) and including the authorization code (OperatorCode).
 
 **Scenario 2**: Consent is required and has not yet been provided by the User (Step 8)
 
 - The Operator performs the consent capture following Section 3.1.2.4 of the OpenID Connect Core 1.0 specification. Since the Authorization Code Grant involves the Consumption Device, Consent can be captured directly from the User - however this must be done in a manner that does not allow for background loading and acceptance by a malicious Application.
-- Once the User has given Consent, the flow continues by redirecting to the Application's redirect_uri (invoker_callback) and including the authorization code (OperatorCode).
+- Once the User has given Consent, the flow continues by redirecting to the Application's redirect_uri (consumer_callback) and including the authorization code (OperatorCode).
 
 Once the Application receives the redirect with the authorization code (OperatorCode - Steps 9-10), it will retrieve the access token from the operator's API exposure platform (OperatorAccessToken) (Steps 11-12).
 
@@ -163,7 +163,7 @@ _NOTE: The technical ruleset is applicable only after a subproject has agreed to
 
 If all API usecases point to the need of an 'On-Net' scenario and where the Consumption Device and Authentication Device are the same, the Frontend flow SHOULD be used. eg. NumberVerification
 
-This flow is then applicable to On-Net scenarios where the mobile connection of the Consumption Device needs to be authenticated e.g. [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification) due to the nature of its functionality where a User's MSISDN needs to be compared to the MSISDN associated with the mobile connection of the Consumption Device. 
+This flow is then applicable to On-Net scenarios where the mobile connection of the Consumption Device needs to be authenticated e.g. [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification) due to the nature of its functionality where a User's phone number needs to be compared to the phone number associated with the mobile connection of the Consumption Device. 
 
 The Application on the Consumption Device must be able to handle browser redirects.
 
@@ -172,7 +172,7 @@ The Application on the Consumption Device must be able to handle browser redirec
   - AuthZ/AuthN:
     - Standard OAuth 2.0 Authorization Code Grant flow
     - Network based authentication.
-      - Use network based authentication mechanism to obtain the user identifier, i.e.: MSISDN. Set the OAuth sub to the unique user ID in the operator.
+      - Use network based authentication mechanism to obtain the user identifier, i.e.: phone number. Set the OAuth sub to the unique user ID in the operator.
     - Three-Legged Access Token. Each access session is associated with the Operator, a client_id (which must be the final application using the information) and the corresponding User identifier.
   - Consent management:
     - Check if User Consent is required as the lawful basis associated with the declared Scope and Purpose. 
@@ -191,8 +191,8 @@ autonumber
 title Consume a CAMARA API - CIBA flow
 participant User as End User<br>@Authentication Device
 participant FE as Device App<br>(Consumption Device)
-participant BE as Invoker<br>(Application Backend/Aggregator)  
-box Operator
+participant BE as API Consumer<br>(Application Backend/Aggregator)  
+box API Provider / Operator
   participant ExpO as API Exposure Platform  
   participant Consent as Consent Master
 end
@@ -200,9 +200,9 @@ end
 Note over FE,BE: Feature needing<br>Operator capability  
 Note over BE: Select User Identifier:<br>Ip:port / Phone Number  
 
-alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between Invoker and Operator.
+alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between API Consumer and Operator.
   BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope=dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint including User Identifier    
-  ExpO->>ExpO: - Validate User Identifier<br>- (Opt) map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
+  ExpO->>ExpO: - Validate User Identifier<br>- (Opt) map to Operator subscription Identifier e.g.: phone number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc
   opt If User Consent is required for the legal basis of the purpose  
     ExpO->>Consent: Check if Consent is granted
@@ -213,7 +213,7 @@ alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between Invoker
     Note over ExpO,User: User Interaction <br> out-of-band capture consent mechanism chosen by the Operator
     ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"}
   end
-  loop Invoker polls until consent is granted or until expires. If granted in advance, token returned in first poll
+  loop API Consumer polls until consent is granted or until expires. If granted in advance, token returned in first poll
     BE->>+ExpO: POST /token <br>Credentials}<br>auth_req_id={OperatorAuthReqId}    
     ExpO->>-BE: HTTP 200 OK <br>{"access_token": "{OperatorAccessToken}"}
   end  
@@ -224,29 +224,29 @@ ExpO->>BE: CAMARA API Response
 Note over BE,FE: Response
 ```
 **Flow description**:
-First, the API Invoker (e.g. Application Backend or Aggregator) requests a Three-Legged Access Token from the Operator's API Exposure Platform. The process follows the OpenID Connect [Client-Initiated Backchannel Authentication (CIBA)](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html) flow.
+First, the API Consumer (e.g. Application Backend or Aggregator) requests a Three-Legged Access Token from the API Provider (for example, the Operator's API Exposure Platform). The process follows the OpenID Connect [Client-Initiated Backchannel Authentication (CIBA)](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html) flow.
 
-In the authorization request to the [Backchannel Authentication Endpoint](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.7) the API Invoker provides a login_hint with a valid User identifier together with the application credentials (the client_id of the Application requesting access to the data) and indicates the Purpose for processing Personal Data (Step 1). The login_hint formats for CAMARA and the way to declare a Purpose when accessing the CAMARA APIs is defined in the [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md).
+In the authorization request to the [Backchannel Authentication Endpoint](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#rfc.section.7) the API Consumer provides a login_hint with a valid User identifier together with the application credentials (the client_id of the Application requesting access to the data) and indicates the Purpose for processing Personal Data (Step 1). The login_hint formats for CAMARA and the way to declare a Purpose when accessing the CAMARA APIs is defined in the [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md).
 
 The Operator's API Exposure Platform will:
 
-- Validate User identifier and map it to a telco identifier if applicable, e.g. map IP to MSISDN. Set the OAuth sub to the unique user id (Step 2).
+- Validate User identifier and map it to an Operator subscription identifier if applicable, e.g. map IP to phone number. Set the OAuth sub to the unique user id (Step 2).
 
 - Check if a User Consent is needed, which depends on the legal basis associated to the purpose (“legitimate interest”, “contract”, “consent”, etc). If needed, it will check in the Operator's Consent Master whether Consent has already been given, the Application client_id and the requested Purpose (Steps 3-4).
 
 Then, two alternatives may occur.
 
-**Scenario 1**: User Consent is not required or Consent is already granted (Step 5). The API Exposure Platform will return a 200 OK response with the CIBA auth request identifier (auth_req_id=OperatorAuthReqId) to the API Invoker. This is a unique identifier to identify the authentication request made by the Invoker.
+**Scenario 1**: User Consent is not required or Consent is already granted (Step 5). The API Exposure Platform will return a 200 OK response with the CIBA auth request identifier (auth_req_id=OperatorAuthReqId) to the API Consumer. This is a unique identifier to identify the authentication request made by the API Consumer.
 
 **Scenario 2**: Consent is required and has not yet been granted by the User (Step 6)
 
 - A mechanism is triggered to capture User Consent in the Operator:
   
   - The Operator triggers an out-of-band Consent capture mechanism to interact with the User. Operators can choose the consent capture mechanism that best suits their capabilities, preferences and needs, for example a push notification or an SMS.
-  - In parallel, the API Exposure Platform returns a 200 OK response with the CIBA auth request identifier (auth_req_id=OperatorAuthReqId) to the API Invoker to indicate that the authentication request has been accepted and is being processed(Step 6).
+  - In parallel, the API Exposure Platform returns a 200 OK response with the CIBA auth request identifier (auth_req_id=OperatorAuthReqId) to the API Consumer to indicate that the authentication request has been accepted and is being processed(Step 6).
 
-Then, the API Invoker polls the token endpoint by making an "HTTP POST" request by sending the grant_type (`urn:openid:params:grant-type:ciba`) and auth_req_id (OperatorAuthReqId) parameters (Step 7).
-- The API Invoker will receive the following error code if the authorization is still pending to be accepted or rejected by the user.
+Then, the API Consumer polls the token endpoint by making an "HTTP POST" request by sending the grant_type (`urn:openid:params:grant-type:ciba`) and auth_req_id (OperatorAuthReqId) parameters (Step 7).
+- The API Consumer will receive the following error code if the authorization is still pending to be accepted or rejected by the user.
     
     ```
     HTTP/1.1 400 Bad Request
@@ -256,14 +256,14 @@ Then, the API Invoker polls the token endpoint by making an "HTTP POST" request 
         "error": "authorization_pending",
     }
     ```
-- When this response is received, the API Invoker must wait the seconds of the `interval` value received in the CIBA authorization endpoint and then repeat the request until a final response is received.
-- Once the User has given Consent, the API Exposure Platform will provide the access token (OperatorAccessToken) to the API Invoker (Step 8).
+- When this response is received, the API Consumer must wait the seconds of the `interval` value received in the CIBA authorization endpoint and then repeat the request until a final response is received.
+- Once the User has given Consent, the API Exposure Platform will provide the access token (OperatorAccessToken) to the API Consumer (Step 8).
 
-Now the API invoker has a valid access token that can be used to invoke the CAMARA API offered by the operator (Step 9).
+Now the API Consumer has a valid access token that can be used to invoke the CAMARA API offered by the operator (Step 9).
 
 Finally, the Operator will validate the OperatorAccessToken, grant access to the API based on the Scopes bound to the access token, forward the request to the corresponding API backend and retrieve the API response (Step 10).
 
-The Operator will provide the API response to the API Invoker (Step 11).
+The Operator will provide the API response to the API Consumer (Step 11).
 
 **Technical ruleset for the Backend flow**
 
@@ -272,7 +272,7 @@ _NOTE: The technical ruleset is applicable only after a subproject has agreed to
 If some use case(s) for an API point to "Off-net" scenarios and where Consumption Device and authentication devices could be different, the Backend flow should be used.
 
   - Identity: 
-    - Identification by IP, MSISDN or others like IMSI, ICCID for specific use cases.
+    - Identification by IP, phone number or others like IMSI, ICCID for specific use cases.
   - AuthZ/AuthN:
     - Standard OIDC backend-based flow: CIBA.
     - Three-Legged Access Token. Each access session is associated with the Operator, a client_id (which must be the final application using the information) and the corresponding User identifier.
@@ -282,7 +282,7 @@ If some use case(s) for an API point to "Off-net" scenarios and where Consumptio
       - If NOT granted, **the operator’s consent capture procedure is triggered**. Out-of-band consent capture as part of asynchronous CIBA flow (e.g. push notification with fallback to SMS, etc...). **Operators can choose the consent capture mechanism that best suits their capabilities, preferences and needs**.
   - Covered scenarios:
     - No front-end developer software in user device
-    - Back-end services (e.g. bank BE anti-fraud validation using MSISDN).
+    - Back-end services (e.g. bank BE anti-fraud validation using phone number).
     - Off-net scenarios (no mobile connection)
     - Device connected to WiFi
     - Device without UI (IoT)
@@ -295,10 +295,10 @@ The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749
 
 The purpose of this document section is to standardise the specification of `securitySchemes` and `security` across all CAMARA API subprojects with common mandatory guidelines as agreed by the Technical Steering Committee (TSC) and the participants of this Working Group.
 
-CAMARA guidelines define a set of authorization flows which can grant API consumers access to the API.
-Which specific authorization flows are to be used will be determined during the onboarding process, happening between the API consumer (the direct API Invoker) and the API producer exposing the API. When API access for an API consumer is ordered, the declared Purpose for accessing the API can be taken into account. This is also being subject to the prevailing legal framework dictated by local legislation and eventually also considers the capabilities of the application (frontend and backend) ultimately involved in the API invocation flow. 
+CAMARA guidelines define a set of authorization flows which can grant API Consumers access to the API.
+Which specific authorization flows are to be used will be determined during the onboarding process, happening between the API Consumer (the direct API Consumer) and the API Provider exposing the API. When API access for an API Consumer is ordered, the declared Purpose for accessing the API can be taken into account. This is also being subject to the prevailing legal framework dictated by local legislation and eventually also considers the capabilities of the application (frontend and backend) ultimately involved in the API invocation flow. 
 The authorization flow to be used will therefore be settled when the API access is ordered. 
-The API consumer is expected to initiate the negotiated authorization flow when requesting ID & access tokens. The Auth Server is responsible to validate that the authorization flow negotiated between API Invoker and API producer for this application, purpose, API/data Scopes is applied.
+The API Consumer is expected to initiate the negotiated authorization flow when requesting ID & access tokens. The Auth Server is responsible to validate that the authorization flow negotiated between API Consumer and API Provider for this application, purpose, API/data scopes is applied.
 
 ### Use of openIdConnect for `securitySchemes`
 
