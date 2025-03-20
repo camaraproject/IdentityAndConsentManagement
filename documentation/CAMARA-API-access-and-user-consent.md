@@ -185,6 +185,11 @@ The Application on the Consumption Device must be able to handle browser redirec
 
 #### CIBA flow (Backend flow)
 
+
+Neither MSISDN nor ipport as User identifiers are considered sufficient for User authentication.
+Because consent status cannot meaningfully be checked without User authentication the Authentication Server MUST send a message to the Authentication Device.
+
+
 ```mermaid
 sequenceDiagram
 autonumber
@@ -204,16 +209,9 @@ alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between Invoker
   BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope=dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint including User Identifier    
   ExpO->>ExpO: - Validate User Identifier<br>- (Opt) map to Telco Identifier e.g.: phone_number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc
-  opt If User Consent is required for the legal basis of the purpose  
-    ExpO->>Consent: Check if Consent is granted
-  end
-  alt If Consent is Granted or Consent not needed for legal basis   
-    ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"  
-  else If Consent is needed and is NOT granted - Out Of Band Consent Capture (Push/SMS/other)
-    Note over ExpO,User: User Interaction <br> out-of-band capture consent mechanism chosen by the Operator
-    ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"}
-  end
-  loop Invoker polls until consent is granted or until expires. If granted in advance, token returned in first poll
+  ExpO->>User: Out-of-band consent capture<br>Push/SMS/Email/other to Authentication Device
+  ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"}
+  loop Invoker polls until consent is granted or until expires.
     BE->>+ExpO: POST /token <br>Credentials}<br>auth_req_id={OperatorAuthReqId}    
     ExpO->>-BE: HTTP 200 OK <br>{"access_token": "{OperatorAccessToken}"}
   end  
