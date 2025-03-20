@@ -6,12 +6,14 @@ This document defines guidelines for API Providers to manage CAMARA API access a
 
 - [Introduction](#introduction)
 - [Glossary of Terms and Concepts](#glossary-of-terms-and-concepts)
-- [Purpose within Camara](#purpose-within-camara)
+- [Purpose within CAMARA](#purpose-within-camara)
   - [Using Purpose within the authorization request](#using-purpose-within-the-authorization-request)
 - [User Authentication/Authorization \& Consent Management](#user-authenticationauthorization--consent-management)
   - [Authorization flows / grant types](#authorization-flows--grant-types)
-    - [Authorization code flow (Frontend flow)](#authorization-code-flow-frontend-flow)
+    - [Authorization Code Flow (Frontend Flow)](#authorization-code-flow-frontend-flow)
+      - [Technical ruleset for the Frontend flow](#technical-ruleset-for-the-frontend-flow)
     - [CIBA flow (Backend flow)](#ciba-flow-backend-flow)
+      - [Technical ruleset for the Backend flow](#technical-ruleset-for-the-backend-flow)
     - [Client Credentials](#client-credentials)
 - [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
   - [Use of openIdConnect for `securitySchemes`](#use-of-openidconnect-for-securityschemes)
@@ -157,7 +159,7 @@ Finally, the Operator will provide the API response to the Application (Step 15)
 
 <br>
 
-**Technical ruleset for the Frontend flow**
+##### Technical ruleset for the Frontend flow
 
 _NOTE: The technical ruleset is applicable only after a subproject has agreed to use a Three-Legged Access Token authentication flow. This ruleset provides a recommendation which will help API providers to align on the Three-Legged Access Token Flow and help with aggregation._
 
@@ -265,7 +267,7 @@ Finally, the Operator will validate the OperatorAccessToken, grant access to the
 
 The Operator will provide the API response to the API Consumer (Step 11).
 
-**Technical ruleset for the Backend flow**
+##### Technical ruleset for the Backend flow
 
 _NOTE: The technical ruleset is applicable only after a subproject has agreed to use a Three-Legged Access Token authentication flow. This ruleset is a recommendation which will help Operators align on the Three-Legged Access Token and help with aggregation._ 
 
