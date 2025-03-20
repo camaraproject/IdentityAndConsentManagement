@@ -100,7 +100,7 @@ FE->>+FE: Browser /<br> Embedded Browser
 alt Standard OIDC Auth Code Flow between API Consumer and API Exposure Platform
   FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=consumer_callback...
   Note over ExpO: API Exposure Platform applies<br>Network Based Authentication (amr=nba/mnba)
-  ExpO->>ExpO: Network Based Authentication:<br>- map to Operator subscription Identifier e.g.: phone_number<br>- Set UserId (sub)  
+  ExpO->>ExpO: Network Based Authentication:<br>- map to Operator subscription Identifier e.g.: phone number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc 
   opt If User Consent is required for the legal basis of the purpose  
     ExpO->>Consent: Check if Consent is granted    
