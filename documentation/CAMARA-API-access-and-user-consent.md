@@ -157,8 +157,6 @@ The Operator's API Exposure Platform will validate OperatorAccessToken, grant th
 
 Finally, the Operator will provide the API response to the Application (Step 15).
 
-<br>
-
 ##### Technical ruleset for the Frontend flow
 
 _NOTE: The technical ruleset is applicable only after a subproject has agreed to use a Three-Legged Access Token authentication flow. This ruleset provides a recommendation which will help API providers to align on the Three-Legged Access Token Flow and help with aggregation._
