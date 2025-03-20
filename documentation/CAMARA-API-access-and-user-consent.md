@@ -189,7 +189,6 @@ The Application on the Consumption Device must be able to handle browser redirec
 Neither MSISDN nor ipport as User identifiers are considered sufficient for User authentication.
 Because consent status cannot meaningfully be checked without User authentication the Authentication Server MUST send a message to the Authentication Device.
 
-Other mechanisms, like `id_token_hint`, to specify the User identifier are going to be considerend in the future.
 
 ```mermaid
 sequenceDiagram
