@@ -185,7 +185,6 @@ The Application on the Consumption Device must be able to handle browser redirec
 
 #### CIBA flow (Backend flow)
 
-The three-legged CIBA flow is necessary if Consumption Device and Authentication Device are different devices. If Consumption Device and Authentication Device are the same and this fact is known to the application, then it should be considered to use OIDC Authentication Code Flow instead. If the legal basis allows it e.g. because of a `purpose` that is based on `legitimate interest` then the API Consumer should use a [client credentials-based two-legged flow](CAMARA-Security-Interoperability.md#client-credentials-flow).
 
 Neither MSISDN nor ipport as User identifiers are considered sufficient for User authentication.
 Because consent status cannot meaningfully be checked without User authentication the Authentication Server MUST send a message to the Authentication Device.
