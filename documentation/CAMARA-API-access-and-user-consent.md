@@ -25,6 +25,8 @@ Some CAMARA APIs process Personal Data and according to local regulations may re
 
 **CAMARA API access will be secured using [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) (OIDC) on top of [OAuth 2.0 protocol](https://datatracker.ietf.org/doc/html/rfc6749) following the [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md)**.
 
+his document defines guidelines for the Operator's API Exposure Platform to manage CAMARA API access and when applicable, User Consent to comply with data protection requirements, and it introduces the formal concept of Purpose within an API invocation. Note that the document is predominantly based on concepts defined within GDPR regulations, however the proposed solution and concepts are generic and can by mapped to any relevant local data protection regulations.
+
 This document includes following concepts:
 - User identity, and how to identify the User.
 - Application Service Provider (ASP) authentication and authorization, and how to authenticate the ASP's applications and authorize their access to CAMARA APIs.
