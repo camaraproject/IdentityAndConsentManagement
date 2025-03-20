@@ -25,11 +25,6 @@ Some CAMARA APIs process Personal Data and according to local regulations may re
 
 **CAMARA API access will be secured using [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) (OIDC) on top of [OAuth 2.0 protocol](https://datatracker.ietf.org/doc/html/rfc6749) following the [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md)**.
 
-The concept common to all flows is that the API access_token is created at the Authentication Server and that the API endpoint (Resource Server) grants access to the API based on the access_token alone.
-This separation of concern puts all the responsibility for implementing legal and business concerns under the authority of the Authentication Server and thus frees the Resource Server from the need to care about those. The API Provider's developers who implement the API can concentrate on the API which simplifies the service exposure platform implementation.
-
-This document defines guidelines for the Operator's API Exposure Platform to manage CAMARA API access and when applicable, User Consent to comply with data protection requirements, and it introduces the formal concept of Purpose within an API invocation. Note that the document is predominantly based on concepts defined within GDPR regulations, however the proposed solution and concepts are generic and can by mapped to any relevant local data protection regulations.
-
 This document includes following concepts:
 - User identity, and how to identify the User.
 - Application Service Provider (ASP) authentication and authorization, and how to authenticate the ASP's applications and authorize their access to CAMARA APIs.
