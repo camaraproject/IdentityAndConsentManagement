@@ -114,7 +114,9 @@ CAMARA does not intend to limit the Authorization Code Flow to just network-base
 
 It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC](https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests). The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication). In addition, this document defines that:
   * Values for the mandatory parameters `scope`, `response_type`, `client_id` and `redirect_uri` MUST be included using the OAuth2.0 request syntax. The values for these parameters MUST match those in the signed request object.
+  * The fields iss, aud, iat, exp and jti MUST be included in the signed request object.
   * For all other parameters, the authorization server MUST only use the parameters contained in the signed request object. 
+  * The request SHALL be rejected by the authorisation server if the exp claim is more than 300 seconds later than the time of receipt. Additionally, if the iat claim is present, the request SHALL be rejected if the difference between the exp claim and iat claim is more than 300 seconds.
 
 It is RECOMMENDED that the value of the `aud` field of the signed authentication request is the URL of the [Authorization Endpoint](https://openid.net/specs/openid-connect-core-1_0.html#AuthorizationEndpoint).
 The authorization server MAY accept different values of the `aud` field e.g. the `issuer` field of its [OpenID Provider Metadata](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata). 
