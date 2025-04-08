@@ -385,7 +385,7 @@ In other cases, as defined in [OIDC Authentication Error Response Section](https
 |     `consent_required`      | The authorization server requires user consent. This error MAY be returned when the `prompt` parameter value in the request is `none`, but the request cannot be completed without displaying a user interface for user consent. This error MAY be returned when the `prompt` parameter value in the request is `consent`, but the authorization server cannot obtain consent.                                                                              |
 |       `server_error`        | The authorization server encountered an unexpected condition that prevented it from fulfilling the request.                                                                                                                                                                                                                                                                                                                                                 |
 |  `temporarily_unavailable`  | The authorization server is currently unable to handle the request due to a temporary overloading or maintenance of the server.                                                                                                                                                                                                                                                                                                                             |
-|   `request_not_supported`   | The authorization server does not support use of the `request` parameter.                                                                                                                                                                                                                                                                                                                                                                                   |
+|  `invalid_request_object`   | The `request` parameter contains an invalid Request Object.                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `request_uri_not_supported` | The authorization server does not support use of the `request_uri` parameter.                                                                                                                                                                                                                                                                                                                                                                               |
 
 
@@ -420,8 +420,8 @@ As described in [CIBA Authentication Error Response Section](https://openid.net/
       <td>The requested scope is either invalid, unknown, or malformed.</td>
     </tr>
     <tr>
-      <td><code>request_not_supported</code></td>
-      <td>The authorization server does not support use of the <code>request</code> parameter.</td>
+      <td><code>invalid_request_object</code></td>
+      <td>The <code>request</code> parameter contains an invalid Request Object.</td>
     </tr>
     <tr>
       <td>401 - Unauthorized</td>
@@ -476,7 +476,7 @@ As defined in [OAuth 2.0 Token Error Response Section](https://www.rfc-editor.or
 
 #### Authorization Code Flow
 
-In addition to the error codes defined in the common [Token Error Response Section](#token-error-response), the following error codes  and scenarios are specific to the Authorization Code flow:
+In addition to the error codes defined in the common [Token Error Response Section](#token-error-response), the following error codes and scenarios are specific to the Authorization Code flow:
 
 | Status Code       | Error Code      | Scenario                                                                                                                                                                                                                                                                                                                                            |
 |-------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
