@@ -112,7 +112,7 @@ CAMARA does not intend to limit the Authorization Code Flow to just network-base
 
 ### Signed Authentication Requests
 
-It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC](https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests). The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication). In addition, this document defines that:
+It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC](https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests). Therefore, the authorization server MUST support the handling of signed authentication requests. The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication). In addition, this document defines that:
   * Values for the mandatory parameters `scope`, `response_type`, `client_id` and `redirect_uri` MUST be included using the OAuth2.0 request syntax. The values for these parameters MUST match those in the signed request object.
   * For all other parameters, the authorization server MUST only use the parameters contained in the signed request object. 
 
@@ -155,7 +155,7 @@ The parameters `binding_message`, `user_code`, and `requested_expiry` are curren
 
 ### Authentication Request
 
-It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC CIBA Core](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#signed_auth_request). The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication).
+It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC CIBA Core](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#signed_auth_request). Therefore, the authorization server MUST support the handling of signed authentication requests. The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication).
 
 CIBA allows the client to use login_hint_token, id_token_hint or login_hint as a hint in the authentication request. This CAMARA profile makes the login_hint parameter REQUIRED. The client SHALL specify login_hint (and only login_hint) in the authentication request when using CIBA in a CAMARA context.
 
