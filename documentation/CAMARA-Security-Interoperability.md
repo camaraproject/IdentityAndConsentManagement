@@ -157,7 +157,7 @@ The parameters `binding_message`, `user_code`, and `requested_expiry` are curren
 
 ### Authentication Request
 
-It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC CIBA Core](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#signed_auth_request). The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication).
+It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC CIBA Core](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#signed_auth_request). The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication). The signed request SHALL be rejected by the authorisation server if the exp claim is more than 300 seconds later than the time of receipt. Additionally, if the iat claim is present, the request SHALL be rejected if the difference between the exp claim and iat claim is more than 300 seconds.
 
 CIBA allows the client to use login_hint_token, id_token_hint or login_hint as a hint in the authentication request. This CAMARA profile makes the login_hint parameter REQUIRED. The client SHALL specify login_hint (and only login_hint) in the authentication request when using CIBA in a CAMARA context.
 
