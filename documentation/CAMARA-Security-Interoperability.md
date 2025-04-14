@@ -247,7 +247,7 @@ The claim of the assertion are.
 
 Client Authentication is optional for JWT-Bearer Flow and is not needed in this CAMARA token request because the assertion is signed by the API Consumer and the assertion is interpreted as the client assertion.
 
-The request SHALL be rejected by the authorisation server if the exp claim is more than 300 seconds later than the time of receipt. Additionally, if the iat claim is present, the request SHALL be rejected if the difference between the exp claim and iat claim is more than 300 seconds.
+The request SHALL be rejected by the authorisation server if the exp claim is more than 300 seconds later than the time of receipt. The request SHALL be rejected if the difference between the exp claim and iat claim is more than 300 seconds.
 
 This flow SHOULD return short-lived access tokens.
 
