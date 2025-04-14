@@ -14,6 +14,7 @@ This document defines guidelines for API Providers to manage CAMARA API access a
       - [Technical ruleset for the Frontend flow](#technical-ruleset-for-the-frontend-flow)
     - [CIBA flow (Backend flow)](#ciba-flow-backend-flow)
       - [Technical ruleset for the Backend flow](#technical-ruleset-for-the-backend-flow)
+    - [JWT Bearer Flow](#jwt-bearer-flow)
     - [Client Credentials](#client-credentials)
 - [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
   - [Use of openIdConnect for `securitySchemes`](#use-of-openidconnect-for-securityschemes)
@@ -286,6 +287,94 @@ If some use case(s) for an API point to "Off-net" scenarios and where Consumptio
     - Off-net scenarios (no mobile connection)
     - Device connected to WiFi
     - Device without UI (IoT)
+
+#### JWT Bearer Flow
+
+JWT Bearer Flow is a two-legged flow that creates an access token that is associated with a User.
+
+Example JWT, which MUST to be signed by the API Consumer, which CAN be encrytped:
+
+```JSON
+{
+  "iss": "client_id",
+  "sub": "operatortoken:ey...",
+  "aud": "https://az.api-provider.com/token.oauth2",
+  "exp": 1504807731,
+  "iat": 1504804131,
+  "jti": "53f42eb1-b751-44b5-bada-6990e08f35ac"
+  "scope": "dpv:FraudPreventionAndDetection number-verification:device-phone-number:read"
+}
+```
+
+Example Token Request:
+
+```
+POST /token.oauth2 HTTP/1.1
+Host: as.example.com
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer
+&assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjE2In0.
+eyJpc3Mi[...omitted for brevity...].
+J9l-ZhwP[...omitted for brevity...]
+```
+
++ The Authorization Server MUST validate the signatur of the signed assertion.
++ The Authorization Server MUST validate that the value of "iss" is associated with the signer of the assertion.
++ The Authorization Server MUST validate the "aud" value.
++ The Authorization Server MUST validate "exp" and "iat" values and the lifetime of the assertion MUST not exceed 300 seconds.
++ The Authorization Server MUST validate that the Purpose is a "legitimate-use" purpose e.g. dpv:FraudPreventionAndDetection
++ The Authorization Server MUST validate that the client is allowed to use the Purpose.
++ The Authorization Server MUST validate that the client is allowed to use the scopes.
++ The Authorization Server MUST validate the subject. In this example the TS.43 token is send to the API Provider's  Entitlement Server.
+
+```mermaid
+sequenceDiagram
+
+title NumberVerification with TS.43 Temporary Token
+
+participant API Consumer
+
+participant API Consumer Backend
+
+box Carrier
+participant Authorization Server
+participant CAMARA API
+participant Entitlement Server
+end
+
+
+note over API Consumer, Entitlement Server: Mobile App gets subscriber from Entitlement Server<br/>through Mobile Operating System
+API Consumer ->> API Consumer Backend: POST phonenumber, temporaryToken
+
+note over API Consumer Backend, Authorization Server: {Camara JWT Bearer Flow}<br/>sub=operatortoken:<temporaryToken><br/>scope number-verification<br/>Purpose legitimate use 
+
+API Consumer Backend ->> Authorization Server: POST signed assertion<br/>assertion=<br/> {scope=dpv:FraudPreventionAndDetection number-verification:device-phone-number:read,<br/>  sub=operatortoken:<temporaryToken>, ...}
+
+note over Authorization Server, Authorization Server: Validate Request
+
+Authorization Server ->> Authorization Server: create ASAC Eligibility Token
+Authorization Server ->> Entitlement Server: {TS.43} GetPhoneNumber<br/>(tempToken, eligibilityToken)
+
+Entitlement Server ->> Entitlement Server: Validate tempToken
+
+Entitlement Server ->> Authorization Server: 200 OK MSISDN
+
+Authorization Server ->> Authorization Server: check consent based on<br/>client_id, scopes, purpose, MSISDN
+
+Authorization Server ->> Authorization Server: create CAMARA access token
+
+Authorization Server ->> API Consumer Backend: return access token
+
+API Consumer Backend ->> CAMARA API: CAMARA NumberVerification API /verify <br/>Authorization: Bearer <acessToken><br/>phoneNumber=phonenumber
+
+CAMARA API ->> API Consumer Backend: devicePhoneNumberVerified (boolean)
+
+API Consumer Backend ->> API Consumer: devicePhoneNumberVerified
+```
+
+
+
 
 #### Client Credentials
 
