@@ -251,7 +251,7 @@ The request SHALL be rejected by the authorisation server if the exp claim is mo
 
 This flow SHOULD return short-lived access tokens.
 
-This flow MUST not return refresh tokens.
+This flow MUST NOT return refresh tokens.
 
 ## Handling of acr_values
 
