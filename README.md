@@ -26,7 +26,7 @@ Repository to describe, develop, document and test the Identity And Consent Mana
 ## Contributing
 * Meetings
   * [Registration / Join](https://zoom-lfx.platform.linuxfoundation.org/meeting/94629188836?password=278b4c8a-f370-43bf-bac1-b30a39f169f3)
-   * Schedule: Bi-weekly Wednesday, 16:00 CEST (14:00 UTC during European daylight saving time)
+   * Schedule: Every 2 weeks on Wednesdays at 14:00 UTC
   * Minutes: Access [meeting minutes](https://lf-camaraproject.atlassian.net/wiki/spaces/CAM/pages/14569108/ICM+Meeting+Minutes).
 * Maling List
   * Subscribe / Unsubscribe to the mailing list of this Sub Project <https://lists.camaraproject.org/g/wg-icm>.
