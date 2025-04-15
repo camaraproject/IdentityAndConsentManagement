@@ -234,7 +234,7 @@ The JWT-Bearer Flow uses [JWTs as Authorization Grants](https://datatracker.ietf
 
 The scope parameter is MUST NOT be specified for JWT-Bearer Flow but the scope claim in the assertion is mandatory. 
 
-The claim of the assertion are.
+The API Consumer SHALL set the claims of the assertion as defined here:
 
 - The mandatory `iss` claim MUST be the client id of the API Consumer.
 - The mandatory `sub` (subject) claim MUST identifies the principal that is the subject of the JWT.
@@ -245,9 +245,21 @@ The claim of the assertion are.
 - The mandatory `jti` claim as defined in [RFC7519 section 4.1.7](https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1.7).
 - The mandatory `scope` claim that MUST contain a [Purpose](#purpose) and CAMARA scope values. 
 
-Client Authentication is optional for JWT-Bearer Flow and is not needed in this CAMARA token request because the assertion is signed by the API Consumer and the assertion is interpreted as the client assertion.
+Authentication of the client is optional, when using Assertions as Authorization Grants.
+In this token request the assertion is signed by the API Consumer and the assertion is interpreted as the client authentication.
 
-The request SHALL be rejected by the authorisation server if the exp claim is more than 300 seconds later than the time of receipt. The request SHALL be rejected if the difference between the exp claim and iat claim is more than 300 seconds.
+The Authorization Server MUST validate the assertion as follows:
+
++ The Authorization Server MUST validate the signatur of the signed assertion.
++ The Authorization Server MUST validate that the value of "iss" is associated with the signer of the assertion.
++ The Authorization Server MUST validate the "aud" value.
++ The Authorization Server MUST validate "exp" and "iat" values.
+  + The request SHALL be rejected by the authorisation server if the exp claim is more than 300 seconds later than the time of receipt.
+  + The request SHALL be rejected if the difference between the exp claim and iat claim is more than 300 seconds.
++ The Authorization Server MUST validate that the Purpose is a "legitimate-use" purpose e.g. dpv:FraudPreventionAndDetection
++ The Authorization Server MUST validate that the client is allowed to use the Purpose.
++ The Authorization Server MUST validate that the client is allowed to use the scopes.
++ The Authorization Server MUST validate the subject.
 
 This flow SHOULD return short-lived access tokens.
 
