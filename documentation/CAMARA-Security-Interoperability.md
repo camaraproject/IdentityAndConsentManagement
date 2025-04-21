@@ -112,7 +112,7 @@ CAMARA does not intend to limit the Authorization Code Flow to just network-base
 
 ### Signed Authentication Requests
 
-It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC](https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests). The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication). In addition, this document defines that:
+It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC](https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests). Therefore, the authorization server MUST support the handling of signed authentication requests. The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication). In addition, this document defines that:
   * Values for the mandatory parameters `scope`, `response_type`, `client_id` and `redirect_uri` MUST be included using the OAuth2.0 request syntax. The values for these parameters MUST match those in the signed request object.
   * For all other parameters, the authorization server MUST only use the parameters contained in the signed request object. 
 
@@ -155,7 +155,7 @@ The parameters `binding_message`, `user_code`, and `requested_expiry` are curren
 
 ### Authentication Request
 
-It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC CIBA Core](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#signed_auth_request). The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication).
+It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC CIBA Core](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#signed_auth_request). Therefore, the authorization server MUST support the handling of signed authentication requests. The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication).
 
 CIBA allows the client to use login_hint_token, id_token_hint or login_hint as a hint in the authentication request. This CAMARA profile makes the login_hint parameter REQUIRED. The client SHALL specify login_hint (and only login_hint) in the authentication request when using CIBA in a CAMARA context.
 
@@ -385,7 +385,7 @@ In other cases, as defined in [OIDC Authentication Error Response Section](https
 |     `consent_required`      | The authorization server requires user consent. This error MAY be returned when the `prompt` parameter value in the request is `none`, but the request cannot be completed without displaying a user interface for user consent. This error MAY be returned when the `prompt` parameter value in the request is `consent`, but the authorization server cannot obtain consent.                                                                              |
 |       `server_error`        | The authorization server encountered an unexpected condition that prevented it from fulfilling the request.                                                                                                                                                                                                                                                                                                                                                 |
 |  `temporarily_unavailable`  | The authorization server is currently unable to handle the request due to a temporary overloading or maintenance of the server.                                                                                                                                                                                                                                                                                                                             |
-|   `request_not_supported`   | The authorization server does not support use of the `request` parameter.                                                                                                                                                                                                                                                                                                                                                                                   |
+|  `invalid_request_object`   | The `request` parameter contains an invalid Request Object.                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `request_uri_not_supported` | The authorization server does not support use of the `request_uri` parameter.                                                                                                                                                                                                                                                                                                                                                                               |
 
 
@@ -420,8 +420,8 @@ As described in [CIBA Authentication Error Response Section](https://openid.net/
       <td>The requested scope is either invalid, unknown, or malformed.</td>
     </tr>
     <tr>
-      <td><code>request_not_supported</code></td>
-      <td>The authorization server does not support use of the <code>request</code> parameter.</td>
+      <td><code>invalid_request_object</code></td>
+      <td>The <code>request</code> parameter contains an invalid Request Object.</td>
     </tr>
     <tr>
       <td>401 - Unauthorized</td>
@@ -476,7 +476,7 @@ As defined in [OAuth 2.0 Token Error Response Section](https://www.rfc-editor.or
 
 #### Authorization Code Flow
 
-In addition to the error codes defined in the common [Token Error Response Section](#token-error-response), the following error codes  and scenarios are specific to the Authorization Code flow:
+In addition to the error codes defined in the common [Token Error Response Section](#token-error-response), the following error codes and scenarios are specific to the Authorization Code flow:
 
 | Status Code       | Error Code      | Scenario                                                                                                                                                                                                                                                                                                                                            |
 |-------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
