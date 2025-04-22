@@ -232,7 +232,7 @@ The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749
 
 The JWT-Bearer Flow uses [JWTs as Authorization Grants](https://datatracker.ietf.org/doc/html/rfc7523#section-2.1) ("urn:ietf:params:oauth:grant-type:jwt-bearer" grant_type for Oauth 2.0) that provide a JWT assertion following the OAuth Assertion Framework: [Using Assertions as Authorization Grants](https://datatracker.ietf.org/doc/html/rfc7521#section-4.1) | [Client Acting on Behalf of a User](https://datatracker.ietf.org/doc/html/rfc7521#section-6.3).
 
-The scope parameter is MUST NOT be specified for JWT-Bearer Flow but the scope claim in the assertion is mandatory. 
+The scope parameter MUST NOT be specified for JWT-Bearer Flow, but the scope claim in the assertion is mandatory. 
 
 The API Consumer SHALL set the claims of the assertion as defined here:
 
