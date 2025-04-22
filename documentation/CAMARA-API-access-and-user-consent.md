@@ -292,6 +292,8 @@ If some use case(s) for an API point to "Off-net" scenarios and where Consumptio
 
 JWT Bearer Flow is a two-legged flow that creates an access token that is associated with a User.
 
+The Purpose and scopes used in this sections are example values.
+
 Example JWT, which MUST to be signed by the API Consumer, which CAN be encrytped:
 
 ```JSON
