@@ -343,6 +343,7 @@ box Carrier
 participant Authorization Server
 participant CAMARA API
 participant Entitlement Server
+participant Consent
 end
 
 
@@ -362,17 +363,28 @@ Entitlement Server ->> Entitlement Server: Validate tempToken
 
 Entitlement Server ->> Authorization Server: 200 OK MSISDN
 
-Authorization Server ->> Authorization Server: check consent based on<br/>client_id, scopes, purpose, MSISDN
+Authorization Server ->> Authorization Server: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc
 
-Authorization Server ->> Authorization Server: create CAMARA access token
+opt If User Consent is required for the legal basis of the purpose  
+    Authorization Server->>Consent: Check if Consent is granted
+end
+alt If Consent is Granted or Consent not needed for legal basis   
+  Authorization Server ->> Authorization Server: create CAMARA access token
 
-Authorization Server ->> API Consumer Backend: return access token
+  Authorization Server ->> API Consumer Backend: return access token
 
-API Consumer Backend ->> CAMARA API: CAMARA NumberVerification API /verify <br/>Authorization: Bearer <acessToken><br/>phoneNumber=phonenumber
+  API Consumer Backend ->> CAMARA API: CAMARA NumberVerification API /verify <br/>Authorization: Bearer <acessToken><br/>phoneNumber=phonenumber
 
-CAMARA API ->> API Consumer Backend: devicePhoneNumberVerified (boolean)
+  CAMARA API ->> API Consumer Backend: devicePhoneNumberVerified (boolean)
 
-API Consumer Backend ->> API Consumer: devicePhoneNumberVerified
+  API Consumer Backend ->> API Consumer: devicePhoneNumberVerified
+
+else If Consent is needed and is NOT granted
+  Authorization Server ->> API Consumer Backend: error `consent_required`
+
+  API Consumer Backend ->> API Consumer: error `consent_required`
+end
+
 ```
 
 
