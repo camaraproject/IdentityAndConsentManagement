@@ -256,7 +256,7 @@ The Authorization Server MUST validate the assertion as follows:
 + The Authorization Server MUST validate "exp" and "iat" values.
   + The request SHALL be rejected by the authorisation server if the exp claim is more than 300 seconds later than the time of receipt.
   + The request SHALL be rejected by the authorisation server if the iat claim is later than the time of receipt, or if the difference between the exp claim and iat claim is greater than 300 seconds.
-+ The Authorization Server MUST validate that the Purpose is a "legitimate-use" purpose e.g. dpv:FraudPreventionAndDetection
++ The Authorization Server MUST validate that the client is allowed to use JWT Bearer Flow.
 + The Authorization Server MUST validate that the client is allowed to use the Purpose.
 + The Authorization Server MUST validate that the client is allowed to use the scopes.
 + The Authorization Server MUST validate the subject.
