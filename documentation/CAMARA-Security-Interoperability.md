@@ -250,7 +250,7 @@ In this token request the assertion is signed by the API Consumer and the assert
 
 The Authorization Server MUST validate the assertion as follows:
 
-+ The Authorization Server MUST validate the signatur of the signed assertion.
++ The Authorization Server MUST validate the signature of the signed assertion.
 + The Authorization Server MUST validate that the value of "iss" is associated with the signer of the assertion.
 + The Authorization Server MUST validate the "aud" value.
 + The Authorization Server MUST validate "exp" and "iat" values.
