@@ -323,9 +323,9 @@ J9l-ZhwP[...omitted for brevity...]
 + The Authorization Server MUST validate that the value of "iss" is associated with the signer of the assertion.
 + The Authorization Server MUST validate the "aud" value.
 + The Authorization Server MUST validate "exp" and "iat" values and the lifetime of the assertion MUST not exceed 300 seconds.
-+ The Authorization Server MUST validate that the Purpose is a "legitimate-use" purpose e.g. dpv:FraudPreventionAndDetection
-+ The Authorization Server MUST validate that the client is allowed to use the Purpose.
-+ The Authorization Server MUST validate that the client is allowed to use the scopes.
++ The Authorization Server MUST validate that the API Consumer is allowed to use JWT Bearer Flow.
++ The Authorization Server MUST validate that the API Consumer is allowed to use the Purpose.
++ The Authorization Server MUST validate that the API Consumer is allowed to use the scopes.
 + The Authorization Server MUST validate the subject. In this example the TS.43 token is send to the API Provider's  Entitlement Server.
 
 ```mermaid
