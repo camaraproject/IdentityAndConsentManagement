@@ -25,7 +25,13 @@ This document defines guidelines for API Providers to manage CAMARA API access a
 
 Some CAMARA APIs process Personal Data and according to local regulations may require a “legal basis” to do so (e.g. "legitimate interest”, “contract”, “consent”). API Providers exposing CAMARA APIs should be built with a privacy-by-design approach to fully comply with any relevant data protection requirements and regulations, such as [GDPR](https://gdpr-info.eu/) in Europe.
 
-**CAMARA API access will be secured using [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) (OIDC) on top of [OAuth 2.0 protocol](https://datatracker.ietf.org/doc/html/rfc6749) following the [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md)**.
+CAMARA API access will be secured by the protocols described in the [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md)
+- [OpenID Connect Authorization Code Flow](CAMARA-Security-Interoperability.md#oidc-authorization-code-flow) (OIDC).
+- [OpenId Connect Client-Initiated Backend Authentication](CAMARA-Security-Interoperability.md#client-initiated-backchannel-authentication-flow) (CIBA).
+- [OAuth2 Client-Credentials Flow](CAMARA-Security-Interoperability.md#client-credentials-flow).
+
+The concept common to all flows is that the access token used to invoke an API is created at the Authorization Server, and the API endpoint (Resource Server) grants access to the API based solely on the access token.
+This separation of concerns places all responsibility for implementing legal and business concerns under the authority of the Authorization Server, freeing the Resource Server from the need to worry about them. The API Provider's developers implementing the API can focus on the API functionality itself, simplifying the Resource Server's implementation.
 
 This document defines guidelines for the API Exposure Platform to manage CAMARA API access and when applicable, User Consent to comply with data protection requirements, and it introduces the formal concept of Purpose within an API invocation. Note that the document is predominantly based on concepts defined within GDPR regulations, however the proposed solution and concepts are generic and can by mapped to any relevant local data protection regulations.
 
