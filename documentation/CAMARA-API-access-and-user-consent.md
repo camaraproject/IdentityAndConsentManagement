@@ -15,6 +15,8 @@ This document defines guidelines for API Providers to manage CAMARA API access a
     - [CIBA flow (Backend flow)](#ciba-flow-backend-flow)
       - [Technical ruleset for the Backend flow](#technical-ruleset-for-the-backend-flow)
     - [JWT Bearer Flow](#jwt-bearer-flow)
+      - [JWT Bearer Flow Operator Token](#wt-bearer-flow-operator-token) 
+      - [JWT Bearer Flow MSISDN](#wt-bearer-msisdn) 
     - [Client Credentials](#client-credentials)
 - [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
   - [Use of openIdConnect for `securitySchemes`](#use-of-openidconnect-for-securityschemes)
@@ -290,9 +292,22 @@ If some use case(s) for an API point to "Off-net" scenarios and where Consumptio
 
 #### JWT Bearer Flow
 
-JWT Bearer Flow is a two-legged flow that creates an access token that is associated with a User.
+JWT Bearer Flow is a flow that validates the API Consumer (client) and creates an access token that is associated with a User (three-legged token).
+
+This section contains two sub-sections, one gives an example for when the sub-value is "operatortoken:" the other for when the sub-value is "tel:".
 
 The Purpose and scopes used in this sections are example values.
+
+If "operatortoken:" is used then the sub-value is an assertion that the User is present in the flow. This assertion acts as a User authentication.
+
+If "tel:" is used then sub value does not provide such an assertion. There is no User authentication.
+
+As in all CAMARA flows the API Provider must check the legal basis of the purpose e.g.: contract, legitimate_interest, consent, etc.
+This is especially important if the value of sub is an identifier, e.g. a MSISDN, and not an assertione that acts as User authentication.
+
+#### JWT Bearer Flow Operator Token
+
+This section shows JWT Bearer Flow where the sub claim is a TS.43 token.
 
 Example JWT, which MUST to be signed by the API Consumer, which CAN be encrytped:
 
@@ -333,7 +348,7 @@ J9l-ZhwP[...omitted for brevity...]
 ```mermaid
 sequenceDiagram
 
-title NumberVerification with TS.43 Temporary Token
+title JWT Bearer Flow for NumberVerification with TS.43 Temporary Token as User authentication
 
 participant API Consumer
 
@@ -387,8 +402,96 @@ end
 
 ```
 
+#### JWT Bearer Flow MSISDN
 
+This section shows JWT Bearer Flow where the sub claim is a MSISDN.
 
+The MSISDN does not prove that the User is involved in the flow. 
+The API Consumer should take care that a malicious end-user cannot use this flow to act on telephone numbers of their victims. The response of this flow reveals private information of the phonenumber.
+The API Provider should take care that the API Consumer is legally allowed to use this flow, which is basically a OAuth2 Client Credentials Flow without User involvement.
+
+Example JWT, which MUST to be signed by the API Consumer, which CAN be encrytped:
+
+```JSON
+{
+  "iss": "client_id",
+  "sub": "tel:+34666666666",
+  "aud": "https://az.api-provider.com/token.oauth2",
+  "exp": 1504807731,
+  "iat": 1504804131,
+  "jti": "53f42eb1-b751-44b5-bada-6990e08f35ac"
+  "scope": "dpv:FraudPreventionAndDetection sim-swap:retrieve-date"
+}
+```
+
+Example Token Request:
+
+```
+POST /token.oauth2 HTTP/1.1
+Host: as.example.com
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer
+&assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjE2In0.
+eyJpc3Mi[...omitted for brevity...].
+J9l-ZhwP[...omitted for brevity...]
+```
+
++ The Authorization Server MUST validate the signatur of the signed assertion.
++ The Authorization Server MUST validate that the value of "iss" is associated with the signer of the assertion.
++ The Authorization Server MUST validate the "aud" value.
++ The Authorization Server MUST validate "exp" and "iat" values and the lifetime of the assertion MUST not exceed 300 seconds.
++ The Authorization Server MUST validate that the API Consumer is allowed to use JWT Bearer Flow.
++ The Authorization Server MUST validate that the API Consumer is allowed to use the Purpose.
++ The Authorization Server MUST validate that the API Consumer is allowed to use the scopes.
++ The Authorization Server MUST validate the subject, e.g. whether for format matches the allowed pattern.
+
+```mermaid
+sequenceDiagram
+
+title JWT Bearer Flow for Sim-Swap and MSISDN as User identifier
+
+participant API Consumer
+
+participant API Consumer Backend
+
+box Carrier
+participant Authorization Server
+participant CAMARA API
+participant Consent
+end
+
+Note over API Consumer,API Consumer Backend: Feature needing<br>API Provider capability  
+
+note over API Consumer Backend, Authorization Server: {Camara JWT Bearer Flow}<br/>sub=tel:+34666666666<br/>scope sim-swap:retrieve-date<br/>Purpose dpv:FraudPreventionAndDetection
+
+API Consumer Backend ->> Authorization Server: POST signed assertion<br/>assertion=<br/> {scope=dpv:FraudPreventionAndDetection sim-swap:retrieve-date,<br/>  sub=tel:+34666666666, ...}
+
+note over Authorization Server, Authorization Server: Validate Request
+
+Authorization Server ->> Authorization Server: Check legal basis of the purpose<br> e.g.: contract, legitimate interest, consent, etc
+
+opt If User Consent is required for the legal basis of the purpose  
+    Authorization Server->>Consent: Check if Consent is granted
+end
+alt If Consent is Granted or Consent not needed for legal basis   
+  Authorization Server ->> Authorization Server: create CAMARA access token
+
+  Authorization Server ->> API Consumer Backend: return access token
+
+  API Consumer Backend ->> CAMARA API: CAMARA SimSwap API /retrieve-date <br/>Authorization: Bearer <acessToken>
+
+  CAMARA API ->> API Consumer Backend: latestSimChange: 2024-09-18T07:37:53.471829447Z
+
+  API Consumer Backend ->> API Consumer: e.g. account created
+
+else If Consent is needed and is NOT granted
+  Authorization Server ->> API Consumer Backend: error `consent_required`
+
+  API Consumer Backend ->> API Consumer: error `consent_required`
+end
+
+```
 
 #### Client Credentials
 
