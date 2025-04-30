@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- **[r3.1](#r31)**
 - **[r2.3](#r23)**
 - **[r2.2](#r22)**
 - **[r2.1](#r21)**
@@ -19,6 +20,36 @@ The below sections record the changes in each release as follows:
 * for the first release-candidate, all changes since the last public release
 * for subsequent release-candidate(s), only the delta to the previous release-candidate
 * for a public release, the consolidated changes since the previous public release
+
+# r3.1
+
+## Release Notes
+
+This public release contains the definition and documentation of:
+
+* "Identity and Consent Management" 0.4.0-alpha.1
+
+The content of the release includes the "Identity And Consent Management" approved deliverables in **[documentation](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r3.1/documentation)** folder.
+
+### Added
+
+N/A
+
+### Changed
+
+* Further alignment of `CAMARA-API-access-and-user-consent.md` with CAMARA terms and definitions by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/280
+* Update request object errors by @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/287
+* Clarify protocols for CAMARA API access by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/281
+
+### Fixed
+
+* Fix typo autenticate -> authenticate by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/274
+
+### Removed
+
+N/A
+
+**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/r2.3...r3.1
 
 # r2.3
 
