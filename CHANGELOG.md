@@ -25,7 +25,7 @@ The below sections record the changes in each release as follows:
 
 ## Release Notes
 
-This public release contains the definition and documentation of:
+This pre-release contains the definition and documentation of:
 
 * "Identity and Consent Management" 0.4.0-alpha.1
 
