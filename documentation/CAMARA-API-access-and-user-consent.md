@@ -64,6 +64,7 @@ The list below introduces several key concepts:
 -	`Resource Server`: the server that exposes protected resources to Applications. The Resource Server requires a valid access token to be provided before allowing access to the protected resource.
 -	`Scope`: the OpenID Connect scope which maps one or more protected resources, some scopes may require processing of Personal Data.
 - `Subscriber`: the mobile subscriber of the Operator. The Subscriber is usually also the End-User, but this is not always the case. For example, a parent may be the Subscriber of a mobile subscription for their child, the End-User.
+- `Target Device`: the device that is the primary resource (target) affected by an API call, and for which Consent may need to be obtained from the Resource Owner.
 - `Three-Legged Access Token`: an access token that involves three parties: the Resource Owner (User), the Authorization Server (operated by the Operator or Aggregator), and the client (the ASP's Application). In CAMARA, Three-Legged Access Tokens are typically created using the OIDC Authorization Code flow or Client-Initiated Backchannel Authentication (CIBA) flow.
 - `Two-Legged Access Token`: an access token that involves two parties, the Authorization Server (operated by the Operator or Aggregator), and the client (the ASP's Application); the Two-Legged Access Token does not include a Resource Owner (User). The Authorization Server does not authenticate a User, nor can User Consent be captured or validated for Two-Legged Access Tokens; therefore Two-Legged Access Tokens must only be used for CAMARA APIs that do not process Personal Data.
 
@@ -90,6 +91,7 @@ This section describes the authorization flows that can be used to access CAMARA
 Note: In cases where Personal Data is processed by a CAMARA API, and Users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of Three-Legged Access Tokens is mandatory.
 
 #### Authorization Code Flow (Frontend Flow)
+The Authorization Code Flow is only applicable if the Consumption Device that initiates the process of obtaining a Three-Legged Access Token from the Authorization Server is also the Target Device of the intended CAMARA API call(s).
 
 ```mermaid
 sequenceDiagram
@@ -184,12 +186,14 @@ The Application on the Consumption Device must be able to handle browser redirec
     - Check if User Consent is required as the lawful basis associated with the declared Scope and Purpose. 
       - If necessary, it will be checked in the operator's consent master whether user consent has already been given to the application for the user identifier and declared purpose.
     - If NOT granted, the operator performs the consent capture. Since the authorization code grant involves the interaction with application front-end, consent can be captured directly from the user through the application browser.
-  - Covered scenarios:
+  - Covered scenarios: 
     - On-net (with mobile connection) & application front-end (with embedded browser)
     - Off-net scenarios using refresh_token, as long as there was a connection when the first access_token was requested.
+    - Note: The Consumption Device must be equal to the Target Device of subsequent API call(s).
 
 
 #### CIBA flow (Backend flow)
+The CIBA flow is applicable if the Consumption Device is equal to or different from the Target Device of the intended CAMARA API call(s).
 
 ```mermaid
 sequenceDiagram
@@ -286,12 +290,13 @@ If some use case(s) for an API point to "Off-net" scenarios and where Consumptio
     - Check if user consent is required by lawful basis associated with the declared purpose. 
       - If necessary, it will be checked **in the operator's consent master** whether user consent has already been given to the application for the user identifier and declared purpose.
       - If NOT granted, **the operator’s consent capture procedure is triggered**. Out-of-band consent capture as part of asynchronous CIBA flow (e.g. push notification with fallback to SMS, etc...). **Operators can choose the consent capture mechanism that best suits their capabilities, preferences and needs**.
-  - Covered scenarios:
+  - Covered scenarios: 
     - No front-end developer software in user device
     - Back-end services (e.g. bank BE anti-fraud validation using phone number).
     - Off-net scenarios (no mobile connection)
     - Device connected to WiFi
     - Device without UI (IoT)
+    - Note: Consumption device and target device of subsequent API call(s) can be different, access token is generated for the target device
 
 #### Client Credentials
 
