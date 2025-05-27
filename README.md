@@ -16,20 +16,20 @@ Repository to describe, develop, document and test the Identity And Consent Mana
 
 ## Release Information
 
-* `NEW`: The "Spring25" release candidate of the "Identity and Consent Management" guidelines and documentation for the CAMARA APIs is available under the tag [r2.2](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r2.2). It contains the current [version](/VERSION.yaml) of the documents which are relevant for the [Spring25 meta-release](https://lf-camaraproject.atlassian.net/wiki/spaces/CAM/pages/14560849/Meta-release+Spring25), including:
-  * [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r2.2/documentation/CAMARA-API-access-and-user-consent.md)
-  * [CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r2.2/documentation/CAMARA-Security-Interoperability.md)
+* `NEW`: The first "Fall25" pre-release of the "Identity and Consent Management" guidelines and documentation for the CAMARA APIs is available under the tag [r3.1](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r3.1). It contains the alpha [version](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r3.1/VERSION.yaml) of the documents which are relevant for the [Fall25 meta-release](https://lf-camaraproject.atlassian.net/wiki/spaces/CAM/pages/36241429/Meta-release+Fall25), including:
+  * [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r3.1/documentation/CAMARA-API-access-and-user-consent.md)
+  * [CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r3.1/documentation/CAMARA-Security-Interoperability.md)
+* The "Spring25" public release of the "Identity and Consent Management" guidelines and documentation for the CAMARA APIs is available under the tag [r2.3](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r2.3). It contains the [version](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r2.3/VERSION.yaml) of the documents which are relevant for the [Spring25 meta-release](https://lf-camaraproject.atlassian.net/wiki/spaces/CAM/pages/14560849/Meta-release+Spring25), including:
+  * [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r2.3/documentation/CAMARA-API-access-and-user-consent.md)
+  * [CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r2.3/documentation/CAMARA-Security-Interoperability.md)
   >NOTE: the Working Group release numbering has been updated to adopt the same release notation as is used for API sub-projects.
-* The "Fall24" public release r0.2.1 of the "Identity and Consent Management" guidelines and documentation for the CAMARA APIs is available under the tag [r0.2.1](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r0.2.1). It contains the public version of the documents which are relevant for the [Fall24 meta-release](https://lf-camaraproject.atlassian.net/wiki/spaces/CAM/pages/14549015/Meta-release+Fall24), including:
-  * [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.1/documentation/CAMARA-API-access-and-user-consent.md)
-  * [CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r0.2.1/documentation/CAMARA-Security-Interoperability.md)
 * The latest **public release** of guidelines and documentation for CAMARA APIs is available [here](https://github.com/camaraproject/IdentityAndConsentManagement/releases/latest).
 * For previous releases and changes see [CHANGELOG.md](/CHANGELOG.md)
 
 ## Contributing
 * Meetings
   * [Registration / Join](https://zoom-lfx.platform.linuxfoundation.org/meeting/94629188836?password=278b4c8a-f370-43bf-bac1-b30a39f169f3)
-   * Schedule: Bi-weekly Wednesday, 16:00 CEST (14:00 UTC during European daylight saving time)
+   * Schedule: Every 2 weeks on Wednesdays at 14:00 UTC
   * Minutes: Access [meeting minutes](https://lf-camaraproject.atlassian.net/wiki/spaces/CAM/pages/14569108/ICM+Meeting+Minutes).
 * Maling List
   * Subscribe / Unsubscribe to the mailing list of this Sub Project <https://lists.camaraproject.org/g/wg-icm>.
