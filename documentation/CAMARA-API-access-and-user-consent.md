@@ -93,7 +93,6 @@ This section describes the authorization flows that can be used to access CAMARA
 Note: In cases where Personal Data is processed by a CAMARA API, and Users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of Three-Legged Access Tokens is mandatory.
 
 #### Authorization Code Flow (Frontend Flow)
-The Authorization Code Flow is only applicable if the Consumption Device that initiates the process of obtaining a Three-Legged Access Token from the Authorization Server is also the Target Device of the intended CAMARA API call(s).
 
 ```mermaid
 sequenceDiagram
@@ -171,9 +170,10 @@ Finally, the Operator will provide the API response to the Application (Step 15)
 
 _NOTE: The technical ruleset is applicable only after a subproject has agreed to use a Three-Legged Access Token authentication flow. This ruleset provides a recommendation which will help API providers to align on the Three-Legged Access Token Flow and help with aggregation._
 
-If all API usecases point to the need of an 'On-Net' scenario and where the Consumption Device and Authentication Device are the same, the Frontend flow SHOULD be used. eg. NumberVerification
+If all API usecases point to the need of an 'On-Net' scenario and where the Consumption Device and Authentication Device are the same, the Frontend flow SHOULD be used. eg. NumberVerification. 
+Also note, the Authorization Code Flow is only applicable if the Consumption Device, that initiates the process of obtaining a Three-Legged Access Token from the Authorization Server, is also the Target Device of the intended CAMARA API call(s).
 
-This flow is then applicable to On-Net scenarios where the mobile connection of the Consumption Device needs to be authenticated e.g. [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification) due to the nature of its functionality where a User's phone number needs to be compared to the phone number associated with the mobile connection of the Consumption Device. 
+This flow then enables On-Net scenarios where the mobile connection of the Consumption Device needs to be authenticated. for example, the [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification) due to the nature of its functionality where a User's phone number needs to be compared to the phone number associated with the mobile connection of the Consumption Device. 
 
 The Application on the Consumption Device must be able to handle browser redirects.
 
@@ -195,7 +195,6 @@ The Application on the Consumption Device must be able to handle browser redirec
 
 
 #### CIBA flow (Backend flow)
-The CIBA flow is applicable if the Consumption Device is equal to or different from the Target Device of the intended CAMARA API call(s).
 
 ```mermaid
 sequenceDiagram
@@ -281,7 +280,8 @@ The Operator will provide the API response to the API Consumer (Step 11).
 
 _NOTE: The technical ruleset is applicable only after a subproject has agreed to use a Three-Legged Access Token authentication flow. This ruleset is a recommendation which will help Operators align on the Three-Legged Access Token and help with aggregation._ 
 
-If some use case(s) for an API point to "Off-net" scenarios and where Consumption Device and authentication devices could be different, the Backend flow should be used.
+If the API use case(s) indicate the need for an "Off-net" scenario and/or if the Consumption Device and Authentication Device are different, the Backend flow (CIBA) SHOULD be used.
+Also note that in the case of the CIBA flow, it is applicable if the Consumption Device is the same or different from the Target Device of the intended CAMARA API call(s).
 
   - Identity: 
     - Identification by IP, phone number or others like IMSI, ICCID for specific use cases.
