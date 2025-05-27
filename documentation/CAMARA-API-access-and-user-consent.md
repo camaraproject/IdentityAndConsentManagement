@@ -213,12 +213,8 @@ alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between API Con
   opt If User Consent is required for the legal basis of the purpose  
     ExpO->>Consent: Check if Consent is granted
   end
-  alt If Consent is Granted or Consent not needed for legal basis   
-    ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"  
-  else If Consent is needed and is NOT granted - Out Of Band Consent Capture (Push/SMS/other)
-    Note over ExpO,User: User Interaction <br> out-of-band capture consent mechanism chosen by the Operator
-    ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"}
-  end
+  Note over ExpO,User: Start User authentication and Request authorization process following<br>Section 8 of the CIBA Core 1.0 spec. Operator MUST obtain an authorization<br> decision as described in Section 3.1.2.4 of the OIDC Core 1.0 spec.<br>This MUST include a mechanism to capture User Consent if required.
+  ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"}
   loop API Consumer polls until consent is granted or until expires. If granted in advance, token returned in first poll
     BE->>+ExpO: POST /token <br>Credentials}<br>auth_req_id={OperatorAuthReqId}    
     ExpO->>-BE: HTTP 200 OK <br>{"access_token": "{OperatorAccessToken}"}
@@ -236,22 +232,18 @@ In the authorization request to the [Backchannel Authentication Endpoint](https:
 
 The Operator's API Exposure Platform will:
 
-- Validate User identifier and map it to an Operator subscription identifier if applicable, e.g. map IP to phone number. Set the OAuth sub to the unique user id (Step 2).
+- Validate User identifier and map it to an Operator subscription identifier if applicable, e.g. map IP to phone number (The Authorization Server MUST process the hint provided to determine if the hint is valid and if it corresponds to a valid user). Set the OAuth sub to the unique user id (Step 2).
 
 - Check if a User Consent is needed, which depends on the legal basis associated to the purpose (“legitimate interest”, “contract”, “consent”, etc). If needed, it will check in the Operator's Consent Master whether Consent has already been given, the Application client_id and the requested Purpose (Steps 3-4).
 
-Then, two alternatives may occur.
+Subsequently, the Operator starts the User authentication and request authorization process following Section 8 of the CIBA Core 1.0 spec. Operator MUST obtain an authorization decision as described in Section 3.1.2.4 of the OIDC Core 1.0 spec. This MUST include a mechanism to capture User Consent if required. 
 
-**Scenario 1**: User Consent is not required or Consent is already granted (Step 5). The API Exposure Platform will return a 200 OK response with the CIBA auth request identifier (auth_req_id=OperatorAuthReqId) to the API Consumer. This is a unique identifier to identify the authentication request made by the API Consumer.
+Note: The Operator retains the flexibility to determine the most suitable method for authorizing the request. This includes options ranging from initiating an interactive session on the user's authentication device to, based on their risk assessment and confidence level, authorizing the request based on the Personal Data being processed and the user identified by the login_hint without further user interaction (e.g. operator token scenario) or by any other means that the Operator deems appropriate, always in accordance with applicable law.
 
-**Scenario 2**: Consent is required and has not yet been granted by the User (Step 6)
+In parallel, the API Exposure Platform returns a 200 OK response with the CIBA auth request identifier (auth_req_id=OperatorAuthReqId) to the API Consumer to indicate that the authentication request has been accepted and is being processed. This is a unique identifier to identify the authentication request made by the Invoker (Step 5).
 
-- A mechanism is triggered to capture User Consent in the Operator:
-  
-  - The Operator triggers an out-of-band Consent capture mechanism to interact with the User. Operators can choose the consent capture mechanism that best suits their capabilities, preferences and needs, for example a push notification or an SMS.
-  - In parallel, the API Exposure Platform returns a 200 OK response with the CIBA auth request identifier (auth_req_id=OperatorAuthReqId) to the API Consumer to indicate that the authentication request has been accepted and is being processed(Step 6).
+Then, the API Consumer polls the token endpoint by making an "HTTP POST" request by sending the grant_type (`urn:openid:params:grant-type:ciba`) and auth_req_id (OperatorAuthReqId) parameters (Step 6).
 
-Then, the API Consumer polls the token endpoint by making an "HTTP POST" request by sending the grant_type (`urn:openid:params:grant-type:ciba`) and auth_req_id (OperatorAuthReqId) parameters (Step 7).
 - The API Consumer will receive the following error code if the authorization is still pending to be accepted or rejected by the user.
     
     ```
@@ -263,13 +255,13 @@ Then, the API Consumer polls the token endpoint by making an "HTTP POST" request
     }
     ```
 - When this response is received, the API Consumer must wait the seconds of the `interval` value received in the CIBA authorization endpoint and then repeat the request until a final response is received.
-- Once the User has given Consent, the API Exposure Platform will provide the access token (OperatorAccessToken) to the API Consumer (Step 8).
+- Once the User has given Consent, the API Exposure Platform will provide the access token (OperatorAccessToken) to the API Consumer (Step 7).
 
-Now the API Consumer has a valid access token that can be used to invoke the CAMARA API offered by the operator (Step 9).
+Now the API Consumer has a valid access token that can be used to invoke the CAMARA API offered by the operator (Step 8).
 
-Finally, the Operator will validate the OperatorAccessToken, grant access to the API based on the Scopes bound to the access token, forward the request to the corresponding API backend and retrieve the API response (Step 10).
+Finally, the Operator will validate the OperatorAccessToken, grant access to the API based on the Scopes bound to the access token, forward the request to the corresponding API backend and retrieve the API response (Step 9).
 
-The Operator will provide the API response to the API Consumer (Step 11).
+The Operator will provide the API response to the API Consumer (Step 10).
 
 ##### Technical ruleset for the Backend flow
 
