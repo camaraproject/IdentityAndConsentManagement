@@ -51,6 +51,8 @@ The list below introduces several key concepts:
 - `API Exposure Platform`: the Operator's platform for exposing CAMARA APIs to ASPs and Aggregators, providing authentication and authorization mechanisms, and End-User Consent management. The API Exposure Platform typically consists of at least an Auth Server and an API Gateway.
 -	`Application` or `Application Backend`: the ASP's software services that access CAMARA APIs.
 - `Application Service Provider (ASP)`: the Legal Entity that provides the Application and/or services that consume CAMARA APIs.
+- `Authentication Device`: The device on which the user will authenticate/authorize the request, often a smartphone.
+Ref: https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#terminology
 -	`Authorization (Auth) Server`: the authorization server processes requests from an Application to issue an access token upon successful authentication and authorization. The Auth Server provides OpenID Connect (OIDC) compliant endpoints, and is able to authenticate the User by validating the provided user identity with an Identity Provider; the Auth Server exposes the OIDC authorization endpoints and the OIDC token endpoint.
 -	`Consent`: an explicit opt-in action that the User takes to allow processing of personal data. Consent grants a Legal Entity (e.g. the Operator or ASP) access to a set of Scopes related to the Resource Owner, for a specific Purpose.
 - `Consumption Device`: the physical device on which an Application is installed or running.
