@@ -170,7 +170,7 @@ Finally, the Operator will provide the API response to the Application (Step 15)
 
 _NOTE: The technical ruleset is applicable only after a subproject has agreed to use a Three-Legged Access Token authentication flow. This ruleset provides a recommendation which will help API providers to align on the Three-Legged Access Token Flow and help with aggregation._
 
-If all API usecases point to the need of an 'On-Net' scenario and where the Consumption Device and Authentication Device are the same, the Frontend flow SHOULD be used. eg. NumberVerification. 
+If all API use cases point to the need of an 'On-Net' scenario and where the Consumption Device and Authentication Device are the same, the Frontend flow SHOULD be used e.g. Number Verification. 
 Also note, the Authorization Code Flow is only applicable if the Consumption Device, that initiates the process of obtaining a Three-Legged Access Token from the Authorization Server, is also the Target Device of the intended CAMARA API call(s).
 
 This flow then enables On-Net scenarios where the mobile connection of the Consumption Device needs to be authenticated. for example, the [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification) due to the nature of its functionality where a User's phone number needs to be compared to the phone number associated with the mobile connection of the Consumption Device. 
