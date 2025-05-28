@@ -44,6 +44,7 @@
       * [Authorization Code Flow](#authorization-code-flow-1)
       * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow-2)
       * [Refresh Token Flow](#refresh-token-flow)
+    * [JWT Bearer Flow](jwt-bearer-flow-1)
 <!-- TOC -->
 
 ## Introduction
