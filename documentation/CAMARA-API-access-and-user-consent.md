@@ -395,9 +395,9 @@ alt If Consent is Granted or Consent not needed for legal basis
   API Consumer Backend ->> API Consumer: devicePhoneNumberVerified
 
 else If Consent is needed and is NOT granted
-  Authorization Server ->> API Consumer Backend: error `consent_required`
+  Authorization Server ->> API Consumer Backend: error `invalid_grant`
 
-  API Consumer Backend ->> API Consumer: error `consent_required`
+  API Consumer Backend ->> API Consumer: error `invalid_grant`
 end
 
 ```
@@ -486,9 +486,9 @@ alt If Consent is Granted or Consent not needed for legal basis
   API Consumer Backend ->> API Consumer: e.g. account created
 
 else If Consent is needed and is NOT granted
-  Authorization Server ->> API Consumer Backend: error `consent_required`
+  Authorization Server ->> API Consumer Backend: error `invalid_grant`
 
-  API Consumer Backend ->> API Consumer: error `consent_required`
+  API Consumer Backend ->> API Consumer: error `invalid_grant`
 end
 
 ```
