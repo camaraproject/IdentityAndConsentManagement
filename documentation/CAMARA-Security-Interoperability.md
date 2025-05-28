@@ -23,6 +23,7 @@
     * [Refresh Token Security](#refresh-token-security)
   * [Client Credentials Flow](#client-credentials-flow)
   * [JWT Bearer Flow](#jwt-bearer-flow)
+    *  [JWT Bearer Flow Error Response](#jwt-bearer-flow-error-response)
   * [Handling of acr_values](#handling-of-acr_values)
   * [Access Token Request](#access-token-request)
   * [The Scope Parameter](#the-scope-parameter)
@@ -260,11 +261,19 @@ The Authorization Server MUST validate the assertion as follows:
 + The Authorization Server MUST validate that the client is allowed to use the Purpose.
 + The Authorization Server MUST validate that the client is allowed to use the scopes.
 + The Authorization Server MUST validate the subject.
++ If the end-user has the legal right to opt-out in the current jurisdiction, then the Authorization Server MUST check whether the end-user opted-out.
 
 This flow SHOULD return short-lived access tokens.
 
 This flow MUST NOT return refresh tokens.
 
+### JWT Bearer Flow Error Response
+
+This document adds a new value for the error field as defined in [RFC6749 section 5.2 Error Response](https://datatracker.ietf.org/doc/html/rfc6749#section-5.2).
+
+  + consent_required
+    * If the end-user has the legal right to opt-out in the current jurisdiction and the end-user opted-out, then the Authorization Server returns `consent_required`.
+    
 ## Handling of acr_values
 
 OIDC specifies in [Mandatory to Implement Features for All OpenID Providers](https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI) that OpenId Providers MUST implement support for acr_values.
