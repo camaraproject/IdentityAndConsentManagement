@@ -22,6 +22,7 @@
     * [Refresh Token Usage](#refresh-token-usage)
     * [Refresh Token Security](#refresh-token-security)
   * [Client Credentials Flow](#client-credentials-flow)
+  * [JWT Bearer Flow](#jwt-bearer-flow)
   * [Handling of acr_values](#handling-of-acr_values)
   * [Access Token Request](#access-token-request)
   * [The Scope Parameter](#the-scope-parameter)
@@ -41,6 +42,7 @@
     * [Token Error Response](#token-error-response)
       * [Authorization Code Flow](#authorization-code-flow-1)
       * [Client-Initiated Backchannel Authentication Flow](#client-initiated-backchannel-authentication-flow-2)
+      * [JWT Bearer Flow](#jwt-bearer-flow-1)
       * [Refresh Token Flow](#refresh-token-flow)
 <!-- TOC -->
 
@@ -51,7 +53,7 @@ This document is the CAMARA Security and Interoperability Profile. To ensure int
 The CAMARA document sharpens the following for interoperability and security: 
 
 * Of the flows defined in OIDC, CAMARA uses the [OIDC Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) and [OIDC Client Initiated Backchannel Authentication Flow](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html)
-* Of the flows defined in Oauth2, CAMARA uses the [Client credentials grant flow](https://www.rfc-editor.org/rfc/rfc6749#section-4.4)
+* Of the flows defined in Oauth2, CAMARA uses the [Client credentials grant flow](https://www.rfc-editor.org/rfc/rfc6749#section-4.4) and the [JWT Bearer Flow](https://datatracker.ietf.org/doc/html/rfc7523#section-2.1).
 * Scope Parameter. Recommendations about the format of the scope parameter used in  CAMARA APIs.
 
 * Client Authentication. Specifications for client authentication within CAMARA.
@@ -228,6 +230,43 @@ Considering [OAuth2 Refresh Token Protection](https://datatracker.ietf.org/doc/h
 ## Client Credentials Flow
 
 The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) grant type is used to obtain a 2-legged Access Token that does not represent a user. The grant-type can only be used if agreed between the API consumer and the API provider exposing the API, taking into account the declared purpose for accessing the API (cf. [CAMARA API Specification - Authorization and authentication common guidelines](CAMARA-API-access-and-user-consent.md#camara-api-specification---authorization-and-authentication-common-guidelines)).
+
+## JWT Bearer Flow
+
+The JWT-Bearer Flow uses [JWTs as Authorization Grants](https://datatracker.ietf.org/doc/html/rfc7523#section-2.1) ("urn:ietf:params:oauth:grant-type:jwt-bearer" grant_type for Oauth 2.0) that provide a JWT assertion following the OAuth Assertion Framework: [Using Assertions as Authorization Grants](https://datatracker.ietf.org/doc/html/rfc7521#section-4.1) | [Client Acting on Behalf of a User](https://datatracker.ietf.org/doc/html/rfc7521#section-6.3).
+
+The scope parameter MUST NOT be specified for JWT-Bearer Flow, but the scope claim in the assertion is mandatory. 
+
+The API Consumer SHALL set the claims of the assertion as defined here:
+
+- The mandatory `iss` claim MUST be the client id of the API Consumer.
+- The mandatory `sub` (subject) claim MUST identifies the principal that is the subject of the JWT.
+  -  The value MUST be either a phonenumber prefixed by "tel:" or a TS.43 token prefixed by "operatortoken:".
+- The mandatory `aud` claim MUST be the URL of the endpoint this token request is sent to.
+- The mandatory `exp` claim as defined in [RFC7519 section 4.1.4](https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1.4).
+- The mandatory `iat` claim as defined in [RFC7519 section 4.1.6](https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1.6).
+- The mandatory `jti` claim as defined in [RFC7519 section 4.1.7](https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1.7).
+- The mandatory `scope` claim that MUST contain a [Purpose](#purpose) and CAMARA scope values. 
+
+[JWTs as Authorization Grants](https://datatracker.ietf.org/doc/html/rfc7523#section-2.1) defines authentication of the client as optional.
+In a JWT Bearer Flow token request the assertion is signed by the API Consumer and the assertion is interpreted as the client authentication.
+
+The Authorization Server MUST validate the assertion as follows:
+
++ The Authorization Server MUST validate the signature of the signed assertion.
++ The Authorization Server MUST validate that the value of "iss" is associated with the signer of the assertion.
++ The Authorization Server MUST validate the "aud" value.
++ The Authorization Server MUST validate "exp" and "iat" values.
+  + The request SHALL be rejected by the authorisation server if the exp claim is more than 300 seconds later than the time of receipt.
+  + The request SHALL be rejected by the authorisation server if the iat claim is later than the time of receipt, or if the difference between the exp claim and iat claim is greater than 300 seconds.
++ The Authorization Server MUST validate that the client is allowed to use JWT Bearer Flow.
++ The Authorization Server MUST validate that the client is allowed to use the requested Purpose and scopes. 
++ The Authorization Server MUST validate the subject and their consent to the client for the requested Purpose and scopes (when required by the applicable legal basis).
+  + The request SHALL be rejected by the authorisation server if the subject has not given consent (or opted-out) to the client for the requested Purpose and scopes.
+
+This flow SHOULD return short-lived access tokens.
+
+This flow MUST NOT return refresh tokens.
 
 ## Handling of acr_values
 
@@ -517,6 +556,27 @@ As described in [CIBA Token Error Response Section](https://openid.net/specs/ope
     <tr>
       <td><code>expired_token</code></td>
       <td>The <code>auth_req_id</code> has expired. The client will need to make a new Authentication Request.</td>
+    </tr>
+  </tbody>
+</table>
+
+#### JWT Bearer Flow
+
+As described in [Authorization Grant Processing](https://datatracker.ietf.org/doc/html/rfc7523#section-3.1), in addition to the error codes defined in the common [Token Error Response Section](#token-error-response), the following error codes  and scenarios are specific to the JWT Bearer flow:
+
+<table>
+  <thead>
+    <tr>
+      <th>Status Code</th>
+      <th>Error Code</th>
+      <th>Scenario</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3">400 - Bad Request</td>
+      <td><code>invalid_grant</code></td>
+      <td>The provided JWT assertion is not valid (for example, there is no consent from the user),  or the current time is not within the token's valid time window for use.</td>
     </tr>
   </tbody>
 </table>

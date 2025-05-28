@@ -14,7 +14,10 @@ This document defines guidelines for API Providers to manage CAMARA API access a
       - [Technical ruleset for the Frontend flow](#technical-ruleset-for-the-frontend-flow)
     - [CIBA flow (Backend flow)](#ciba-flow-backend-flow)
       - [Technical ruleset for the Backend flow](#technical-ruleset-for-the-backend-flow)
+      - [CIBA flow with Operator Token](#ciba-flow-with-operator-token)
     - [Client Credentials](#client-credentials)
+    - [JWT Bearer Flow](#jwt-bearer-flow)
+      - [Technical ruleset for the JWT Bearer Flow](#technical-ruleset-for-the-jwt-bearer-flow)
 - [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
   - [Use of openIdConnect for `securitySchemes`](#use-of-openidconnect-for-securityschemes)
   - [Use of `security` property](#use-of-security-property)
@@ -29,6 +32,7 @@ CAMARA API access will be secured by the protocols described in the [CAMARA Secu
 - [OpenID Connect Authorization Code Flow](CAMARA-Security-Interoperability.md#oidc-authorization-code-flow) (OIDC).
 - [OpenId Connect Client-Initiated Backend Authentication](CAMARA-Security-Interoperability.md#client-initiated-backchannel-authentication-flow) (CIBA).
 - [OAuth2 Client-Credentials Flow](CAMARA-Security-Interoperability.md#client-credentials-flow).
+- [OAuth2 JWT Bearer Flow](CAMARA-Security-Interoperability.md#jwt-bearer-flow).
 
 The concept common to all flows is that the access token used to invoke an API is created at the Authorization Server, and the API endpoint (Resource Server) grants access to the API based solely on the access token.
 This separation of concerns places all responsibility for implementing legal and business concerns under the authority of the Authorization Server, freeing the Resource Server from the need to worry about them. The API Provider's developers implementing the API can focus on the API functionality itself, simplifying the Resource Server's implementation.
@@ -86,6 +90,7 @@ This section describes the authorization flows that can be used to access CAMARA
 * Authorization code flow (Frontend flow) - Used to obtain a Three-Legged Access Token from the Authorization Server and initiated from the Consumption Device
 * CIBA flow (Backend flow) - Used to obtain a Three-Legged Access Token from the Authorization Server and initiated from the ASP's Application Backend
 * Client Credentials - Used to obtain a Two-Legged Access Token from the Authorization Server
+* JWT Bearer Flow - Used to obtain a Three-Legged Access Token from the Authorization Server using a JWT assertion as Authorization Grant, on behalf of the User.
 
 Note: In cases where Personal Data is processed by a CAMARA API, and Users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of Three-Legged Access Tokens is mandatory.
 
@@ -164,8 +169,6 @@ The Operator's API Exposure Platform will validate OperatorAccessToken, grant th
 Finally, the Operator will provide the API response to the Application (Step 15).
 
 ##### Technical ruleset for the Frontend flow
-
-_NOTE: The technical ruleset is applicable only after a subproject has agreed to use a Three-Legged Access Token authentication flow. This ruleset provides a recommendation which will help API providers to align on the Three-Legged Access Token Flow and help with aggregation._
 
 If all API usecases point to the need of an 'On-Net' scenario and where the Consumption Device and Authentication Device are the same, the Frontend flow SHOULD be used. eg. NumberVerification
 
@@ -273,8 +276,6 @@ The Operator will provide the API response to the API Consumer (Step 11).
 
 ##### Technical ruleset for the Backend flow
 
-_NOTE: The technical ruleset is applicable only after a subproject has agreed to use a Three-Legged Access Token authentication flow. This ruleset is a recommendation which will help Operators align on the Three-Legged Access Token and help with aggregation._ 
-
 If some use case(s) for an API point to "Off-net" scenarios and where Consumption Device and authentication devices could be different, the Backend flow should be used.
 
   - Identity: 
@@ -293,9 +294,158 @@ If some use case(s) for an API point to "Off-net" scenarios and where Consumptio
     - Device connected to WiFi
     - Device without UI (IoT)
 
+##### CIBA flow with Operator Token
+
+This section provides an example of the CIBA flow with Operator Token, which is a specific case of the CIBA flow where the User Identifier is an temporary token (TS.43 token). In this case, the API Consumer sends the temporary token to their backend which sends a CIBA Authentication Request with a parameter "login_hint=operatortoken:<temporaryToken>". How the API Consumers get a TS.43 token from the Entitlement Server using EAP-AKA SIM-based authentication, how this token is sent to their backend or how the API Provider then validates the temporary token with the Entitlement Server is out of scope of this document. The API Consumer must follow the TS.43 definitions to obtain the temporary token.
+
+```mermaid
+sequenceDiagram
+autonumber
+title Consume a CAMARA API - CIBA flow with Operator Token
+participant User as End User<br>@Authentication Device
+participant FE as Device App<br>(Consumption Device)
+participant BE as API Consumer<br>(Application Backend/Aggregator)  
+box API Provider / Operator
+  participant ExpO as API Exposure Platform
+  participant ES as Entitlement Server  
+  participant Consent as Consent Master
+end
+
+Note over FE,BE: Feature needing<br>Operator capability  
+Note over BE: API Consumer obtains a temporary token<br>following TS.43 definitions...  
+
+alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between API Consumer and Operator.
+  BE->>+ExpO: POST /bc-authorize<br>Credentials,<br>scope=dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint=operatortoken:<temporaryToken>    
+  ExpO->>ExpO: Validate Authentication<br>request
+  alt TS.43
+    Note over ExpO,ES: Get Entitlement Server<br> access_token
+    ExpO->>ES: AcquireOperatorToken(ap2015,temporary_token=temporaryToken,<br>operation_targets=GetSubscriberDeviceInfo,[client_id, access_token]) 
+    ES->>ES: Validate temporary token
+    ES->>ExpO: HTTP 200 OK <br>{operator_token}
+    ExpO->>ES: GetSubscriberDeviceInfo (ap2015, operator_token) 
+    ES->>ExpO: SubscriberDeviceInfo (MSISDN[,IMSI])
+  end
+  ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc
+  opt If User Consent is required for the legal basis of the purpose  
+    ExpO->>Consent: Check if Consent is granted
+  end
+  ExpO->>BE: HTTP 200 OK {"auth_req_id": "{OperatorAuthReqId}"}
+  BE->>+ExpO: POST /token <br>Credentials}<br>auth_req_id={OperatorAuthReqId}    
+  ExpO->>-BE: HTTP 200 OK <br>{"access_token": "{OperatorAccessToken}"} 
+end
+BE->>ExpO: Access Operator CAMARA API<br>Authorization: Bearer {OperatorAccessToken}    
+ExpO->>ExpO: Decrypt OperatorAccessToken,<br>grants Access,<br>progresses request to API Backend,<br>gets API response  
+ExpO->>BE: CAMARA API Response
+Note over BE,FE: Response
+```
+
+Note: This flow assumes use cases where Consent is not required, such as legitimate interest. The Operator Token scenario is used for 'silent' authentication of the User (i.e. with no User interaction), where the API consumer has already obtained the temporary token from the Entitlement Server using EAP-AKA SIM-based authentication, which is transparent to the User.
+
 #### Client Credentials
 
 The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) grant type is used to obtain a Two-Legged Access Token that does not represent a User. More details about what CAMARA defines for this grant type and it's usage can be found in the [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md).
+
+#### JWT Bearer Flow
+
+The [OAuth 2.0 JWT Bearer](https://datatracker.ietf.org/doc/html/rfc7523) flow is used to obtain a Three-Legged Access Token that represents a User, using a JWT assertion as Authorization Grant, on behalf of the User. More details about what CAMARA defines for this grant type and its usage can be found in the [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md).
+
+
+```mermaid
+sequenceDiagram
+autonumber
+title JWT Bearer Flow
+participant FE as Device App<br>(Consumption Device)
+participant BE as API Consumer<br>(Application Backend/Aggregator)
+box API Provider / Operator
+  participant ExpO as API Exposure Platform  
+  participant Consent as Consent Master
+end
+Note over BE,ExpO: Pre-requisite:<br> To verify the signed JWT assertion, the public key of the API Consumer must be shared<br> with API Provider as part of API Consumer's Application onboarding process
+Note over FE,BE: Feature needing Operator capability  
+Note over BE: Select User Identifier:<br> Phone Number / Operator Token
+
+alt Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants
+    BE->>+ExpO: POST /token<br>grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer<br>assertion=<br>{scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>sub=tel:<phone_number> or operatortoken:<Operator_Token>,...}
+    ExpO->>ExpO: - Validate User Identifier<br>- (Opt) Map to Operator subscription Identifier e.g.: phone_number<br>- Set UserId (sub)
+    ExpO->>ExpO: Check legal basis of the purpose<br>e.g.: contract, legitimate_interest, consent, etc
+    opt If User Consent is required for the legal basis of the purpose  
+        ExpO->>Consent: Check if Consent is granted
+    end
+    ExpO->>ExpO: Create 3-legged access token
+    ExpO->>-BE: HTTP 200 OK<br>{"access_token": "{OperatorAccessToken}"}
+end
+BE->>ExpO: Access Operator CAMARA API<br>Authorization: Bearer {OperatorAccessToken}    
+ExpO->>ExpO: Decrypt OperatorAccessToken,<br>grants Access,<br>progresses request to API Backend,<br>gets API response  
+ExpO->>BE: CAMARA API Response
+Note over BE,FE: Response
+```
+
+**Flow description**:
+
+The JWT Bearer Flow enables an API Consumer (typically the Application Backend or Aggregator) to obtain a Three-Legged Access Token from the API Provider (Operator) by presenting a signed JWT assertion on behalf of the User. The flow proceeds as follows:
+
+**Pre-requisite:** The API Consumer must share its public key with the API Provider during onboarding, so the API Provider can verify the signature of the JWT assertion.
+
+The API Consumer selects the User Identifier. The User is identified by the `sub` claim in the JWT, which must be a unique identifier for the User in the Operator's system. As per the CAMARA Security and Interoperability Profile, the `sub` claim MUST be either a phone number prefixed by "tel:" or a TS.43 token prefixed by "operatortoken:".
+
+Example JWT, which MUST to be signed by the API Consumer, which CAN be encrytped:
+
+```json
+{
+  "iss": "client_id",
+  "sub": "operatortoken:ey...",
+  "aud": "https://az.api-provider.com/token.oauth2",
+  "exp": 1504807731,
+  "iat": 1504804131,
+  "jti": "53f42eb1-b751-44b5-bada-6990e08f35ac",
+  "scope": "dpv:FraudPreventionAndDetection number-verification:device-phone-number:read"
+}
+```
+
+The API Consumer sends a POST request to the API Exposure Platform's token endpoint (Step 1), using the `urn:ietf:params:oauth:grant-type:jwt-bearer` grant type and including the signed JWT assertion. The assertion contains the required claims: `iss` (client_id), `sub` (User Identifier), `aud` (token endpoint URL), `exp`, `iat`, `jti`, and `scope` (including the declared Purpose and CAMARA scopes).
+
+Example Token Request:
+
+```http
+POST /token.oauth2 HTTP/1.1
+Host: as.example.com
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer
+&assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjE2In0.
+eyJpc3Mi[...omitted for brevity...].
+J9l-ZhwP[...omitted for brevity...]
+```
+
+Then the API Exposure Platform validates the JWT assertion (Steps 2-4):
+  - Verifies the signature using the API Consumer's public key.
+  - Validates the User Identifier and, if needed, maps it to the Operator's internal subscription identifier.
+  - Checks the legal basis for the requested Purpose (e.g., contract, legitimate interest, consent).
+  - If User Consent is required for the Purpose, the Consent Master is consulted to verify that consent has been granted.
+
+If all validations succeed, the API Exposure Platform issues a Three-Legged Access (Step 5) Token and returns it to the API Consumer (Step 6).
+
+The API Consumer uses the access token to invoke the CAMARA API, including it in the Authorization header (Step 7).
+
+The API Exposure Platform validates and decrypts the access token, authorizes access, forwards the request to the API backend, and returns the API response to the API Consumer (Steps 8-9).
+
+##### Technical ruleset for the JWT Bearer Flow
+
+In case of Backend-to-backend scenarios where no user interaction is required (e.g. Legitimate Interest), and the User Identifier is known (e.g. TS.43 Operator Token), the JWT Bearer Flow should be used.
+
+- Identity:
+  - The User is identified by the `sub` claim in the JWT assertion, which must be either a phone number (`tel:`) or an Operator Token (`operatortoken:`), as per CAMARA Security and Interoperability Profile.
+- AuthZ/AuthN:
+  - Standard OAuth2 JWT Bearer flow.
+  - Backend-based flow, where the API Consumer acts on behalf of a User using a JWT assertion as Authorization Grant.
+  - Three-Legged Access Token. Each access session is associated with the Operator, a client_id (which must be the final application using the information) and the corresponding User identifier.
+- Consent management:
+  - Check if user consent is required by lawful basis associated with the declared purpose.
+    - If necessary, it will be checked **in the operator's consent master** whether user consent has already been given to the application for the user identifier and declared purpose.
+    - If NOT granted, the API Provider returns an error response indicating that Consent is required, and the API Consumer must handle the Consent capture process.
+- Covered scenarios:
+  - Backend-to-backend integrations where the API Consumer acts on behalf of a User, and the User Identifier is known.
+  - Use cases where direct user interaction is not required at the time of the request, but prior consent has been obtained.
 
 ## CAMARA API Specification - Authorization and authentication common guidelines
 
