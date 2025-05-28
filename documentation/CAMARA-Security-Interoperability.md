@@ -574,5 +574,12 @@ In addition to the error codes defined in the common [Token Error Response Secti
 |-------------------|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------|
 | 400 - Bad Request | `invalid_grant` | The provided refresh token is invalid, expired, revoked (for instance, there is no consent from the user), or was issued to another client. |
 
+#### JWT Bearer Flow
+
+| Status Code       | Error Code      | Scenario                                                                                                                                    |
+|-------------------|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| 400 - Bad Request | `consent_required` | If the end-user has the legal right to opt-out and has opted-out, then this error is returned. |
+
+
 
 
