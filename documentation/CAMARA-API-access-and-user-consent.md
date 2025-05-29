@@ -406,7 +406,7 @@ The API Consumer sends a POST request to the API Exposure Platform's token endpo
 
 Example Token Request:
 
-```http
+```
 POST /token.oauth2 HTTP/1.1
 Host: as.example.com
 Content-Type: application/x-www-form-urlencoded

@@ -27,11 +27,11 @@ See [OIDC Authentication Request](https://openid.net/specs/openid-connect-core-1
 
 ```
 GET /authorize?
-    response_type=code
-    &scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date
-    &client_id=s6BhdRkqt3
-    &state=af0ifjsldkj
-    &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb HTTP/1.1
+response_type=code
+&scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date
+&client_id=s6BhdRkqt3
+&state=af0ifjsldkj
+&redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb HTTP/1.1
 Host: server.example.com
 ```
 
@@ -55,9 +55,9 @@ Host: server.example.com
 Content-Type: application/x-www-form-urlencoded 
 
 grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA
-    &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
-    &client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer
-    &client_assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi......
+&redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
+&client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer
+&client_assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi......
 ```
 
 ##### Successful response
@@ -89,9 +89,9 @@ Host: server.example.com
 Content-Type: application/x-www-form-urlencoded
 
 scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date
-   &login_hint=tel%3A%2B34666666666
-   &client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer
-   &client_assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi......
+&login_hint=tel%3A%2B34666666666
+&client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer
+&client_assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi......
 ```
 
 
@@ -124,9 +124,9 @@ Host: server.example.com
 Content-Type: application/x-www-form-urlencoded
 
 grant_type=urn%3Aopenid%3Aparams%3Agrant-type%3Aciba
-    &auth_req_id=3f7b2e8a-9cde-4f3b-8b12-1a2b3c4d5e6f
-    &client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer
-    &client_assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi......   
+&auth_req_id=3f7b2e8a-9cde-4f3b-8b12-1a2b3c4d5e6f
+&client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer
+&client_assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi......   
 ```
 
 ##### Successful response
@@ -154,14 +154,14 @@ Cache-Control: no-store
 See [JWT Bearer Token Request](https://datatracker.ietf.org/doc/html/rfc7523#section-4)
 
 ```
-    POST /token.oauth2 HTTP/1.1
-    Host: server.example.com
-    Content-Type: application/x-www-form-urlencoded
+POST /token.oauth2 HTTP/1.1
+Host: server.example.com
+Content-Type: application/x-www-form-urlencoded
 
-    grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer
-    &assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjE2In0.
-    eyJpc3Mi[...omitted for brevity...].
-    J9l-ZhwP[...omitted for brevity...]
+grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer
+&assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjE2In0.
+eyJpc3Mi[...omitted for brevity...].
+J9l-ZhwP[...omitted for brevity...]
 ```
 The requested purpose and scopes are included in the JWT assertion `scope` claim. The `scope` parameter MUST NOT be specified for JWT-Bearer Flow as per [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md#jwt-bearer-flow) 
 
