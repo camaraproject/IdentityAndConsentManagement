@@ -345,6 +345,9 @@ J9l-ZhwP[...omitted for brevity...]
 + The Authorization Server MUST validate that the API Consumer is allowed to use the scopes.
 + The Authorization Server MUST validate the subject. In this example the TS.43 token is send to the API Provider's  Entitlement Server.
 
+The following sequence diagram does *not* show the case where the end-user has the legal right to opt-out in the current jurisdiction and the end-user opted-out. 
+In that case the Authorization Server returns the error `consent_required`.
+
 ```mermaid
 sequenceDiagram
 
@@ -445,6 +448,9 @@ J9l-ZhwP[...omitted for brevity...]
 + The Authorization Server MUST validate that the API Consumer is allowed to use the Purpose.
 + The Authorization Server MUST validate that the API Consumer is allowed to use the scopes.
 + The Authorization Server MUST validate the subject, e.g. whether for format matches the allowed pattern.
+
+The following sequence diagram does *not* show the case where the end-user has the legal right to opt-out in the current jurisdiction and the end-user opted-out. 
+In that case the Authorization Server returns the error `consent_required`.
 
 ```mermaid
 sequenceDiagram
