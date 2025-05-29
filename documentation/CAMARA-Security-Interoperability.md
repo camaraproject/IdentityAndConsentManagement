@@ -249,7 +249,7 @@ The API Consumer SHALL set the claims of the assertion as defined here:
 - The mandatory `scope` claim that MUST contain a [Purpose](#purpose) and CAMARA scope values. 
 
 [JWTs as Authorization Grants](https://datatracker.ietf.org/doc/html/rfc7523#section-2.1) defines authentication of the client as optional.
-In a JWT Bearer Flow token request the assertion is signed by the API Consumer and the assertion is interpreted as the client authentication.
+In the JWT Bearer Flow, the token request JWT assertion is signed by the API Consumer, and the assertion is interpreted as Client Authentication.
 
 The Authorization Server MUST validate the assertion as follows:
 

@@ -68,7 +68,7 @@ The list below introduces several key concepts:
 -	`Resource Server`: the server that exposes protected resources to Applications. The Resource Server requires a valid access token to be provided before allowing access to the protected resource.
 -	`Scope`: the OpenID Connect scope which maps one or more protected resources, some scopes may require processing of Personal Data.
 - `Subscriber`: the mobile subscriber of the Operator. The Subscriber is usually also the End-User, but this is not always the case. For example, a parent may be the Subscriber of a mobile subscription for their child, the End-User.
-- `Three-Legged Access Token`: an access token that involves three parties: the Resource Owner (User), the Authorization Server (operated by the Operator or Aggregator), and the client (the ASP's Application). In CAMARA, Three-Legged Access Tokens are typically created using the OIDC Authorization Code flow or Client-Initiated Backchannel Authentication (CIBA) flow.
+- `Three-Legged Access Token`: an access token that involves three parties: the Resource Owner (User), the Authorization Server (operated by the Operator or Aggregator), and the client (the ASP's Application). In CAMARA, Three-Legged Access Tokens are typically created using the OIDC Authorization Code flow, Client-Initiated Backchannel Authentication (CIBA) flow or OAuth2 JWT Bearer Flow.
 - `Two-Legged Access Token`: an access token that involves two parties, the Authorization Server (operated by the Operator or Aggregator), and the client (the ASP's Application); the Two-Legged Access Token does not include a Resource Owner (User). The Authorization Server does not authenticate a User, nor can User Consent be captured or validated for Two-Legged Access Tokens; therefore Two-Legged Access Tokens must only be used for CAMARA APIs that do not process Personal Data.
 
 ## Purpose within CAMARA
@@ -339,7 +339,9 @@ ExpO->>BE: CAMARA API Response
 Note over BE,FE: Response
 ```
 
-Note: This flow assumes use cases where Consent is not required, such as legitimate interest. The Operator Token scenario is used for 'silent' authentication of the User (i.e. with no User interaction), where the API consumer has already obtained the temporary token from the Entitlement Server using EAP-AKA SIM-based authentication, which is transparent to the User.
+Note: The interaction between the API Exposure Platform (Authentication Server) and the Entitlement Server is just an illustrative example, not a normative one. However, the API Provider (Operator) MUST follow the TS.43 definitions to validate the temporary token and obtain the user identifier (e.g. phone number) from the Entitlement Server. 
+
+The above flow example assumes a use case where Consent is not required, such as legitimate interest. In this case, the Operator Token is used for 'silent' authentication of the User (i.e. with no User interaction), where the API consumer has already obtained the temporary token from the Entitlement Server using EAP-AKA SIM-based authentication, which is transparent to the User.
 
 #### Client Credentials
 
@@ -388,7 +390,7 @@ The JWT Bearer Flow enables an API Consumer (typically the Application Backend o
 
 The API Consumer selects the User Identifier. The User is identified by the `sub` claim in the JWT, which must be a unique identifier for the User in the Operator's system. As per the CAMARA Security and Interoperability Profile, the `sub` claim MUST be either a phone number prefixed by "tel:" or a TS.43 token prefixed by "operatortoken:".
 
-Example JWT, which MUST to be signed by the API Consumer, which CAN be encrytped:
+Example JWT assertion, which MUST be signed by the API Consumer and MAY be encrypted:
 
 ```json
 {
@@ -445,7 +447,7 @@ In case of Backend-to-backend scenarios where no user interaction is required (e
     - If NOT granted, the API Provider returns an error response indicating that Consent is required, and the API Consumer must handle the Consent capture process.
 - Covered scenarios:
   - Backend-to-backend integrations where the API Consumer acts on behalf of a User, and the User Identifier is known.
-  - Use cases where direct user interaction is not required at the time of the request, but prior consent has been obtained.
+  - Use cases where direct user interaction is not required at the time of the request because consent is not required or has already been obtained.
 
 ## CAMARA API Specification - Authorization and authentication common guidelines
 
