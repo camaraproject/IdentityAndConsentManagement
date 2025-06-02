@@ -296,7 +296,7 @@ If some use case(s) for an API point to "Off-net" scenarios and where Consumptio
 
 ##### CIBA flow with Operator Token
 
-This section provides an example of the CIBA flow with Operator Token, which is a specific case of the CIBA flow where the User Identifier is an temporary token (TS.43 token). In this case, the API Consumer sends the temporary token to their backend which sends a CIBA Authentication Request with a parameter "login_hint=operatortoken:<temporaryToken>". How the API Consumers get a TS.43 token from the Entitlement Server using EAP-AKA SIM-based authentication, how this token is sent to their backend or how the API Provider then validates the temporary token with the Entitlement Server is out of scope of this document. The API Consumer must follow the TS.43 definitions to obtain the temporary token.
+This section provides an example of the CIBA flow involving an Operator Token, which is a specific case of the CIBA flow where the login_hint provided by the API Consumer is a temporary token (a TS.43 token). The presence of a TS.43 token confirms the Subscriber's prior authentication. In this case, the API Consumer sends the temporary token to their backend which sends a CIBA Authentication Request with a parameter "login_hint=operatortoken:<temporaryToken>". How the API Consumers get a TS.43 token from the Entitlement Server using EAP-AKA SIM-based authentication, how this token is sent to their backend or how the API Provider then validates the temporary token with the Entitlement Server is out of scope of this document. The API Consumer must follow the TS.43 definitions to obtain the temporary token.
 
 ```mermaid
 sequenceDiagram
@@ -341,7 +341,7 @@ Note over BE,FE: Response
 
 Note: The interaction between the API Exposure Platform (Authentication Server) and the Entitlement Server is just an illustrative example, not a normative one. The Entitlement Server MUST validate the temporary token when performing a TS.43 operation like GetPhoneNumber, VerifyPhoneNumber, GetSubscriberDeviceInfo or AcquireOperatorToken. 
 
-The above flow example assumes a use case where Consent is not required, such as legitimate interest. In this case, the Operator Token is used for 'silent' authentication of the User (i.e. with no User interaction), where the API consumer has already obtained the temporary token from the Entitlement Server using EAP-AKA SIM-based authentication, which is transparent to the User.
+The above flow example assumes a use case where Consent is not required, such as legitimate interest. In this case, the Operator Token is used for 'silent' authentication of the User (i.e. with no User interaction), where the API Consumer has already obtained the temporary token from the Entitlement Server using EAP-AKA SIM-based authentication, which is transparent to the User.
 
 #### Client Credentials
 

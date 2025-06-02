@@ -229,7 +229,7 @@ Considering [OAuth2 Refresh Token Protection](https://datatracker.ietf.org/doc/h
 
 ## Client Credentials Flow
 
-The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) grant type is used to obtain a 2-legged Access Token that does not represent a user. The grant-type can only be used if agreed between the API consumer and the API provider exposing the API, taking into account the declared purpose for accessing the API (cf. [CAMARA API Specification - Authorization and authentication common guidelines](CAMARA-API-access-and-user-consent.md#camara-api-specification---authorization-and-authentication-common-guidelines)).
+The [OAuth 2.0 Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) grant type is used to obtain a 2-legged Access Token that does not represent a user. The grant-type can only be used if agreed between the API Consumer and the API provider exposing the API, taking into account the declared purpose for accessing the API (cf. [CAMARA API Specification - Authorization and authentication common guidelines](CAMARA-API-access-and-user-consent.md#camara-api-specification---authorization-and-authentication-common-guidelines)).
 
 ## JWT Bearer Flow
 
@@ -370,9 +370,9 @@ This document does not mandate a particular PPID algorithm to be used.
 
 ## Client Authentication
 
-The API consumer MUST authenticate with the Authorization server using `private_key_jwt`, as specified in [OIDC Client Authentication](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication). In addition to the required claims, the signed JWT SHOULD also include the `iat` (issued at) claim.
+The API Consumer MUST authenticate with the Authorization server using `private_key_jwt`, as specified in [OIDC Client Authentication](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication). In addition to the required claims, the signed JWT SHOULD also include the `iat` (issued at) claim.
 
-The API consumer MUST NOT create client assertions with a lifetime of more than 300 seconds, calculated as the difference between the `exp` (expires at) claim and the token creation time (which SHALL also be the value of the `iat` claim if present).
+The API Consumer MUST NOT create client assertions with a lifetime of more than 300 seconds, calculated as the difference between the `exp` (expires at) claim and the token creation time (which SHALL also be the value of the `iat` claim if present).
 
 The request SHALL be rejected by the Authorization server if the `exp` claim is more than 300 seconds later than the time of receipt. Additionally, if the `iat` claim is present, the request SHALL be rejected if the difference between the `exp` claim and `iat` claim is more than 300 seconds.
 
