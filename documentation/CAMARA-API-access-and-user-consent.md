@@ -318,8 +318,8 @@ alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between API Con
   BE->>+ExpO: POST /bc-authorize<br>Credentials,<br>scope=dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint=operatortoken:<temporaryToken>    
   ExpO->>ExpO: Validate Authentication<br>request
   alt TS.43
-    Note over ExpO,ES: Get Entitlement Server<br> access_token
-    ExpO->>ES: AcquireOperatorToken(ap2015,temporary_token=temporaryToken,<br>operation_targets=GetSubscriberDeviceInfo,[client_id, access_token]) 
+    Note over ExpO,ES: Get information from Entitlement Server<br> needed for access_token creation<br>Scopes are adapted
+    ExpO->>ES: AcquireOperatorToken(ap2015,temporary_token=temporaryToken,<br>operation_targets=GetSubscriberDeviceInfo,[client_id, access_token,scope="MSISDN"]) 
     ES->>ES: Validate temporary token
     ES->>ExpO: HTTP 200 OK <br>{operator_token}
     ExpO->>ES: GetSubscriberDeviceInfo (ap2015, operator_token) 
@@ -339,7 +339,7 @@ ExpO->>BE: CAMARA API Response
 Note over BE,FE: Response
 ```
 
-Note: The interaction between the API Exposure Platform (Authentication Server) and the Entitlement Server is just an illustrative example, not a normative one. However, the API Provider (Operator) MUST follow the TS.43 definitions to validate the temporary token and obtain the user identifier (e.g. phone number) from the Entitlement Server. 
+Note: The interaction between the API Exposure Platform (Authentication Server) and the Entitlement Server is just an illustrative example, not a normative one. The Entitlement Server MUST validate the temporary token when performing a TS.43 operation like GetPhoneNumber, VerifyPhoneNumber, GetSubscriberDeviceInfo or AcquireOperatorToken. 
 
 The above flow example assumes a use case where Consent is not required, such as legitimate interest. In this case, the Operator Token is used for 'silent' authentication of the User (i.e. with no User interaction), where the API consumer has already obtained the temporary token from the Entitlement Server using EAP-AKA SIM-based authentication, which is transparent to the User.
 
@@ -364,11 +364,11 @@ box API Provider / Operator
 end
 Note over BE,ExpO: Pre-requisite:<br> To verify the signed JWT assertion, the public key of the API Consumer must be shared<br> with API Provider as part of API Consumer's Application onboarding process
 Note over FE,BE: Feature needing Operator capability  
-Note over BE: Select User Identifier:<br> Phone Number / Operator Token
+Note over BE: Select API Subject:<br> Phone Number / Operator Token
 
 alt Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants
     BE->>+ExpO: POST /token<br>grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer<br>assertion=<br>{scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>sub=tel:<phone_number> or operatortoken:<Operator_Token>,...}
-    ExpO->>ExpO: - Validate User Identifier<br>- (Opt) Map to Operator subscription Identifier e.g.: phone_number<br>- Set UserId (sub)
+    ExpO->>ExpO: - Validate API Subject (sub)<br>- (Opt) Map to Operator subscription Identifier e.g.: phone_number<br>- Set UserId (sub)
     ExpO->>ExpO: Check legal basis of the purpose<br>e.g.: contract, legitimate_interest, consent, etc
     opt If User Consent is required for the legal basis of the purpose  
         ExpO->>Consent: Check if Consent is granted
@@ -388,7 +388,7 @@ The JWT Bearer Flow enables an API Consumer (typically the Application Backend o
 
 **Pre-requisite:** The API Consumer must share its public key with the API Provider during onboarding, so the API Provider can verify the signature of the JWT assertion.
 
-The API Consumer selects the User Identifier. The User is identified by the `sub` claim in the JWT, which must be a unique identifier for the User in the Operator's system. As per the CAMARA Security and Interoperability Profile, the `sub` claim MUST be either a phone number prefixed by "tel:" or a TS.43 token prefixed by "operatortoken:".
+The API Consumer selects the API Subject. The User is identified by the `sub` claim in the JWT assertion, which must uniquely identify the User in the Operator's system. As per the CAMARA Security and Interoperability Profile, the `sub` claim MUST be either a phone number prefixed by "tel:" or a TS.43 token prefixed by "operatortoken:".
 
 Example JWT assertion, which MUST be signed by the API Consumer and MAY be encrypted:
 
@@ -404,7 +404,7 @@ Example JWT assertion, which MUST be signed by the API Consumer and MAY be encry
 }
 ```
 
-The API Consumer sends a POST request to the API Exposure Platform's token endpoint (Step 1), using the `urn:ietf:params:oauth:grant-type:jwt-bearer` grant type and including the signed JWT assertion. The assertion contains the required claims: `iss` (client_id), `sub` (User Identifier), `aud` (token endpoint URL), `exp`, `iat`, `jti`, and `scope` (including the declared Purpose and CAMARA scopes).
+The API Consumer sends a POST request to the API Exposure Platform's token endpoint (Step 1), using the `urn:ietf:params:oauth:grant-type:jwt-bearer` grant type and including the signed JWT assertion. The assertion contains the required claims: `iss` (client_id), `sub` (Identifying the User; the presence of a TS.43 Operator Token confirms the Subscriber's prior authentication.), `aud` (token endpoint URL), `exp`, `iat`, `jti`, and `scope` (including the declared Purpose and CAMARA scopes).
 
 Example Token Request:
 
@@ -421,7 +421,7 @@ J9l-ZhwP[...omitted for brevity...]
 
 Then the API Exposure Platform validates the JWT assertion (Steps 2-4):
   - Verifies the signature using the API Consumer's public key.
-  - Validates the User Identifier and, if needed, maps it to the Operator's internal subscription identifier.
+  - Validates the API Subject and, if needed, maps it e.g. to the Operator's internal subscription identifier.
   - Checks the legal basis for the requested Purpose (e.g., contract, legitimate interest, consent).
   - If User Consent is required for the Purpose, the Consent Master is consulted to verify that consent has been granted.
 
