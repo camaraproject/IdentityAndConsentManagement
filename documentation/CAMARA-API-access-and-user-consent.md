@@ -55,6 +55,7 @@ The list below introduces several key concepts:
 - `API Exposure Platform`: the Operator's platform for exposing CAMARA APIs to ASPs and Aggregators, providing authentication and authorization mechanisms, and End-User Consent management. The API Exposure Platform typically consists of at least an Auth Server and an API Gateway.
 -	`Application` or `Application Backend`: the ASP's software services that access CAMARA APIs.
 - `Application Service Provider (ASP)`: the Legal Entity that provides the Application and/or services that consume CAMARA APIs.
+- `Authentication Device`: The device on which the user will authenticate/authorize the request, often a smartphone. As defined by [CIBA](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#terminology).
 -	`Authorization (Auth) Server`: the authorization server processes requests from an Application to issue an access token upon successful authentication and authorization. The Auth Server provides OpenID Connect (OIDC) compliant endpoints, and is able to authenticate the User by validating the provided user identity with an Identity Provider; the Auth Server exposes the OIDC authorization endpoints and the OIDC token endpoint.
 -	`Consent`: an explicit opt-in action that the User takes to allow processing of personal data. Consent grants a Legal Entity (e.g. the Operator or ASP) access to a set of Scopes related to the Resource Owner, for a specific Purpose.
 - `Consumption Device`: the physical device on which an Application is installed or running.
@@ -68,6 +69,7 @@ The list below introduces several key concepts:
 -	`Resource Server`: the server that exposes protected resources to Applications. The Resource Server requires a valid access token to be provided before allowing access to the protected resource.
 -	`Scope`: the OpenID Connect scope which maps one or more protected resources, some scopes may require processing of Personal Data.
 - `Subscriber`: the mobile subscriber of the Operator. The Subscriber is usually also the End-User, but this is not always the case. For example, a parent may be the Subscriber of a mobile subscription for their child, the End-User.
+- `Target Device`: the device that is the primary resource (target) affected by an API call, and for which Consent may need to be obtained from the Resource Owner.
 - `Three-Legged Access Token`: an access token that involves three parties: the Resource Owner (User), the Authorization Server (operated by the Operator or Aggregator), and the client (the ASP's Application). In CAMARA, Three-Legged Access Tokens are typically created using the OIDC Authorization Code flow, Client-Initiated Backchannel Authentication (CIBA) flow or OAuth2 JWT Bearer Flow.
 - `Two-Legged Access Token`: an access token that involves two parties, the Authorization Server (operated by the Operator or Aggregator), and the client (the ASP's Application); the Two-Legged Access Token does not include a Resource Owner (User). The Authorization Server does not authenticate a User, nor can User Consent be captured or validated for Two-Legged Access Tokens; therefore Two-Legged Access Tokens must only be used for CAMARA APIs that do not process Personal Data.
 
@@ -170,9 +172,9 @@ Finally, the Operator will provide the API response to the Application (Step 15)
 
 ##### Technical ruleset for the Frontend flow
 
-If all API usecases point to the need of an 'On-Net' scenario and where the Consumption Device and Authentication Device are the same, the Frontend flow SHOULD be used. eg. NumberVerification
+If all API use cases point to the need of an 'On-Net' scenario and where the Consumption Device and Authentication Device are the same, the Frontend flow SHOULD be used e.g. Number Verification.
 
-This flow is then applicable to On-Net scenarios where the mobile connection of the Consumption Device needs to be authenticated e.g. [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification) due to the nature of its functionality where a User's phone number needs to be compared to the phone number associated with the mobile connection of the Consumption Device. 
+This flow then enables On-Net scenarios where the mobile connection of the Consumption Device needs to be authenticated. For example, the [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification) due to the nature of its functionality where a User's phone number needs to be compared to the phone number associated with the mobile connection of the Consumption Device. 
 
 The Application on the Consumption Device must be able to handle browser redirects.
 
@@ -187,9 +189,10 @@ The Application on the Consumption Device must be able to handle browser redirec
     - Check if User Consent is required as the lawful basis associated with the declared Scope and Purpose. 
       - If necessary, it will be checked in the operator's consent master whether user consent has already been given to the application for the user identifier and declared purpose.
     - If NOT granted, the operator performs the consent capture. Since the authorization code grant involves the interaction with application front-end, consent can be captured directly from the user through the application browser.
-  - Covered scenarios:
+  - Covered scenarios: 
     - On-net (with mobile connection) & application front-end (with embedded browser)
     - Off-net scenarios using refresh_token, as long as there was a connection when the first access_token was requested.
+    - Note: The Consumption Device must be equal to the Target Device of subsequent API call(s).
 
 
 #### CIBA flow (Backend flow)
@@ -276,7 +279,8 @@ The Operator will provide the API response to the API Consumer (Step 11).
 
 ##### Technical ruleset for the Backend flow
 
-If some use case(s) for an API point to "Off-net" scenarios and where Consumption Device and authentication devices could be different, the Backend flow should be used.
+If the API use case(s) indicate the need for an "Off-net" scenario and/or if the Consumption Device and Authentication Device are different, the Backend flow (CIBA) SHOULD be used.
+Also note that in the case of the CIBA flow, it is applicable if the Consumption Device is the same or different from the Target Device of the intended CAMARA API call(s).
 
   - Identity: 
     - Identification by IP, phone number or others like IMSI, ICCID for specific use cases.
@@ -287,12 +291,13 @@ If some use case(s) for an API point to "Off-net" scenarios and where Consumptio
     - Check if user consent is required by lawful basis associated with the declared purpose. 
       - If necessary, it will be checked **in the operator's consent master** whether user consent has already been given to the application for the user identifier and declared purpose.
       - If NOT granted, **the operator’s consent capture procedure is triggered**. Out-of-band consent capture as part of asynchronous CIBA flow (e.g. push notification with fallback to SMS, etc...). **Operators can choose the consent capture mechanism that best suits their capabilities, preferences and needs**.
-  - Covered scenarios:
+  - Covered scenarios: 
     - No front-end developer software in user device
     - Back-end services (e.g. bank BE anti-fraud validation using phone number).
     - Off-net scenarios (no mobile connection)
     - Device connected to WiFi
     - Device without UI (IoT)
+    - Note: Consumption device and target device of subsequent API call(s) can be different, access token is generated for the target device
 
 ##### CIBA flow with Operator Token
 
