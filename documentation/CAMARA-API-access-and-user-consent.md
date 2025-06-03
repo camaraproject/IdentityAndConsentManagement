@@ -364,11 +364,11 @@ box API Provider / Operator
 end
 Note over BE,ExpO: Pre-requisite:<br> To verify the signed JWT assertion, the public key of the API Consumer must be shared<br> with API Provider as part of API Consumer's Application onboarding process
 Note over FE,BE: Feature needing Operator capability  
-Note over BE: Select API Subject:<br> Phone Number / Operator Token
+Note over BE: Select User Identifier:<br> Phone Number / Operator Token
 
 alt Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants
     BE->>+ExpO: POST /token<br>grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer<br>assertion=<br>{scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>sub=tel:<phone_number> or operatortoken:<Operator_Token>,...}
-    ExpO->>ExpO: - Validate API Subject (sub)<br>- (Opt) Map to Operator subscription Identifier e.g.: phone_number<br>- Set UserId (sub)
+    ExpO->>ExpO: - Validate User Identifier (sub)<br>- (Opt) Map to Operator subscription Identifier e.g.: phone_number<br>- Set UserId (sub)
     ExpO->>ExpO: Check legal basis of the purpose<br>e.g.: contract, legitimate_interest, consent, etc
     opt If User Consent is required for the legal basis of the purpose  
         ExpO->>Consent: Check if Consent is granted
@@ -388,7 +388,7 @@ The JWT Bearer Flow enables an API Consumer (typically the Application Backend o
 
 **Pre-requisite:** The API Consumer must share its public key with the API Provider during onboarding, so the API Provider can verify the signature of the JWT assertion.
 
-The API Consumer selects the API Subject. The User is identified by the `sub` claim in the JWT assertion, which must uniquely identify the User in the Operator's system. As per the CAMARA Security and Interoperability Profile, the `sub` claim MUST be either a phone number prefixed by "tel:" or a TS.43 token prefixed by "operatortoken:".
+The API Consumer selects the User Identifier. The User is identified by the `sub` claim in the JWT assertion, which must uniquely identify the User in the Operator's system. As per the CAMARA Security and Interoperability Profile, the `sub` claim MUST be either a phone number prefixed by "tel:" or a TS.43 token prefixed by "operatortoken:".
 
 Example JWT assertion, which MUST be signed by the API Consumer and MAY be encrypted:
 
@@ -421,7 +421,7 @@ J9l-ZhwP[...omitted for brevity...]
 
 Then the API Exposure Platform validates the JWT assertion (Steps 2-4):
   - Verifies the signature using the API Consumer's public key.
-  - Validates the API Subject and, if needed, maps it e.g. to the Operator's internal subscription identifier.
+  - Validates the User Identifier and, if needed, maps it e.g. to the Operator's internal subscription identifier.
   - Checks the legal basis for the requested Purpose (e.g., contract, legitimate interest, consent).
   - If User Consent is required for the Purpose, the Consent Master is consulted to verify that consent has been granted.
 
