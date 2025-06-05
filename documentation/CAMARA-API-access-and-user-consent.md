@@ -247,7 +247,9 @@ How the Operator Token is retrieved from the API provider is out of scope of thi
 
 The format of the Operator Token is out of scope fo this document. If the Operator Token contains personal information that confidential information must be protected. If the Operator Token contains routing information that e.g. the Aggregator needs to know then that routing information can be encrypted to the Aggregator and the personal information of the User can be encrytpted to the API Exposure platform.
 
-Operator Token is standardized be GSMA in [TS.43](https://www.gsma.com/newsroom/gsma_resources/ts-43-service-entitlement-configuration/) and [ASAC](https://www.gsma.com/newsroom/gsma_resources/asac-01/).
+The Operator Token that is send to the Operator's Authorization Server is the token that was created by the Operator's Entitlement Server. If the Aggregator received a token with routing information then the Aggregator removes that routing information and sends the original Entitlement Server created token to the Operator's Authorization Server.
+
+Note: the value that follows the "operatortoken:" prefix is not nessesarily the operator token as defined in GSMA TS.43 v12 section 14 "Device App authentication". Some implementations send a GSMA TS.43 temporary token to the Operator's Authorization Server.
 
 The API Consumer (for example, the Application Backend) instructs the Application on the Consumption Device to initiate the OIDC Authorization Code Flow with the Operator. The authorization request includes the client_id of the ASP's Application requesting access to the API and the Application's redirect_uri (api_consumer_callback) where the authorization code will be sent. The authorization request includes the operator token in the `login_hint` OIDC parameter.
 
