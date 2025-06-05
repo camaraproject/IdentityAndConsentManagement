@@ -2,11 +2,175 @@
 
 ## Table of Contents
 
-- [r0.2.1](#r021)
-- [r0.2.0](#r020)
-- [r0.2.0-rc.2](#r020-rc2)
-- [v0.2.0-rc.1](#v020-rc1)
-- [v0.1.0 - Initial version](#v010---initial-version)
+- **[r3.1](#r31)**
+- **[r2.3](#r23)**
+- **[r2.2](#r22)**
+- **[r2.1](#r21)**
+- **[r0.2.1](#r021)**
+- **[r0.2.0](#r020)**
+- **[r0.2.0-rc.2](#r020-rc2)**
+- **[v0.2.0-rc.1](#v020-rc1)**
+- **[v0.1.0 - Initial version](#v010---initial-version)**
+
+**Please be aware that the project will have frequent updates to the main branch. There are no compatibility guarantees associated with code in any branch, including main, until it has been released. For example, changes may be reverted before a release is published. For the best results, use the latest published release.**
+
+The below sections record the changes in each release as follows:
+
+* for an alpha release, the delta with respect to the previous release
+* for the first release-candidate, all changes since the last public release
+* for subsequent release-candidate(s), only the delta to the previous release-candidate
+* for a public release, the consolidated changes since the previous public release
+
+# r3.1
+
+## Release Notes
+
+This pre-release contains the definition and documentation of:
+
+* "Identity and Consent Management" 0.4.0-alpha.1
+
+The content of the release includes the "Identity And Consent Management" approved deliverables in **[documentation](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r3.1/documentation)** folder.
+
+### Added
+
+N/A
+
+### Changed
+
+* Further alignment of `CAMARA-API-access-and-user-consent.md` with CAMARA terms and definitions by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/280
+* Update request object errors by @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/287
+* Clarify protocols for CAMARA API access by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/281
+
+### Fixed
+
+* Fix typo autenticate -> authenticate by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/274
+
+### Removed
+
+N/A
+
+**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/r2.3...r3.1
+
+# r2.3
+
+## Release Notes
+
+This public release contains the definition and documentation of:
+
+* "Identity and Consent Management" v0.3.0
+
+The content of the release includes the "Identity And Consent Management" approved deliverables in **[documentation](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r2.3/documentation)** folder.
+  > The mandatory `info.description` [template](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r2.3/documentation/CAMARA-API-access-and-user-consent.md#mandatory-template-for-infodescription-in-camara-api-specs) defined for "Authorization and authentication" has been modified and will eventually need to be adopted by all API definitions.
+
+NOTE: The Working Group release numbering has been updated to adopt the same release notation as is used for API sub-projects.
+
+### Added
+
+* Lifetime handling of client assertions on client authentication by @eric-murray in https://github.com/camaraproject/IdentityAndConsentManagement/pull/216
+* Recommend signed authentication requests for CIBA by @eric-murray in https://github.com/camaraproject/IdentityAndConsentManagement/pull/217
+* Operator token `login_hint` format by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/218
+* Response codes for error scenarios by @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/220
+* Clarification on the use of sender constraint tokens via "Demonstrating Proof of Possession" (DPoP) by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/225
+* `login_hint` statement for Authorization Code Flow by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/242
+* Recommend signed authentication requests for Authorization Code Flow by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/251
+* Agreed conclusion statement about authentication method in the Authorization Code Flow by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/253
+
+### Changed
+
+* Updated the `CAMARA-Security-Interoperability.md` document to replace Telco and Operator terms with API Provider by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/201
+* Updated terms and definitions in the `CAMARA-API-access-and-user-consent.md` document for better writing and understanding by @jpengar and @chrishowell in https://github.com/camaraproject/IdentityAndConsentManagement/pull/212
+* Updated the `CAMARA-API-access-and-user-consent.md` document with editorial and general writing improvements by @jpengar and @chrishowell in https://github.com/camaraproject/IdentityAndConsentManagement/pull/213
+* Updated `info.description` template in the `CAMARA-API-access-and-user-consent.md` document with revised wording by @jpengar and @chrishowell in https://github.com/camaraproject/IdentityAndConsentManagement/pull/214
+* Updated the `CAMARA-ICM-examples.md` document with more CIBA examples by @sebdewet in https://github.com/camaraproject/IdentityAndConsentManagement/pull/237
+
+### Fixed
+
+* Fixed error description for missing openid scope in the `CAMARA-Security-Interoperability.md` document by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/210
+* Clarify case sensitivity of parameter names and values in the `CAMARA-Security-Interoperability.md` document by @eric-murray in https://github.com/camaraproject/IdentityAndConsentManagement/pull/221
+* Fixed "bc_authorize" typo in the `CAMARA-API-access-and-user-consent.md` document by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/248
+* Fixed operator token login_hint formatting and encoding references by @garciarolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/262
+
+### Removed
+
+N/A
+
+**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/r0.2.1...r2.3
+
+# r2.2
+
+## Release Notes
+
+This pre-release contains the definition and documentation of:
+
+* "Identity and Consent Management" v0.3.0-rc.1
+
+The content of the release includes the "Identity And Consent Management" approved deliverables in **[documentation](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r2.2/documentation)** folder.
+  > The mandatory `info.description` [template](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r2.2/documentation/CAMARA-API-access-and-user-consent.md#mandatory-template-for-infodescription-in-camara-api-specs) defined for "Authorization and authentication" has been modified and will eventually need to be adopted by all API definitions.
+
+NOTE: The Working Group release numbering has been updated to adopt the same release notation as is used for API sub-projects.
+
+### Added
+
+* Lifetime handling of client assertions on client authentication by @eric-murray in https://github.com/camaraproject/IdentityAndConsentManagement/pull/216
+* Recommend signed authentication requests for CIBA by @eric-murray in https://github.com/camaraproject/IdentityAndConsentManagement/pull/217
+* Operator token `login_hint` format by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/218
+* Response codes for error scenarios by @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/220
+* Clarification on the use of sender constraint tokens via "Demonstrating Proof of Possession" (DPoP) by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/225
+* `login_hint` statement for Authorization Code Flow by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/242
+* Recommend signed authentication requests for Authorization Code Flow by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/251
+* Agreed conclusion statement about authentication method in the Authorization Code Flow by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/253
+
+### Changed
+
+* Updated the `CAMARA-Security-Interoperability.md` document to replace Telco and Operator terms with API Provider by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/201
+* Updated terms and definitions in the `CAMARA-API-access-and-user-consent.md` document for better writing and understanding by @jpengar and @chrishowell in https://github.com/camaraproject/IdentityAndConsentManagement/pull/212
+* Updated the `CAMARA-API-access-and-user-consent.md` document with editorial and general writing improvements by @jpengar and @chrishowell in https://github.com/camaraproject/IdentityAndConsentManagement/pull/213
+* Updated `info.description` template in the `CAMARA-API-access-and-user-consent.md` document with revised wording by @jpengar and @chrishowell in https://github.com/camaraproject/IdentityAndConsentManagement/pull/214
+* Updated the `CAMARA-ICM-examples.md` document with more CIBA examples by @sebdewet in https://github.com/camaraproject/IdentityAndConsentManagement/pull/237
+
+### Fixed
+
+* Fixed error description for missing openid scope in the `CAMARA-Security-Interoperability.md` document by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/210
+* Clarify case sensitivity of parameter names and values in the `CAMARA-Security-Interoperability.md` document by @eric-murray in https://github.com/camaraproject/IdentityAndConsentManagement/pull/221
+* Fixed "bc_authorize" typo in the `CAMARA-API-access-and-user-consent.md` document by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/248
+
+### Removed
+
+N/A
+
+**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/r0.2.1...r2.2
+
+# r2.1
+
+## Release Notes
+
+This pre-release contains the definition and documentation of:
+
+* "Identity and Consent Management" v0.3.0-alpha.1
+
+NOTE: The Working Group release numbering has been updated to adopt the same release notation as is used for API sub-projects.
+
+### Added
+
+* Recommend signed authentication requests for CIBA by @eric-murray in https://github.com/camaraproject/IdentityAndConsentManagement/pull/217
+* Operator token login_hint format by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/218
+
+### Changed
+
+* Updated the `CAMARA-Security-Interoperability.md` document to replace Telco and Operator terms with API Provider by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/201
+* Updated terms and definitions in the `CAMARA-API-access-and-user-consent.md` for better writing and understanding by @jpengar and @chrishowell in https://github.com/camaraproject/IdentityAndConsentManagement/pull/212
+* Updated the `CAMARA-API-access-and-user-consent.md` document with editorial and general writing improvements by @jpengar and @chrishowell in https://github.com/camaraproject/IdentityAndConsentManagement/pull/213
+
+### Fixed
+
+* Fixed error description for missing openid scope in the `CAMARA-Security-Interoperability.md` document by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/210
+* Clarify case sensitivity of parameter names and values in the `CAMARA-Security-Interoperability.md` document by @eric-murray in https://github.com/camaraproject/IdentityAndConsentManagement/pull/221
+
+### Removed
+
+N/A
+
+**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/r0.2.1...r2.1
 
 # r0.2.1
 
