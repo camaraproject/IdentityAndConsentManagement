@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- **[r3.2](#r32)**
 - **[r3.1](#r31)**
 - **[r2.3](#r23)**
 - **[r2.2](#r22)**
@@ -20,6 +21,39 @@ The below sections record the changes in each release as follows:
 * for the first release-candidate, all changes since the last public release
 * for subsequent release-candidate(s), only the delta to the previous release-candidate
 * for a public release, the consolidated changes since the previous public release
+
+# r3.2
+
+## Release Notes
+
+This pre-release contains the definition and documentation of:
+
+* "Identity and Consent Management" 0.4.0-rc.1
+
+The content of the release includes the "Identity And Consent Management" approved deliverables in **[documentation](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r3.2/documentation)** folder.
+
+### Added
+
+* Mandatory fields in signed Authorization Code Flow request objects by @AxelNennker & @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/285
+* JWT Bearer Flow by @jpengar, @AxelNennker & @subha5h in https://github.com/camaraproject/IdentityAndConsentManagement/pull/294
+
+### Changed
+
+* Further alignment of `CAMARA-API-access-and-user-consent.md` with CAMARA terms and definitions by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/280
+* Update request object errors by @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/287
+* Clarify protocols for CAMARA API access by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/281
+* Document when Authorization Code Flow is applicable with regards to involved devices by @Elisabeth-Ericsson in https://github.com/camaraproject/IdentityAndConsentManagement/pull/256
+* CIBA Flow descriptions to further clarify the Authentication request authorization process with regard to User privacy by @jpengar & @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/293
+
+### Fixed
+
+* Fix typo autenticate -> authenticate by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/274
+
+### Removed
+
+N/A
+
+**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/r2.3...r3.2
 
 # r3.1
 
