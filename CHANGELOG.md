@@ -35,7 +35,7 @@ The content of the release includes the "Identity And Consent Management" approv
 ### Added
 
 * Mandatory fields in signed Authorization Code Flow request objects by @AxelNennker & @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/285
-* JWT Bearer Flow by @jpengar, @AxelNennker & @subha5h in https://github.com/camaraproject/IdentityAndConsentManagement/pull/294
+* New JWT Bearer Flow specification in addition to the three previously supported flows: Authorization Code Flow, CIBA and Client Credentials by @jpengar, @AxelNennker & @subha5h in https://github.com/camaraproject/IdentityAndConsentManagement/pull/294
 
 ### Changed
 
@@ -48,6 +48,7 @@ The content of the release includes the "Identity And Consent Management" approv
 ### Fixed
 
 * Fix typo autenticate -> authenticate by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/274
+* Update the references to the OAuth 2.0 Security Best Practices (RFC 9700) by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/263
 
 ### Removed
 
