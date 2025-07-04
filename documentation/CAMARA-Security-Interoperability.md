@@ -179,9 +179,9 @@ This CAMARA document clarifies the values used in login_hint in the following wa
 
   * **_operatortoken_**
 
-    For operator tokens as defined by [GSMA TS.43](https://www.gsma.com/newsroom/gsma_resources/ts-43-service-entitlement-configuration/) and [GSMA ASAC](https://www.gsma.com/newsroom/gsma_resources/asac-01-v1-0/). TS.43 does not specify the format of the operator token.
+    For TS.43 tokens as defined by [GSMA TS.43](https://www.gsma.com/newsroom/gsma_resources/ts-43-service-entitlement-configuration/) and [GSMA ASAC](https://www.gsma.com/newsroom/gsma_resources/asac-01-v1-0/). TS.43 does not specify the format of the token.
     
-   This document does not specifiy how the API consumer got the operatorToken. 
+   This document does not specifiy how the API consumer got the TS.43 token. 
 
 ## Offline Access
 
