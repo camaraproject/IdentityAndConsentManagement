@@ -60,6 +60,12 @@ The CAMARA document sharpens the following for interoperability and security:
 
 By encapsulating these elements within this document, it aims to provide a comprehensive guide for API consumers and API providers, ensuring consistent implementation and adherence to standardized security measures across the CAMARA ecosystem. The defined OIDC profile not only facilitates the integration process, but also serves as a basic framework for developers wishing to leverage the CAMARA APIs while maintaining security and interoperability.
 
+**Future Adoption of OAuth 2.1**
+
+The CAMARA Security and Interoperability Profile is currently based on OAuth 2.0. [OAuth 2.1](https://datatracker.ietf.org/doc/draft-ietf-oauth-v2-1/) is an in-progress effort to create an updated version that consolidates various RFCs and best practices from OAuth 2.0, while removing insecure features.
+
+CAMARA is already closely aligned with the principles of OAuth 2.1. Most of the required features are either already in place or strongly recommended. Future releases of this profile document will fully adopt the finalised OAuth 2.1 specification.
+
 
 ## Audience
 
