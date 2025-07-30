@@ -240,7 +240,7 @@ The Operator's API Exposure Platform will:
 
 - Validate User identifier and map it to an Operator subscription identifier if applicable, e.g. map IP to phone number (The Authorization Server MUST process the hint provided to determine if the hint is valid and if it corresponds to a valid user). Set the OAuth sub to the unique user id (Step 2).
 
-- Check if a User Consent is needed, which depends on the legal basis associated to the purpose (“legitimate interest”, “contract”, “consent”, etc). If needed, it will check in the Operator's Consent Master whether Consent has already been given, the Application client_id and the requested Purpose (Steps 3-4).
+- Checks if User Consent is required, which depends on the legal basis associated with the Scope and Purpose. If needed, it will check in the Operator's Consent Master whether Consent has already been given, the Application client_id and the requested Purpose (Steps 3-4).
 
 Subsequently, the Operator starts the User authentication and request authorization process following Section 8 of the CIBA Core 1.0 spec. Operator MUST obtain an authorization decision as described in Section 3.1.2.4 of the OIDC Core 1.0 spec. This MUST include a mechanism to capture User Consent if required. 
 
