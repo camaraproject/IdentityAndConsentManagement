@@ -64,7 +64,7 @@ By encapsulating these elements within this document, it aims to provide a compr
 
 The CAMARA Security and Interoperability Profile is currently based on OAuth 2.0. [OAuth 2.1](https://datatracker.ietf.org/doc/draft-ietf-oauth-v2-1/) is an in-progress effort to create an updated version that consolidates various RFCs and best practices from OAuth 2.0, while removing insecure features.
 
-CAMARA is already closely aligned with the principles of OAuth 2.1. Most of the required features are either already in place or strongly recommended. Future releases of this profile document will fully adopt the finalised OAuth 2.1 specification.
+CAMARA is already closely aligned with the principles of OAuth 2.1. Most of the required features are either already in place or recommended. Future releases of this profile document will fully adopt the finalised OAuth 2.1 specification.
 
 
 ## Audience
