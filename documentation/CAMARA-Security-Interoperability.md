@@ -376,7 +376,7 @@ The API Consumer MUST NOT create client assertions with a lifetime of more than 
 
 The request SHALL be rejected by the Authorization server if the `exp` claim is more than 300 seconds later than the time of receipt. Additionally, if the `iat` claim is present, the request SHALL be rejected if the difference between the `exp` claim and `iat` claim is more than 300 seconds.
 
-This document RECOMMENDS that the `aud` (audience) claim in the client assertion SHOULD contain the full URL of the specific endpoint at the Authorization Server to which the client is sending the request. For example, the Token Endpoint URL for requests to `/token`, or the [Backchannel Authentication Endpoint](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#auth_backchannel_endpoint) URL for OIDC CIBA requests to `/bc-authorize`.
+This document RECOMMENDS that the `aud` (audience) claim in the client assertion SHOULD be the full URL of the specific endpoint at the Authorization Server to which the client is sending the request.
 
 ## OpenId Foundation Certification
 
