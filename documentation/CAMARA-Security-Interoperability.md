@@ -161,6 +161,10 @@ The parameters `binding_message`, `user_code`, and `requested_expiry` are curren
 
 It is RECOMMENDED that signed authentication requests be used, as specified by [OIDC CIBA Core](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#signed_auth_request). Therefore, the authorization server MUST support the handling of signed authentication requests. The same key MAY be used for signing the authentication request as is used for [client authentication](#client-authentication).
 
+It is RECOMMENDED that the value of the `aud` field of the signed authentication request is the URL of the [Backchannel Authentication Endpoint](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html#auth_backchannel_endpoint).
+The authorization server MAY accept different values of the `aud` field e.g. the `issuer` field of its [OpenID Provider Metadata](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata). 
+The authorization server MUST check the value of the `aud` field and reject signed authentication requests if the value of the `aud` is not associated with the authorization server.
+
 CIBA allows the client to use login_hint_token, id_token_hint or login_hint as a hint in the authentication request. This CAMARA profile makes the login_hint parameter REQUIRED. The client SHALL specify login_hint (and only login_hint) in the authentication request when using CIBA in a CAMARA context.
 
 The client MUST authenticate with the authorization server as described in [Client Authentication Section](#client-authentication).
