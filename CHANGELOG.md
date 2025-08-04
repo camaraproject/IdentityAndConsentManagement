@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- **[r3.3](#r33)**
 - **[r3.2](#r32)**
 - **[r3.1](#r31)**
 - **[r2.3](#r23)**
@@ -21,6 +22,45 @@ The below sections record the changes in each release as follows:
 * for the first release-candidate, all changes since the last public release
 * for subsequent release-candidate(s), only the delta to the previous release-candidate
 * for a public release, the consolidated changes since the previous public release
+
+# r3.3
+
+## Release Notes
+
+This pre-release contains the definition and documentation of:
+
+* "Identity and Consent Management" 0.4.0
+
+The content of the release includes the "Identity And Consent Management" approved deliverables in **[documentation](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r3.3/documentation)** folder.
+
+### Added
+
+* Mandatory fields in signed Authorization Code Flow request objects by @AxelNennker & @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/285
+* New JWT Bearer Flow specification in addition to the three previously supported flows: Authorization Code Flow, CIBA and Client Credentials by @jpengar, @AxelNennker & @subha5h in https://github.com/camaraproject/IdentityAndConsentManagement/pull/294
+* Statement of future adoption of OAuth 2.1 by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/303
+* Recommended value for the audience field of signed authentication requests for CIBA by @mhfoo in https://github.com/camaraproject/IdentityAndConsentManagement/pull/306
+
+### Changed
+
+* Further alignment of `CAMARA-API-access-and-user-consent.md` with CAMARA terms and definitions by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/280
+* Update request object errors by @garciasolero in https://github.com/camaraproject/IdentityAndConsentManagement/pull/287
+* Clarify protocols for CAMARA API access by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/281
+* Document when Authorization Code Flow is applicable with regards to involved devices by @Elisabeth-Ericsson in https://github.com/camaraproject/IdentityAndConsentManagement/pull/256
+* CIBA Flow descriptions to further clarify the Authentication request authorization process with regard to User privacy by @jpengar & @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/293
+* Clarify and generalize login_hint usage to include Operator and Temporary Tokens (TS.43) in the ICM documentation by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/297
+* Client assertion audience clarification for CIBA by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/302
+
+### Fixed
+
+* Fix typo autenticate -> authenticate by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/274
+* Update the references to the OAuth 2.0 Security Best Practices (RFC 9700) by @AxelNennker in https://github.com/camaraproject/IdentityAndConsentManagement/pull/263
+* Consistent consent check statement in Authorization Code Flow and CIBA by @shilpa-padgaonkar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/305
+
+### Removed
+
+N/A
+
+**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/r2.3...r3.3
 
 # r3.2
 

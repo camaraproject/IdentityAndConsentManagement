@@ -16,15 +16,11 @@ Repository to describe, develop, document and test the Identity And Consent Mana
 
 ## Release Information
 
-* `NEW`: The second "Fall25" pre-release of the "Identity and Consent Management" guidelines and documentation for the CAMARA APIs is available under the tag [r3.2](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r3.2). It contains the release candidate [version](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r3.2/VERSION.yaml) of the documents which are relevant for the [Fall25 meta-release](https://lf-camaraproject.atlassian.net/wiki/spaces/CAM/pages/36241429/Meta-release+Fall25), including:
-  * [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r3.2/documentation/CAMARA-API-access-and-user-consent.md)
-  * [CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r3.2/documentation/CAMARA-Security-Interoperability.md)
-* The "Spring25" public release of the "Identity and Consent Management" guidelines and documentation for the CAMARA APIs is available under the tag [r2.3](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r2.3). It contains the [version](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r2.3/VERSION.yaml) of the documents which are relevant for the [Spring25 meta-release](https://lf-camaraproject.atlassian.net/wiki/spaces/CAM/pages/14560849/Meta-release+Spring25), including:
-  * [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r2.3/documentation/CAMARA-API-access-and-user-consent.md)
-  * [CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r2.3/documentation/CAMARA-Security-Interoperability.md)
-  >NOTE: the Working Group release numbering has been updated to adopt the same release notation as is used for API sub-projects.
-* The latest **public release** of guidelines and documentation for CAMARA APIs is available [here](https://github.com/camaraproject/IdentityAndConsentManagement/releases/latest).
-* For previous releases and changes see [CHANGELOG.md](/CHANGELOG.md)
+* `NEW`: The "Fall25" public release of the "Identity and Consent Management" guidelines and documentation for the CAMARA APIs is available under the tag [r3.3](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r3.3). It contains the [version](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r3.3/VERSION.yaml) of the documents which are relevant for the [Fall25 meta-release](https://lf-camaraproject.atlassian.net/wiki/spaces/CAM/pages/36241429/Meta-release+Fall25), including:
+  * [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r3.3/documentation/CAMARA-API-access-and-user-consent.md)
+  * [CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r3.3/documentation/CAMARA-Security-Interoperability.md)
+* Previous releases and pre-releases are available [here](https://github.com/camaraproject/IdentityAndConsentManagement/releases).
+* For a detailed list of changes, see [CHANGELOG.md](/CHANGELOG.md).
 
 ## Contributing
 * Meetings
