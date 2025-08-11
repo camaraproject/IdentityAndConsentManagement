@@ -138,6 +138,30 @@ Note: The [Security Considerations](https://www.rfc-editor.org/rfc/rfc9101.html#
 
 The OIDC Authentication Request defines login_hint as an OPTIONAL request parameter. CAMARA does not define a specific handling for this parameter in OIDC Authorization Code Flow. To ensure better interoperability, CAMARA clarifies that, if login_hint parameter is present in the authentication request and the authorization server does not support it, it MAY ignore it. It is RECOMMENDED that the authorization server does not return an error if the login_hint is not supported.
 
+### Consistent User Authentication and Consent collection
+
+It is up to the operator to make a decision when consent collection is needed or not, based on the scope(s)/purpose declared by the API client and aligned with local legislation, ensuring that all operators under the same regulatory framework adopt a *consistent* approach.
+
+This document defines that if the optional prompt parameter is absent from the OIDC authentication request then the API consumer uses network-based authentication to identify the subscription. If the subscription identified by network-based authentication cannot assure that the end-user equals the subscriber then an error MUST be returned.
+
+Examples for cases where the authorization server cannot assue that the end-user equals the subscriber:
+```
+* A business owner has one contract that is associated with multiple MSISDNs
+  then the authorization server cannot assume that the end-user is the subscriber.
+* A family has several contracts which all have the same subscriber then the authorization server cannot assume that the end-user is the subscriber.
+```
+
+The API provider could start User-Interaction to resolve the above cases, but that likely leads to different behaviour by different API producers.
+
+The document defines that if the optional prompt parameter is absent from the OIDC authentication request and network-based authentication identifies one subscription that belongs to one person and that person does not own other subscriptions with that API provider, then the API provider can assume that the subscriber equals the end-user. 
+The decicion whether consent needs to be collected or not is then determined by the API provider 
+* by determining the legal basis of the purpose e.g.: contract, legitimate_interest, consent, etc,
+* and then checking if consent is required for the legal basis of the purpose
+* and then checking whether consent was already granted or revoked out-of-band.
+
+If consent needs to be optained then the API provider optains it according to [OIDC section 3.1.2.4](https://openid.net/specs/openid-connect-core-1_0.html#Consent).
+
+
 ### Cross-Site Request Forgery Protection
 
 CAMARA REQUIRES cross-site request forgery (CSRF) protection.
@@ -157,6 +181,8 @@ The [Client-Initiated Backchannel Authentication (CIBA)](https://openid.net/spec
 Communication with the Backchannel Authentication Endpoint MUST utilize TLS.
 
 CIBA allows the Client to get the authentication result in three ways: poll, ping, or push. This profile allows clients to use the *poll* mode. In the Poll mode, the authentication result is retrieved by the Client by polling the token endpoint using the new grant type. 
+
+If the the login_hint is not sufficient to identify one device, e.g. a phone number is specified but several subscriptions for the same phone number exist, then the authoriztion server MUST return an error code `DEVICE_NOT_FOUND` (???).
 
 ### Optional Parameters
 
