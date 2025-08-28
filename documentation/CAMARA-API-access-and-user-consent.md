@@ -110,10 +110,10 @@ box API Provider / Operator
 end
 
 Note over FE,BE: Use Feature needing<br>Operator Capability  
-BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=consumer_callback...
+BE->>FE: Auth Needed - redirect <br>/authorize?response_type=code&client_id=coolApp<br>&scope=openid dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=consumer_callback...
 FE->>+FE: Browser /<br> Embedded Browser
 alt Standard OIDC Auth Code Flow between API Consumer and API Exposure Platform
-  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=consumer_callback...
+  FE-->>ExpO: GET /authorize?response_type=code&client_id=coolApp<br>&scope=openid dpv:<purposeDpvValue> scope1 ... scopeN<br>&redirect_uri=consumer_callback...
   Note over ExpO: API Exposure Platform applies<br>Network Based Authentication (amr=nba/mnba)
   ExpO->>ExpO: Network Based Authentication:<br>- map to Operator subscription Identifier e.g.: phone number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc 
@@ -213,7 +213,7 @@ Note over FE,BE: Feature needing<br>Operator capability
 Note over BE: Select User Identifier:<br>Ip:port / Phone Number  
 
 alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between API Consumer and Operator.
-  BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope=dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint including User Identifier    
+  BE->>+ExpO: POST /bc-authorize<br> Credentials,<br>scope=openid dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint including User Identifier    
   ExpO->>ExpO: - Validate User Identifier<br>- (Opt) map to Operator subscription Identifier e.g.: phone number<br>- Set UserId (sub)  
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc
   opt If User Consent is required for the legal basis of the purpose  
@@ -240,7 +240,7 @@ The Operator's API Exposure Platform will:
 
 - Validate User identifier and map it to an Operator subscription identifier if applicable, e.g. map IP to phone number (The Authorization Server MUST process the hint provided to determine if the hint is valid and if it corresponds to a valid user). Set the OAuth sub to the unique user id (Step 2).
 
-- Checks if User Consent is required, which depends on the legal basis associated with the Scope and Purpose. If needed, it will check in the Operator's Consent Master whether Consent has already been given, the Application client_id and the requested Purpose (Steps 3-4).
+- Checks if User Consent is required, which depends on the legal basis associated with the  and Purpose. If needed, it will check in the Operator's Consent Master whether Consent has already been given, the Application client_id and the requested Purpose (Steps 3-4).
 
 Subsequently, the Operator starts the User authentication and request authorization process following Section 8 of the CIBA Core 1.0 spec. Operator MUST obtain an authorization decision as described in Section 3.1.2.4 of the OIDC Core 1.0 spec. This MUST include a mechanism to capture User Consent if required. 
 
@@ -312,7 +312,7 @@ Note over FE,BE: Feature needing<br>Operator capability
 Note over BE: API Consumer obtains a temporary token<br>following TS.43 definitions...  
 
 alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between API Consumer and Operator.
-  BE->>+ExpO: POST /bc-authorize<br>Credentials,<br>scope=dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint=operatortoken:<temporaryToken>    
+  BE->>+ExpO: POST /bc-authorize<br>Credentials,<br>scope=openid dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint=operatortoken:<temporaryToken>    
   ExpO->>ExpO: Validate Authentication<br>request
   alt TS.43
     Note over ExpO,ES: Get information from Entitlement Server<br> needed for access_token creation<br>Scopes are adapted
@@ -364,7 +364,7 @@ Note over FE,BE: Feature needing Operator capability
 Note over BE: Select User Identifier:<br> Phone Number / Operator Token
 
 alt Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants
-    BE->>+ExpO: POST /token<br>grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer<br>assertion=<br>{scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>sub=tel:<phone_number> or operatortoken:<Operator_Token>,...}
+    BE->>+ExpO: POST /token<br>grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer<br>assertion=<br>{scope=openid dpv:<purposeDpvValue> scope1 ... scopeN<br>sub=tel:<phone_number> or operatortoken:<Operator_Token>,...}
     ExpO->>ExpO: - Validate User Identifier (sub)<br>- (Opt) Map to Operator subscription Identifier e.g.: phone_number<br>- Set UserId (sub)
     ExpO->>ExpO: Check legal basis of the purpose<br>e.g.: contract, legitimate_interest, consent, etc
     opt If User Consent is required for the legal basis of the purpose  
@@ -397,7 +397,7 @@ Example JWT assertion, which MUST be signed by the API Consumer and MAY be encry
   "exp": 1504807731,
   "iat": 1504804131,
   "jti": "53f42eb1-b751-44b5-bada-6990e08f35ac",
-  "scope": "dpv:FraudPreventionAndDetection number-verification:device-phone-number:read"
+  "scope": "openid dpv:FraudPreventionAndDetection number-verification:device-phone-number:read"
 }
 ```
 
