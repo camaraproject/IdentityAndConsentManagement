@@ -258,6 +258,9 @@ The API Consumer SHALL set the claims of the assertion as defined here:
 - The mandatory `jti` claim as defined in [RFC7519 section 4.1.7](https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1.7).
 - The mandatory `scope` claim that MUST contain a [Purpose](#purpose) and CAMARA scope values. 
 
+Support for [RFC8707](https://datatracker.ietf.org/doc/html/rfc8707#name-resource-parameter) is RECOMMENDED.
+The client SHOULD add a claim `resource` to the assertion and the value of that claim is a JSON array that becomes the `aud` value associated with the created access token if the absolute URLs of array elements are allowed as audience for the client. 
+
 [JWTs as Authorization Grants](https://datatracker.ietf.org/doc/html/rfc7523#section-2.1) defines authentication of the client as optional.
 In the JWT Bearer Flow, the token request JWT assertion is signed by the API Consumer, and the assertion is interpreted as Client Authentication.
 
