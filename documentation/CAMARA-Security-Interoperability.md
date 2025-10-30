@@ -105,31 +105,35 @@ The following table defines the REQUIRED behaviour of the API Provider for the `
 | No                               | Supports DPoP                     | Bearer token         |
 | No                               | Requires DPoP                      | HTTP 400 `invalid_dpop_proof`<br>(see RFC [9449](https://www.rfc-editor.org/rfc/rfc9449.html#name-oauth-extensions-error-regi)) |
 
+
 ### Additional Recommendations for DPoP Implementations 
 
-For API providers (e.g., operators) that support and require the Demonstration of Proof-of-Possession (DPoP) mechanism as defined in [RFC 9449], it is RECOMMENDED to apply the following measures to strengthen message integrity and replay protection. 
+For API providers (e.g., operators) that support and require the Demonstration of Proof-of-Possession (DPoP) mechanism as defined in [RFC 9449], the following measures MAY be used to strengthen message integrity and replay protection. 
 
 **Request Binding to DPoP Proofs**
 
 As per RFC 9449 §11.7, the DPoP proof binds the HTTP method (htm) and target URI (htu) but omits headers and the request body.  To prevent message alteration or tampering, API providers SHOULD require clients to include additional CAMARA-defined claims in the DPoP proof: 
 
-Table
+|      Extension Claim   | Purpose  | Computation  | Encoding |
+|:-------------------:|:---------------------:|:-------------------:|:-------------------:|
+| x-camara:qh                          | Binds the query string to the DPoP proof | SHA-256 hash of the raw query string (if present) | Base64URL-encoded (RFC 7515 §2), without padding |
+| x-camara:bh                          | Binds the request body to the DPoP proof | SHA-256 hash of the full request body byte stream | Base64URL-encoded (RFC 7515 §2), without padding |
+
+
 
 The resulting hash values are included as string values within the DPoP proof JWT. Implementations MUST ignore any DPoP claims not defined in the base DPoP specification or in this CAMARA extension. 
 
-Further, to advertise the requirements for these additional claims, the server MUST include their names as members of the x-dpop_required_claims_supported array within its OAuth 2.0 Authorization Server Metadata. 
+Further, to advertise the requirements for these additional claims, the server MUST include their names as members of the `x-dpop_required_claims_supported` array within its OAuth 2.0 Authorization Server Metadata. 
 
-### Replay Protection Requirements 
+**Replay Protection Requirements**
 
 To improve replay protection beyond the baseline DPoP behavior: 
 
-Each jti value MUST be unique per proof. 
+- Each jti value MUST be unique per proof. 
+- Resource servers MUST verify that the iat value is within an acceptable time window. 
+- Resource servers SHOULD maintain a replay cache for jti values for at least the lifetime of the associated access token and MUST reject any DPoP proof with a reused jti. 
 
-Resource servers MUST verify that the iat value is within an acceptable time window. 
-
-Resource servers SHOULD maintain a replay cache for jti values for at least the lifetime of the associated access token and MUST reject any DPoP proof with a reused jti. 
-
-### OpenAPI Documentation 
+**OpenAPI Documentation**
 
 To declare DPoP extensions in CAMARA OpenAPI specifications, API providers MAY include the following metadata under the securitySchemes component: 
 
