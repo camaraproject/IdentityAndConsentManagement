@@ -105,6 +105,60 @@ The following table defines the REQUIRED behaviour of the API Provider for the `
 | No                               | Supports DPoP                     | Bearer token         |
 | No                               | Requires DPoP                      | HTTP 400 `invalid_dpop_proof`<br>(see RFC [9449](https://www.rfc-editor.org/rfc/rfc9449.html#name-oauth-extensions-error-regi)) |
 
+### Additional Recommendations for DPoP Implementations 
+
+For API providers (e.g., operators) that support and require the Demonstration of Proof-of-Possession (DPoP) mechanism as defined in [RFC 9449], it is RECOMMENDED to apply the following measures to strengthen message integrity and replay protection. 
+
+**Request Binding to DPoP Proofs**
+
+As per RFC 9449 §11.7, the DPoP proof binds the HTTP method (htm) and target URI (htu) but omits headers and the request body.  To prevent message alteration or tampering, API providers SHOULD require clients to include additional CAMARA-defined claims in the DPoP proof: 
+
+Table
+
+The resulting hash values are included as string values within the DPoP proof JWT. Implementations MUST ignore any DPoP claims not defined in the base DPoP specification or in this CAMARA extension. 
+
+Further, to advertise the requirements for these additional claims, the server MUST include their names as members of the x-dpop_required_claims_supported array within its OAuth 2.0 Authorization Server Metadata. 
+
+### Replay Protection Requirements 
+
+To improve replay protection beyond the baseline DPoP behavior: 
+
+Each jti value MUST be unique per proof. 
+
+Resource servers MUST verify that the iat value is within an acceptable time window. 
+
+Resource servers SHOULD maintain a replay cache for jti values for at least the lifetime of the associated access token and MUST reject any DPoP proof with a reused jti. 
+
+### OpenAPI Documentation 
+
+To declare DPoP extensions in CAMARA OpenAPI specifications, API providers MAY include the following metadata under the securitySchemes component: 
+
+```yaml
+components: 
+  securitySchemes: 
+    camara-dpop-oauth2: 
+      type: oauth2 
+      description: > 
+        OAuth 2.0 with Demonstration of Proof-of-Possession (DPoP, RFC 9449), 
+        extended with CAMARA-specific claims for request integrity (x-camara-qh and x-camara-bh). 
+      flows: 
+        authorizationCode: 
+          authorizationUrl: https://auth.example.com/authorize 
+          tokenUrl: https://auth.example.com/token 
+      # Standard CAMARA Security Profile indicator 
+      x-camara-security-profile: DPoP-v1-ext 
+      # Clear list of the actual claims expected in the DPoP proof JWT 
+      x-dpop-required-claims-supported:  
+        - htm 
+        - htu 
+        - ath 
+        - x-camara-qh # Custom claim for Query Hash 
+        - x-camara-bh # Custom claim for Body Hash 
+
+```
+
+The x-camara-security-profile: DPoP-v1-ext indicator communicates that the API applies to the CAMARA DPoP extensions for message integrity and replay protection. 
+
 ## OIDC Authorization Code Flow
 
 The OIDC Authorization Code Flow is defined in [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html). CAMARA REQUIRES API Providers to use network-based authentication in the Authorization Code Flow. Therefore, access tokens are issued for the network authenticated identifier.
