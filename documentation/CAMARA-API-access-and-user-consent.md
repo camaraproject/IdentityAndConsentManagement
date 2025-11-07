@@ -151,7 +151,7 @@ The Operator's API Exposure Platform receives the request from the Application (
 
 - Uses network based authentication to obtain the Subscriber's unique identifier,e.g.: phone number or IMSI. Sets the id_token sub to a unique user ID and associates the sub with the access token. The id_token sub MUST NOT reveal information to the Application, as authentication has not yet been performed. (Step 4).
 
-Checks if User Consent is required, which depends on the legal basis associated with the Scope and Purpose. If necessary, it will check in the Operator's Consent Master whether User Consent has already been given for this Application, Scope and Purpose (Steps 5-6).
+- Checks if User Consent is required, which depends on the legal basis associated with the Scope and Purpose. If necessary, it will check in the Operator's Consent Master whether User Consent has already been given for this Application, Scope and Purpose (Steps 5-6).
 
 Then, two alternatives may occur:
 
