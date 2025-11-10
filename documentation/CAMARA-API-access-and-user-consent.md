@@ -364,7 +364,7 @@ Note over FE,BE: Feature needing Operator capability
 Note over BE: Select User Identifier:<br> Phone Number / Operator Token
 
 alt Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants
-    BE->>+ExpO: POST /token<br>grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer<br>assertion=<br>{scope=openid dpv:<purposeDpvValue> scope1 ... scopeN<br>sub=tel:<phone_number> or operatortoken:<Operator_Token>,...}
+    BE->>+ExpO: POST /token<br>grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer<br>assertion=<br>{scope=dpv:<purposeDpvValue> scope1 ... scopeN<br>sub=tel:<phone_number> or operatortoken:<Operator_Token>,...}
     ExpO->>ExpO: - Validate User Identifier (sub)<br>- (Opt) Map to Operator subscription Identifier e.g.: phone_number<br>- Set UserId (sub)
     ExpO->>ExpO: Check legal basis of the purpose<br>e.g.: contract, legitimate_interest, consent, etc
     opt If User Consent is required for the legal basis of the purpose  
@@ -397,7 +397,7 @@ Example JWT assertion, which MUST be signed by the API Consumer and MAY be encry
   "exp": 1504807731,
   "iat": 1504804131,
   "jti": "53f42eb1-b751-44b5-bada-6990e08f35ac",
-  "scope": "openid dpv:FraudPreventionAndDetection number-verification:device-phone-number:read"
+  "scope": "dpv:FraudPreventionAndDetection number-verification:device-phone-number:read"
 }
 ```
 
