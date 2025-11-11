@@ -310,7 +310,7 @@ box API Provider / Operator
 end
 
 Note over FE,BE: Feature needing<br>Operator capability  
-Note over BE: API Consumer obtains a temporary token<br>following TS.43 definitions...  
+Note over FE,BE: API Consumer obtains a temporary token<br>following TS.43 definitions...  
 
 alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between API Consumer and Operator.
   BE->>+ExpO: POST /bc-authorize<br>Credentials,<br>scope=openid dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint=operatortoken:<temporaryToken>    
@@ -360,7 +360,7 @@ box API Provider / Operator
   participant ExpO as API Exposure Platform  
   participant Consent as Consent Master
 end
-Note over BE,ExpO: Pre-requisite:<br> To verify the signed JWT assertion, the public key of the API Consumer must be shared<br> with API Provider as part of API Consumer's Application onboarding process
+Note over BE,ExpO: Pre-requisite:<br> To verify the signed JWT assertion, the public key of the API Consumer<br>must be shared with API Provider as part of<br>API Consumer's Application onboarding process
 Note over FE,BE: Feature needing Operator capability  
 Note over BE: Select User Identifier:<br> Phone Number / Operator Token
 
@@ -462,9 +462,9 @@ box API Provider / Operator
   participant ES as Entitlement Server  
   participant Consent as Consent Master
 end
-Note over BE,ExpO: Pre-requisite:<br> To verify the signed JWT assertion, the public key of the API Consumer must be shared<br> with API Provider as part of API Consumer's Application onboarding process
+Note over BE,ExpO: Pre-requisite:<br> To verify the signed JWT assertion, the public key of the API Consumer<br>must be shared with API Provider as part of<br>API Consumer's Application onboarding process
 Note over FE,BE: Feature needing Operator capability  
-Note over BE: API Consumer obtains a temporary token<br>following TS.43 definitions...
+Note over FE,BE: API Consumer obtains a temporary token<br>following TS.43 definitions...
 alt Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants
     BE->>+ExpO: POST /token<br>grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer<br>assertion=<br>{dpv:<purposeDpvValue> scope1 ... scopeN<br>sub=operatortoken:<temporaryToken>,...}
     ExpO->>ExpO: Validate Authentication<br>request
