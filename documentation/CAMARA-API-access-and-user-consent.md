@@ -18,6 +18,7 @@ This document defines guidelines for API Providers to manage CAMARA API access a
     - [Client Credentials](#client-credentials)
     - [JWT Bearer Flow](#jwt-bearer-flow)
       - [Technical ruleset for the JWT Bearer Flow](#technical-ruleset-for-the-jwt-bearer-flow)
+      - [JWT Bearer flow with Operator Token](#jwt-bearer-flow-with-operator-token)
 - [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
   - [Use of openIdConnect for `securitySchemes`](#use-of-openidconnect-for-securityschemes)
   - [Use of `security` property](#use-of-security-property)
