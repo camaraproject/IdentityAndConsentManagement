@@ -10,14 +10,12 @@ This document defines guidelines for API Providers to manage CAMARA API access a
   - [Using Purpose within the authorization request](#using-purpose-within-the-authorization-request)
 - [User Authentication/Authorization \& Consent Management](#user-authenticationauthorization--consent-management)
   - [Authorization flows / grant types](#authorization-flows--grant-types)
+    - [Choosing the Right Authorization Flow](#choosing-the-right-authorization-flow)
     - [Authorization Code Flow (Frontend Flow)](#authorization-code-flow-frontend-flow)
-      - [Technical ruleset for the Frontend flow](#technical-ruleset-for-the-frontend-flow)
     - [CIBA flow (Backend flow)](#ciba-flow-backend-flow)
-      - [Technical ruleset for the Backend flow](#technical-ruleset-for-the-backend-flow)
       - [CIBA flow with Operator Token](#ciba-flow-with-operator-token)
     - [Client Credentials](#client-credentials)
     - [JWT Bearer Flow](#jwt-bearer-flow)
-      - [Technical ruleset for the JWT Bearer Flow](#technical-ruleset-for-the-jwt-bearer-flow)
       - [JWT Bearer flow with Operator Token](#jwt-bearer-flow-with-operator-token)
 - [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
   - [Use of openIdConnect for `securitySchemes`](#use-of-openidconnect-for-securityschemes)
@@ -31,7 +29,7 @@ Some CAMARA APIs process Personal Data and according to local regulations may re
 
 CAMARA API access will be secured by the protocols described in the [CAMARA Security and Interoperability Profile](CAMARA-Security-Interoperability.md)
 - [OpenID Connect Authorization Code Flow](CAMARA-Security-Interoperability.md#oidc-authorization-code-flow) (OIDC).
-- [OpenId Connect Client-Initiated Backend Authentication](CAMARA-Security-Interoperability.md#client-initiated-backchannel-authentication-flow) (CIBA).
+- [OpenID Connect Client-Initiated Backchannel Authentication Flow](CAMARA-Security-Interoperability.md#client-initiated-backchannel-authentication-flow) (CIBA).
 - [OAuth2 Client-Credentials Flow](CAMARA-Security-Interoperability.md#client-credentials-flow).
 - [OAuth2 JWT Bearer Flow](CAMARA-Security-Interoperability.md#jwt-bearer-flow).
 
@@ -88,12 +86,23 @@ Purpose must be specified in the authorization request for a CAMARA Three-Legged
 
 ### Authorization flows / grant types
 
-This section describes the authorization flows that can be used to access CAMARA APIs:
+This section describes the authorization flows that can be used to access CAMARA APIs.
 
-* Authorization code flow (Frontend flow) - Used to obtain a Three-Legged Access Token from the Authorization Server and initiated from the Consumption Device
-* CIBA flow (Backend flow) - Used to obtain a Three-Legged Access Token from the Authorization Server and initiated from the ASP's Application Backend
-* Client Credentials - Used to obtain a Two-Legged Access Token from the Authorization Server
-* JWT Bearer Flow - Used to obtain a Three-Legged Access Token from the Authorization Server using a JWT assertion as Authorization Grant, on behalf of the User.
+* [Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth)
+* [CIBA Flow](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html)
+* [Client Credentials Flow](https://www.rfc-editor.org/rfc/rfc6749#section-4.4)
+* [JWT Bearer Flow](https://datatracker.ietf.org/doc/html/rfc7523#section-2.1)
+
+#### Choosing the Right Authorization Flow
+
+To help API Consumers select the most appropriate authorization flow, the following table provides a set of recommendations based on common use cases and technical characteristics. Detailed descriptions for each flow are provided in the subsequent sections.
+
+| Auth Flow | Primary Use Case | Access Token Type | Key Characteristics | Recommended For |
+|-----------|------------------|---------------------|-----------------|-----------------------------|
+| Authorization Code<br>(Frontend) | "On-Net" API use cases where the API Consumer has a frontend component. | Three-Legged | - Involves HTTP redirects.<br>- Network-based authentication (e.g. IP address or header enrichment), where the mobile connection of the Consumption Device is authenticated. Users are not prompted to authenticate unless their Consent is explicitly required.<br>- The Consumption and Authentication devices are the same, and MUST also be equal to the Target Device of subsequent API call(s).<br>- Checks if User Consent is required by lawful basis associated with the declared purpose. When required, User Consent can be captured interactively (in-band) during the flow. | - Mobile Applications requiring network-based authentication, where the app can handle HTTP redirects and the User is interacting directly with the Consumption device.<br>- Well-suited for "On-Net" scenarios where the mobile connection of the Consumption Device needs to be authenticated (e.g. Number Verification API). |
+| CIBA <br>(Backend) | Backend-initiated API use cases requiring asynchronous User interaction for authentication/Consent. | Three-Legged | - Asynchronous, out-of-band User authentication/Consent.<br>-  Decouples the Consumption and Authentication devices. Also note that it is applicable if the Consumption Device is the same or different from the Target Device of the intended CAMARA API call(s).<br>- Checks if User Consent is required by lawful basis associated with the declared purpose. When required, the API Providers can choose the Consent capture mechanism that best suits their capabilities, preferences and needs (e.g. push notification, SMS, etc). | - Use cases that specifically benefit from an asynchronous authentication backchannel to the User<br>e.g. Use cases that require asynchronous, out-of-band User authentication or Consent, especially when User interaction cannot occur in real-time within the application. Ideal for scenarios where User approval or verification is performed via separate communication channels such as push notifications, SMS, or other messaging systems. |
+| Client Credentials | API use cases that do not involve User-related information or processing of Personal Data. | Two-Legged | - The API Consumer authenticates itself, not a User.<br>- Simplified token management without the need for User authentication or Consent. | API Consumers accessing APIs that do not involve a specific User or process Personal Data. |
+| JWT Bearer | Backend-to-backend API uses cases where no User interaction is required (e.g. Legitimate Interest), and the User Identifier is known (e.g. TS.43 Operator Token) | Three-Legged | - Non-interactive and synchronous.<br>- The User is identified by the sub claim in the JWT assertion, which MUST be either a phone number (tel:) or an Operator Token (operatortoken:)<br>- The API Consumer acts on behalf of a User using a JWT assertion as Authorization Grant<br>- Checks if User Consent is required by lawful basis associated with the declared purpose. If NOT granted, the API Provider returns an error response indicating that Consent is required. | - Backend-to-backend API calls where the User’s identity is established through a pre-issued JWT assertion, with no direct User interaction required at the time of the request. Suitable for automated, silent authentication scenarios, or when the user has previously granted Consent, and the token is used to act on behalf of the User in a secure and trusted manner.<br>- Use cases where direct User interaction is not needed at the time of the request because Consent is not required or has already been obtained, e.g. through the mechanism enabled by the Consent Info API.<br>- Silent authentication scenarios with a pre-authenticated Operator Token. |
 
 Note: In cases where Personal Data is processed by a CAMARA API, and Users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of Three-Legged Access Tokens is mandatory.
 
@@ -171,30 +180,6 @@ The Operator's API Exposure Platform will validate OperatorAccessToken, grant th
 
 Finally, the Operator will provide the API response to the Application (Step 15).
 
-##### Technical ruleset for the Frontend flow
-
-If all API use cases point to the need of an 'On-Net' scenario and where the Consumption Device and Authentication Device are the same, the Frontend flow SHOULD be used e.g. Number Verification.
-
-This flow then enables On-Net scenarios where the mobile connection of the Consumption Device needs to be authenticated. For example, the [CAMARA Number Verification API](https://github.com/camaraproject/NumberVerification) due to the nature of its functionality where a User's phone number needs to be compared to the phone number associated with the mobile connection of the Consumption Device. 
-
-The Application on the Consumption Device must be able to handle browser redirects.
-
-  - Identity: 
-    - Identification by IP address (or header enrichment).
-  - AuthZ/AuthN:
-    - Standard OAuth 2.0 Authorization Code Grant flow
-    - Network based authentication.
-      - Use network based authentication mechanism to obtain the user identifier, i.e.: phone number. Set the OAuth sub to the unique user ID in the operator.
-    - Three-Legged Access Token. Each access session is associated with the Operator, a client_id (which must be the final application using the information) and the corresponding User identifier.
-  - Consent management:
-    - Check if User Consent is required as the lawful basis associated with the declared Scope and Purpose. 
-      - If necessary, it will be checked in the operator's consent master whether user consent has already been given to the application for the user identifier and declared purpose.
-    - If NOT granted, the operator performs the consent capture. Since the authorization code grant involves the interaction with application front-end, consent can be captured directly from the user through the application browser.
-  - Covered scenarios: 
-    - On-net (with mobile connection) & application front-end (with embedded browser)
-    - Off-net scenarios using refresh_token, as long as there was a connection when the first access_token was requested.
-    - Note: The Consumption Device must be equal to the Target Device of subsequent API call(s).
-
 
 #### CIBA flow (Backend flow)
 
@@ -269,28 +254,6 @@ Now the API Consumer has a valid access token that can be used to invoke the CAM
 Finally, the Operator will validate the OperatorAccessToken, grant access to the API based on the Scopes bound to the access token, forward the request to the corresponding API backend and retrieve the API response (Step 9).
 
 The Operator will provide the API response to the API Consumer (Step 10).
-
-##### Technical ruleset for the Backend flow
-
-If the API use case(s) indicate the need for an "Off-net" scenario and/or if the Consumption Device and Authentication Device are different, the Backend flow (CIBA) SHOULD be used.
-Also note that in the case of the CIBA flow, it is applicable if the Consumption Device is the same or different from the Target Device of the intended CAMARA API call(s).
-
-  - Identity: 
-    - Identification by IP, phone number or others like IMSI, ICCID for specific use cases.
-  - AuthZ/AuthN:
-    - Standard OIDC backend-based flow: CIBA.
-    - Three-Legged Access Token. Each access session is associated with the Operator, a client_id (which must be the final application using the information) and the corresponding User identifier.
-  - Consent management:
-    - Check if user consent is required by lawful basis associated with the declared purpose. 
-      - If necessary, it will be checked **in the operator's consent master** whether user consent has already been given to the application for the user identifier and declared purpose.
-      - If NOT granted, **the operator’s consent capture procedure is triggered**. Out-of-band consent capture as part of asynchronous CIBA flow (e.g. push notification with fallback to SMS, etc...). **Operators can choose the consent capture mechanism that best suits their capabilities, preferences and needs**.
-  - Covered scenarios: 
-    - No front-end developer software in user device
-    - Back-end services (e.g. bank BE anti-fraud validation using phone number).
-    - Off-net scenarios (no mobile connection)
-    - Device connected to WiFi
-    - Device without UI (IoT)
-    - Note: Consumption device and target device of subsequent API call(s) can be different, access token is generated for the target device
 
 ##### CIBA flow with Operator Token
 
@@ -428,24 +391,6 @@ If all validations succeed, the API Exposure Platform issues a Three-Legged Acce
 The API Consumer uses the access token to invoke the CAMARA API, including it in the Authorization header (Step 7).
 
 The API Exposure Platform validates and decrypts the access token, authorizes access, forwards the request to the API backend, and returns the API response to the API Consumer (Steps 8-9).
-
-##### Technical ruleset for the JWT Bearer Flow
-
-In case of Backend-to-backend scenarios where no user interaction is required (e.g. Legitimate Interest), and the User Identifier is known (e.g. TS.43 Operator Token), the JWT Bearer Flow should be used.
-
-- Identity:
-  - The User is identified by the `sub` claim in the JWT assertion, which must be either a phone number (`tel:`) or an Operator Token (`operatortoken:`), as per CAMARA Security and Interoperability Profile.
-- AuthZ/AuthN:
-  - Standard OAuth2 JWT Bearer flow.
-  - Backend-based flow, where the API Consumer acts on behalf of a User using a JWT assertion as Authorization Grant.
-  - Three-Legged Access Token. Each access session is associated with the Operator, a client_id (which must be the final application using the information) and the corresponding User identifier.
-- Consent management:
-  - Check if user consent is required by lawful basis associated with the declared purpose.
-    - If necessary, it will be checked **in the operator's consent master** whether user consent has already been given to the application for the user identifier and declared purpose.
-    - If NOT granted, the API Provider returns an error response indicating that Consent is required, and the API Consumer must handle the Consent capture process.
-- Covered scenarios:
-  - Backend-to-backend integrations where the API Consumer acts on behalf of a User, and the User Identifier is known.
-  - Use cases where direct user interaction is not required at the time of the request because consent is not required or has already been obtained.
 
 ##### JWT Bearer flow with Operator Token
 
