@@ -403,6 +403,7 @@ Example JWT assertion, which MUST be signed by the API Consumer and MAY be encry
 
 The API Consumer sends a POST request to the API Exposure Platform's token endpoint (Step 1), using the `urn:ietf:params:oauth:grant-type:jwt-bearer` grant type and including the signed JWT assertion. The assertion contains the required claims: `iss` (client_id), `sub` (Identifying the User; the presence of a TS.43 Operator Token confirms the Subscriber's prior authentication.), `aud` (token endpoint URL), `exp`, `iat`, `jti`, and `scope` (including the declared Purpose and CAMARA scopes).
 
+
 Example Token Request:
 
 ```
