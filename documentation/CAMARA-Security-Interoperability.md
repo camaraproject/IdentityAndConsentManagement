@@ -119,8 +119,6 @@ As per RFC 9449 [section 11.7](https://www.rfc-editor.org/rfc/rfc9449.html#secti
 | x-camara:qh                          | Binds the query string to the DPoP proof | SHA-256 hash of the raw query string (if present) | Base64URL-encoded ([RFC 7515](https://www.rfc-editor.org/rfc/rfc7515.html) §2), without padding |
 | x-camara:bh                          | Binds the request body to the DPoP proof | SHA-256 hash of the full request body byte stream | Base64URL-encoded ([RFC 7515](https://www.rfc-editor.org/rfc/rfc7515.html) §2), without padding |
 
-
-
 The resulting hash values are included as string values within the DPoP proof JWT. Implementations MUST ignore any DPoP claims not defined in the base DPoP specification or in this CAMARA extension. 
 
 Further, to advertise the requirements for these additional claims, the server MUST include their names as members of the `x-dpop_required_claims_supported` array within its OAuth 2.0 Authorization Server Metadata. 
