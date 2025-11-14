@@ -117,7 +117,7 @@ As per RFC 9449 [section 11.7](https://www.rfc-editor.org/rfc/rfc9449.html#secti
 |      Extension Claim   | Purpose  | Computation  | Encoding |
 |:-------------------:|:---------------------:|:-------------------:|:-------------------:|
 | x-camara:qh                          | Binds the query string to the DPoP proof | SHA-256 hash of the raw query string (if present) | Base64URL-encoded ([RFC 7515](https://www.rfc-editor.org/rfc/rfc7515.html) §2), without padding |
-| x-camara:bh                          | Binds the request body to the DPoP proof | SHA-256 hash of the full request body byte stream | Base64URL-encoded (RFC 7515 §2), without padding |
+| x-camara:bh                          | Binds the request body to the DPoP proof | SHA-256 hash of the full request body byte stream | Base64URL-encoded ([RFC 7515](https://www.rfc-editor.org/rfc/rfc7515.html) §2), without padding |
 
 
 
