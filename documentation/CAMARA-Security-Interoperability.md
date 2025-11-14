@@ -121,7 +121,7 @@ As per RFC 9449 [section 11.7](https://www.rfc-editor.org/rfc/rfc9449.html#secti
 
 The resulting hash values are included as string values within the DPoP proof JWT. Implementations MUST ignore any DPoP claims not defined in the base DPoP specification or in this CAMARA extension. 
 
-Further, to advertise the requirements for these additional claims, the server MUST include their names as members of the `x-dpop_required_claims_supported` array within its OAuth 2.0 Authorization Server Metadata. 
+Further, to advertise the requirements for these additional claims, the API provider MUST include their names as members of the `x-dpop_required_claims_supported` array within its OAuth 2.0 Authorization Server Metadata. 
 
 **Replay Protection Requirements**
 
