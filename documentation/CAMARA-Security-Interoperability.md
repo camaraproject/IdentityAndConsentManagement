@@ -106,7 +106,7 @@ The following table defines the REQUIRED behaviour of the API Provider for the `
 | No                               | Requires DPoP                      | HTTP 400 `invalid_dpop_proof`<br>(see RFC [9449](https://www.rfc-editor.org/rfc/rfc9449.html#name-oauth-extensions-error-regi)) |
 
 
-### Additional Recommendations for DPoP Implementations 
+#### Additional Recommendations for DPoP Implementations 
 
 For API providers (e.g., operators) that support and require the Demonstration of Proof-of-Possession (DPoP) mechanism as defined in [RFC 9449], the following measures MAY be used to strengthen message integrity and replay protection. 
 
