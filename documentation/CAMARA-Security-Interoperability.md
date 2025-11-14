@@ -112,7 +112,7 @@ For API providers (e.g., Operators) that support and require the DPoP mechanism 
 
 **Request Binding to DPoP Proofs**
 
-As per RFC 9449 §11.7, the DPoP proof binds the HTTP method (htm) and target URI (htu) but omits headers and the request body.  To prevent message alteration or tampering, API providers SHOULD require clients to include additional CAMARA-defined claims in the DPoP proof: 
+As per RFC 9449 [section 11.7](https://www.rfc-editor.org/rfc/rfc9449.html#section-11.7), the DPoP proof binds the HTTP method (htm) and target URI (htu) but omits headers and the request body. To prevent message alteration or tampering, API providers SHOULD require clients to include additional CAMARA-defined claims in the DPoP proof: 
 
 |      Extension Claim   | Purpose  | Computation  | Encoding |
 |:-------------------:|:---------------------:|:-------------------:|:-------------------:|
