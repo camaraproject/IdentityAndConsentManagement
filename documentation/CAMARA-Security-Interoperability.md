@@ -108,7 +108,7 @@ The following table defines the REQUIRED behaviour of the API Provider for the `
 
 #### Additional Recommendations for DPoP Implementations 
 
-For API providers (e.g., operators) that support and require the Demonstration of Proof-of-Possession (DPoP) mechanism as defined in [RFC 9449], the following measures MAY be used to strengthen message integrity and replay protection. 
+For API providers (e.g., Operators) that support and require the DPoP mechanism as defined in [RFC 9449](https://datatracker.ietf.org/doc/html/rfc9449), the following measures MAY be used to strengthen message integrity and replay protection. 
 
 **Request Binding to DPoP Proofs**
 
