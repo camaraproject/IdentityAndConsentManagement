@@ -9,6 +9,7 @@
   * [General Considerations](#general-considerations)
     * [Transport Security](#transport-security)
     * [Sender-Constrained Tokens](#sender-constrained-tokens)
+       * [Additional Recommendations for DPoP Implementations](#additional-recommendations-for-dpop-implementations)
   * [OIDC Authorization Code Flow](#oidc-authorization-code-flow)
     * [Signed Authentication Requests](#signed-authentication-requests)
     * [Optional Parameters](#optional-parameters)
@@ -106,7 +107,7 @@ The following table defines the REQUIRED behaviour of the API Provider for the `
 | No                               | Requires DPoP                      | HTTP 400 `invalid_dpop_proof`<br>(see RFC [9449](https://www.rfc-editor.org/rfc/rfc9449.html#name-oauth-extensions-error-regi)) |
 
 
-#### Additional Recommendations for DPoP Implementations 
+#### Additional Recommendations for DPoP Implementations
 
 For API providers (e.g., Operators) that support and require the DPoP mechanism as defined in [RFC 9449](https://datatracker.ietf.org/doc/html/rfc9449), the following measures MAY be used to strengthen message integrity and replay protection. 
 
@@ -121,7 +122,19 @@ As per RFC 9449 [section 11.7](https://www.rfc-editor.org/rfc/rfc9449.html#secti
 
 The resulting hash values are included as string values within the DPoP proof JWT. Implementations MUST ignore any DPoP claims not defined in the base DPoP specification or in this CAMARA extension. 
 
-Further, to advertise the requirements for these additional claims, the API provider MUST include their names as members of the `x-dpop_required_claims_supported` array within its OAuth 2.0 Authorization Server Metadata. 
+If a server requires DPoP Extensions, it MUST include the extended claims in the AS metadata to dynamically inform clients about these required claims. In addition, the server MAY advertise this extension claim requirements as part of the developer documentation with examples. Example Authorization Server Metadata (OIDC Discovery Document) typically as response to openIdConnectUrl: https://example.com/.well-known/openid-configuration
+
+json:
+
+{  
+  "issuer": "https://server.example.com", 
+   "token_endpoint": "https://server.example.com/oauth2/token” 
+   "authorization_endpoint": https://server.example.com/oauth2/authorize” 
+   "dpop_bound_access_tokens": true, 
+   "dpop_signing_alg_values_supported": ["ES256", “RS256”], 
+   "x-dpop_claims_required": [ "CAMARA:bh", "CAMARA:qh"]  
+// ... other OIDC fields  
+}  
 
 **Replay Protection Requirements**
 
@@ -131,35 +144,6 @@ To improve replay protection beyond the baseline DPoP behavior:
 - Resource servers MUST verify that the iat value is within an acceptable time window. 
 - Resource servers SHOULD maintain a replay cache for jti values for at least the lifetime of the associated access token and MUST reject any DPoP proof with a reused jti. 
 
-**OpenAPI Documentation**
-
-To declare DPoP extensions in CAMARA OpenAPI specifications, API providers MAY include the following metadata under the securitySchemes component: 
-
-```yaml
-components: 
-  securitySchemes: 
-    camara-dpop-oauth2: 
-      type: oauth2 
-      description: > 
-        OAuth 2.0 with Demonstration of Proof-of-Possession (DPoP, RFC 9449), 
-        extended with CAMARA-specific claims for request integrity (x-camara-qh and x-camara-bh). 
-      flows: 
-        authorizationCode: 
-          authorizationUrl: https://auth.example.com/authorize 
-          tokenUrl: https://auth.example.com/token 
-      # Standard CAMARA Security Profile indicator 
-      x-camara-security-profile: DPoP-v1-ext 
-      # Clear list of the actual claims expected in the DPoP proof JWT 
-      x-dpop-required-claims-supported:  
-        - htm 
-        - htu 
-        - ath 
-        - x-camara-qh # Custom claim for Query Hash 
-        - x-camara-bh # Custom claim for Body Hash 
-
-```
-
-The x-camara-security-profile: DPoP-v1-ext indicator communicates that the API applies to the CAMARA DPoP extensions for message integrity and replay protection. 
 
 ## OIDC Authorization Code Flow
 
