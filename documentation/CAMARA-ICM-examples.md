@@ -28,7 +28,7 @@ See [OIDC Authentication Request](https://openid.net/specs/openid-connect-core-1
 ```
 GET /authorize?
 response_type=code
-&scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date
+&scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date%20offline_access
 &client_id=s6BhdRkqt3
 &state=af0ifjsldkj
 &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb HTTP/1.1
@@ -88,7 +88,7 @@ POST /bc-authorize HTTP/1.1
 Host: server.example.com
 Content-Type: application/x-www-form-urlencoded
 
-scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date
+scope=openid%20dpv%3AFraudPreventionAndDetection%20sim-swap%3Acheck%20sim-swap%3Aretrieve-date%20offline_access
 &login_hint=tel%3A%2B34666666666
 &client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer
 &client_assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi......
