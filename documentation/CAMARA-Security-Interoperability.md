@@ -126,24 +126,25 @@ If a server requires DPoP Extensions, it MUST include the extended claims in the
 
 json:
 
-{  
-  "issuer": "https://server.example.com", 
-   "token_endpoint": "https://server.example.com/oauth2/token” 
-   "authorization_endpoint": https://server.example.com/oauth2/authorize” 
-   "dpop_bound_access_tokens": true, 
-   "dpop_signing_alg_values_supported": ["ES256", “RS256”], 
-   "x-dpop_claims_required": [ "CAMARA:bh", "CAMARA:qh"]  
-// ... other OIDC fields  
-}  
+{
+
+   "issuer": "https://server.example.com",
+   "token_endpoint": "https://server.example.com/oauth2/token”,
+   "authorization_endpoint": https://server.example.com/oauth2/authorize”,
+   "dpop_bound_access_tokens": true,
+   "dpop_signing_alg_values_supported": ["ES256", “RS256”],
+   "x-dpop_claims_required": [ "CAMARA:bh", "CAMARA:qh"],
+    // ... other OIDC fields
+
+}
 
 **Replay Protection Requirements**
 
 To improve replay protection beyond the baseline DPoP behavior: 
 
-- Each jti value MUST be unique per proof. 
-- Resource servers MUST verify that the iat value is within an acceptable time window. 
-- Resource servers SHOULD maintain a replay cache for jti values for at least the lifetime of the associated access token and MUST reject any DPoP proof with a reused jti. 
-
+- Each jti value MUST be unique per proof. Resource servers SHOULD maintain a replay cache for jti values for at least the lifetime of the associated access token and MUST reject any DPoP proof with a reused jti. When a DPoP proof is invalid, including an incorrect or reused jti value, the server should return an `HTTP 400 Bad Request` error with an error code of `invalid_dpop_proof`.
+- Resource servers MUST verify that the iat value is within an acceptable time window of 15 minutes. 
+  
 
 ## OIDC Authorization Code Flow
 
