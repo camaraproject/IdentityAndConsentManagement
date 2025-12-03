@@ -133,8 +133,8 @@ json:
    "authorization_endpoint": https://server.example.com/oauth2/authorize”,
    "dpop_bound_access_tokens": true,
    "dpop_signing_alg_values_supported": ["ES256", “RS256”],
-   "x-dpop_claims_required": [ "CAMARA:bh", "CAMARA:qh"],
-    // ... other OIDC fields
+   "x-dpop_claims_required": [ "x-camara:bh", "x-camara:qh"],
+    "...other fields": "..."
 
 }
 
@@ -143,7 +143,7 @@ json:
 To improve replay protection beyond the baseline DPoP behavior: 
 
 - Each jti value MUST be unique per proof. Resource servers SHOULD maintain a replay cache for jti values for at least the lifetime of the associated access token and MUST reject any DPoP proof with a reused jti. When a DPoP proof is invalid, including an incorrect or reused jti value, the server should return an `HTTP 400 Bad Request` error with an error code of `invalid_dpop_proof`.
-- Resource servers MUST verify that the iat value is within an acceptable time window of 15 minutes. 
+- Resource servers MUST verify that the iat value is within an acceptable time window of 300 seconds. 
   
 
 ## OIDC Authorization Code Flow
