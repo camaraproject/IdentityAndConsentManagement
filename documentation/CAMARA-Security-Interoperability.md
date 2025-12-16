@@ -117,14 +117,14 @@ As per RFC 9449 [section 11.7](https://www.rfc-editor.org/rfc/rfc9449.html#secti
 
 |      Extension Claim   | Purpose  | Computation  | Encoding |
 |:-------------------:|:---------------------:|:-------------------:|:-------------------:|
-| x-camara:qh                          | Binds the query string to the DPoP proof | SHA-256 hash of the raw query string exactly as received (if present) | Base64URL-encoded ([RFC 7515](https://www.rfc-editor.org/rfc/rfc7515.html) §2), without padding |
-| x-camara:bh                          | Binds the request body to the DPoP proof | SHA-256 hash of the full request body byte stream | Base64URL-encoded ([RFC 7515](https://www.rfc-editor.org/rfc/rfc7515.html) §2), without padding |
+| camara:qh                          | Binds the query string to the DPoP proof | SHA-256 hash of the raw query string exactly as received (if present) | Base64URL-encoded ([RFC 7515](https://www.rfc-editor.org/rfc/rfc7515.html) §2), without padding |
+| camara:bh                          | Binds the request body to the DPoP proof | SHA-256 hash of the full request body byte stream | Base64URL-encoded ([RFC 7515](https://www.rfc-editor.org/rfc/rfc7515.html) §2), without padding |
 
 The resulting hash values are included as string values within the DPoP proof JWT. Implementations MUST ignore any DPoP claims not defined in the base DPoP specification or in this CAMARA extension. The server MUST verify the presence and correctness of this claim within the JWT, ensuring the hash matches the respective actual body and/or query string.
 
 If a server requires DPoP Extensions, it MUST include the extended claims in the AS metadata to dynamically inform clients about these required claims. In addition, the server MAY advertise this extension claim requirements as part of the developer documentation with examples. Example Authorization Server Metadata (OIDC Discovery Document) typically as response to openIdConnectUrl: https://example.com/.well-known/openid-configuration
 
-json:
+```json:
 
 {
 
@@ -133,10 +133,11 @@ json:
    "authorization_endpoint": https://server.example.com/oauth2/authorize”,
    "dpop_bound_access_tokens": true,
    "dpop_signing_alg_values_supported": ["ES256", “RS256”],
-   "x-dpop_claims_required": [ "x-camara:bh", "x-camara:qh"],
+   "camara_dpop_claims_required": [ "camara:bh", "camara:qh"],
     "...other fields": "..."
 
 }
+```
 
 **Replay Protection Requirements**
 
