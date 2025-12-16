@@ -278,14 +278,7 @@ Note over FE,BE: API Consumer obtains a temporary token<br>following TS.43 defin
 alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between API Consumer and Operator.
   BE->>+ExpO: POST /bc-authorize<br>Credentials,<br>scope=openid dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint=operatortoken:<temporaryToken>    
   ExpO->>ExpO: Validate Authentication<br>request
-  alt TS.43
-    Note over ExpO,ES: Get information from Entitlement Server<br> needed for access_token creation<br>Scopes are adapted
-    ExpO->>ES: AcquireOperatorToken(ap2015,temporary_token=temporaryToken,<br>operation_targets=GetSubscriberDeviceInfo,[client_id, access_token,scope="MSISDN"]) 
-    ES->>ES: Validate temporary token
-    ES->>ExpO: HTTP 200 OK <br>{operator_token}
-    ExpO->>ES: GetSubscriberDeviceInfo (ap2015, operator_token) 
-    ES->>ExpO: SubscriberDeviceInfo (MSISDN[,IMSI])
-  end
+  Note over ExpO,ES: TS.43 internal steps<br>for validating the temporary<br>token and retrieving subscriber<br>info (e.g. MSISDN) may depend<br>on API Provider's implementation<br>and are beyond the scope of<br>this document.
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc
   opt If User Consent is required for the legal basis of the purpose  
     ExpO->>Consent: Check if Consent is granted
@@ -300,7 +293,7 @@ ExpO->>BE: CAMARA API Response
 Note over BE,FE: Response
 ```
 
-Note: The interaction between the API Exposure Platform (Authentication Server) and the Entitlement Server is just an illustrative example, not a normative one. The Entitlement Server MUST validate the temporary token when performing a TS.43 operation like GetPhoneNumber, VerifyPhoneNumber, GetSubscriberDeviceInfo or AcquireOperatorToken. 
+Note: The interaction between the API Exposure Platform (Authentication Server) and the Entitlement Server shown above is illustrative only, not normative. Regardless of the internal flow, the Entitlement Server MUST validate the temporary token when performing a TS.43 operation like GetPhoneNumber, VerifyPhoneNumber, GetSubscriberDeviceInfo or AcquireOperatorToken according to TS.43 standard.
 
 The above flow example assumes a use case where Consent is not required, such as legitimate interest. In this case, the Operator Token is used for 'silent' authentication of the User (i.e. with no User interaction), where the API Consumer has already obtained the temporary token from the Entitlement Server using EAP-AKA SIM-based authentication, which is transparent to the User.
 
@@ -413,14 +406,7 @@ Note over FE,BE: API Consumer obtains a temporary token<br>following TS.43 defin
 alt Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants
     BE->>+ExpO: POST /token<br>grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer<br>assertion=<br>{dpv:<purposeDpvValue> scope1 ... scopeN<br>sub=operatortoken:<temporaryToken>,...}
     ExpO->>ExpO: Validate Authentication<br>request
-    alt TS.43
-      Note over ExpO,ES: Get information from Entitlement Server<br> needed for access_token creation<br>Scopes are adapted
-      ExpO->>ES: AcquireOperatorToken(ap2015,temporary_token=temporaryToken,<br>operation_targets=GetSubscriberDeviceInfo,[client_id, access_token,scope="MSISDN"]) 
-      ES->>ES: Validate temporary token
-      ES->>ExpO: HTTP 200 OK <br>{operator_token}
-      ExpO->>ES: GetSubscriberDeviceInfo (ap2015, operator_token) 
-      ES->>ExpO: SubscriberDeviceInfo (MSISDN[,IMSI])
-    end
+    Note over ExpO,ES: TS.43 internal steps<br>for validating the temporary<br>token and retrieving subscriber<br>info (e.g. MSISDN) may depend<br>on API Provider's implementation<br>and are beyond the scope of<br>this document.
     ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc
     opt If User Consent is required for the legal basis of the purpose  
         ExpO->>Consent: Check if Consent is granted
@@ -434,7 +420,7 @@ ExpO->>BE: CAMARA API Response
 Note over BE,FE: Response
 ```
 
-Note: The interaction between the API Exposure Platform (Authentication Server) and the Entitlement Server is just an illustrative example, not a normative one. The Entitlement Server MUST validate the temporary token when performing a TS.43 operation like GetPhoneNumber, VerifyPhoneNumber, GetSubscriberDeviceInfo or AcquireOperatorToken.
+Note: The interaction between the API Exposure Platform (Authentication Server) and the Entitlement Server shown above is illustrative only, not normative. Regardless of the internal flow, the Entitlement Server MUST validate the temporary token when performing a TS.43 operation like GetPhoneNumber, VerifyPhoneNumber, GetSubscriberDeviceInfo or AcquireOperatorToken according to TS.43 standard.
 
 ## CAMARA API Specification - Authorization and authentication common guidelines
 
