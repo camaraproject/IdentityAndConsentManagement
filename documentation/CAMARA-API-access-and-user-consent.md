@@ -16,6 +16,7 @@ This document defines guidelines for API Providers to manage CAMARA API access a
       - [CIBA flow with Operator Token](#ciba-flow-with-operator-token)
     - [Client Credentials](#client-credentials)
     - [JWT Bearer Flow](#jwt-bearer-flow)
+      - [JWT Bearer flow with Operator Token](#jwt-bearer-flow-with-operator-token)
 - [CAMARA API Specification - Authorization and authentication common guidelines](#camara-api-specification---authorization-and-authentication-common-guidelines)
   - [Use of openIdConnect for `securitySchemes`](#use-of-openidconnect-for-securityschemes)
   - [Use of `security` property](#use-of-security-property)
@@ -256,7 +257,7 @@ The Operator will provide the API response to the API Consumer (Step 10).
 
 ##### CIBA flow with Operator Token
 
-This section provides an example of the CIBA flow involving an Operator Token, which is a specific case of the CIBA flow where the login_hint provided by the API Consumer is a temporary token (a TS.43 token). The presence of a TS.43 token confirms the Subscriber's prior authentication. In this case, the API Consumer sends the temporary token to their backend which sends a CIBA Authentication Request with a parameter "login_hint=operatortoken:<temporaryToken>". How the API Consumers get a TS.43 token from the Entitlement Server using EAP-AKA SIM-based authentication, how this token is sent to their backend or how the API Provider then validates the temporary token with the Entitlement Server is out of scope of this document. The API Consumer must follow the TS.43 definitions to obtain the temporary token.
+This section provides an example of the CIBA flow involving an Operator Token, which is a specific case of the CIBA flow where the login_hint provided by the API Consumer is a temporary token (a TS.43 token). The presence of a TS.43 token confirms the Subscriber's prior authentication. In this case, the API Consumer sends the temporary token to their backend which sends a CIBA Authentication Request with a parameter `login_hint=operatortoken:<temporaryToken>`. The process by which API Consumers obtain a TS.43 token from the Entitlement Server using EAP-AKA SIM-based authentication, how this token is sent to their backend, and how the API Provider subsequently validates the temporary token with the Entitlement Server, are beyond the scope of this document. API Consumers must follow the TS.43 definitions to obtain the temporary token.
 
 ```mermaid
 sequenceDiagram
@@ -272,19 +273,12 @@ box API Provider / Operator
 end
 
 Note over FE,BE: Feature needing<br>Operator capability  
-Note over BE: API Consumer obtains a temporary token<br>following TS.43 definitions...  
+Note over FE,BE: API Consumer obtains a temporary token<br>following TS.43 definitions...  
 
 alt OIDC Client-Initiated Backchannel Authentication (CIBA) Flow between API Consumer and Operator.
   BE->>+ExpO: POST /bc-authorize<br>Credentials,<br>scope=openid dpv:<purposeDpvValue> scope1 ... scopeN,<br>login_hint=operatortoken:<temporaryToken>    
   ExpO->>ExpO: Validate Authentication<br>request
-  alt TS.43
-    Note over ExpO,ES: Get information from Entitlement Server<br> needed for access_token creation<br>Scopes are adapted
-    ExpO->>ES: AcquireOperatorToken(ap2015,temporary_token=temporaryToken,<br>operation_targets=GetSubscriberDeviceInfo,[client_id, access_token,scope="MSISDN"]) 
-    ES->>ES: Validate temporary token
-    ES->>ExpO: HTTP 200 OK <br>{operator_token}
-    ExpO->>ES: GetSubscriberDeviceInfo (ap2015, operator_token) 
-    ES->>ExpO: SubscriberDeviceInfo (MSISDN[,IMSI])
-  end
+  Note over ExpO,ES: TS.43 internal steps<br>for validating the temporary<br>token and retrieving subscriber<br>info (e.g. MSISDN) may depend<br>on API Provider's implementation<br>and are beyond the scope of<br>this document.
   ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc
   opt If User Consent is required for the legal basis of the purpose  
     ExpO->>Consent: Check if Consent is granted
@@ -299,7 +293,7 @@ ExpO->>BE: CAMARA API Response
 Note over BE,FE: Response
 ```
 
-Note: The interaction between the API Exposure Platform (Authentication Server) and the Entitlement Server is just an illustrative example, not a normative one. The Entitlement Server MUST validate the temporary token when performing a TS.43 operation like GetPhoneNumber, VerifyPhoneNumber, GetSubscriberDeviceInfo or AcquireOperatorToken. 
+Note: The interaction between the API Exposure Platform (Authentication Server) and the Entitlement Server shown above is illustrative only, not normative. Regardless of the internal flow, the Entitlement Server MUST validate the temporary token when performing a TS.43 operation like GetPhoneNumber, VerifyPhoneNumber, GetSubscriberDeviceInfo or AcquireOperatorToken according to TS.43 standard.
 
 The above flow example assumes a use case where Consent is not required, such as legitimate interest. In this case, the Operator Token is used for 'silent' authentication of the User (i.e. with no User interaction), where the API Consumer has already obtained the temporary token from the Entitlement Server using EAP-AKA SIM-based authentication, which is transparent to the User.
 
@@ -322,7 +316,7 @@ box API Provider / Operator
   participant ExpO as API Exposure Platform  
   participant Consent as Consent Master
 end
-Note over BE,ExpO: Pre-requisite:<br> To verify the signed JWT assertion, the public key of the API Consumer must be shared<br> with API Provider as part of API Consumer's Application onboarding process
+Note over BE,ExpO: Pre-requisite:<br> To verify the signed JWT assertion, the public key of the API Consumer<br>must be shared with API Provider as part of<br>API Consumer's Application onboarding process
 Note over FE,BE: Feature needing Operator capability  
 Note over BE: Select User Identifier:<br> Phone Number / Operator Token
 
@@ -390,6 +384,43 @@ If all validations succeed, the API Exposure Platform issues a Three-Legged Acce
 The API Consumer uses the access token to invoke the CAMARA API, including it in the Authorization header (Step 7).
 
 The API Exposure Platform validates and decrypts the access token, authorizes access, forwards the request to the API backend, and returns the API response to the API Consumer (Steps 8-9).
+
+##### JWT Bearer flow with Operator Token
+
+This section provides an example of the JWT Bearer flow involving an Operator Token, which is a specific case of the JWT Bearer flow where the `sub` claim in the JWT assertion is a temporary token (a TS.43 token). The presence of a TS.43 token confirms the Subscriber's prior authentication. In this case, the API Consumer sends the temporary token to their backend, which then sends a JWT Bearer Token Request to the API Provider with a JWT assertion where the `sub` claim is set to `operatortoken:<temporaryToken>`. The process by which API Consumers obtain a TS.43 token from the Entitlement Server using EAP-AKA SIM-based authentication, how this token is sent to their backend, and how the API Provider subsequently validates the temporary token with the Entitlement Server, are beyond the scope of this document. API Consumers must follow the TS.43 definitions to obtain the temporary token.
+
+```mermaid
+sequenceDiagram
+autonumber
+title JWT Bearer Flow with Operator Token
+participant FE as Device App<br>(Consumption Device)
+participant BE as API Consumer<br>(Application Backend/Aggregator)
+box API Provider / Operator
+  participant ExpO as API Exposure Platform
+  participant ES as Entitlement Server  
+  participant Consent as Consent Master
+end
+Note over BE,ExpO: Pre-requisite:<br> To verify the signed JWT assertion, the public key of the API Consumer<br>must be shared with API Provider as part of<br>API Consumer's Application onboarding process
+Note over FE,BE: Feature needing Operator capability  
+Note over FE,BE: API Consumer obtains a temporary token<br>following TS.43 definitions...
+alt Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants
+    BE->>+ExpO: POST /token<br>grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer<br>assertion=<br>{dpv:<purposeDpvValue> scope1 ... scopeN<br>sub=operatortoken:<temporaryToken>,...}
+    ExpO->>ExpO: Validate Authentication<br>request
+    Note over ExpO,ES: TS.43 internal steps<br>for validating the temporary<br>token and retrieving subscriber<br>info (e.g. MSISDN) may depend<br>on API Provider's implementation<br>and are beyond the scope of<br>this document.
+    ExpO->>ExpO: Check legal basis of the purpose<br> e.g.: contract, legitimate_interest, consent, etc
+    opt If User Consent is required for the legal basis of the purpose  
+        ExpO->>Consent: Check if Consent is granted
+    end
+    ExpO->>ExpO: Create 3-legged access token
+    ExpO->>-BE: HTTP 200 OK<br>{"access_token": "{OperatorAccessToken}"}
+end
+BE->>ExpO: Access Operator CAMARA API<br>Authorization: Bearer {OperatorAccessToken}    
+ExpO->>ExpO: Decrypt OperatorAccessToken,<br>grants Access,<br>progresses request to API Backend,<br>gets API response  
+ExpO->>BE: CAMARA API Response
+Note over BE,FE: Response
+```
+
+Note: The interaction between the API Exposure Platform (Authentication Server) and the Entitlement Server shown above is illustrative only, not normative. Regardless of the internal flow, the Entitlement Server MUST validate the temporary token when performing a TS.43 operation like GetPhoneNumber, VerifyPhoneNumber, GetSubscriberDeviceInfo or AcquireOperatorToken according to TS.43 standard.
 
 ## CAMARA API Specification - Authorization and authentication common guidelines
 
