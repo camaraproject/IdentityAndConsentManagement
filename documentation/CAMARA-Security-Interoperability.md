@@ -124,10 +124,8 @@ The resulting hash values are included as string values within the DPoP proof JW
 
 If a server requires DPoP Extensions, it MUST include the extended claims in the AS metadata to dynamically inform clients about these required claims. In addition, the server MAY advertise this extension claim requirements as part of the developer documentation with examples. Example Authorization Server Metadata (OIDC Discovery Document) typically as response to openIdConnectUrl: https://example.com/.well-known/openid-configuration
 
-```json:
-
+```json
 {
-
    "issuer": "https://server.example.com",
    "token_endpoint": "https://server.example.com/oauth2/token”,
    "authorization_endpoint": https://server.example.com/oauth2/authorize”,
