@@ -127,7 +127,7 @@ If a server requires DPoP Extensions, it MUST include the extended claims in the
 ```json
 {
    "issuer": "https://server.example.com",
-   "token_endpoint": "https://server.example.com/oauth2/token”,
+   "token_endpoint": "https://server.example.com/oauth2/token",
    "authorization_endpoint": https://server.example.com/oauth2/authorize”,
    "dpop_bound_access_tokens": true,
    "dpop_signing_alg_values_supported": ["ES256", “RS256”],
