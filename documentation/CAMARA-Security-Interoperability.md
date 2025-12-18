@@ -133,7 +133,6 @@ If a server requires DPoP Extensions, it MUST include the extended claims in the
    "dpop_signing_alg_values_supported": ["ES256", “RS256”],
    "camara_dpop_claims_required": [ "camara:bh", "camara:qh"],
     "...other fields": "..."
-
 }
 ```
 
