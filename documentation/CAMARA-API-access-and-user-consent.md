@@ -344,7 +344,7 @@ The JWT Bearer Flow enables an API Consumer (typically the Application Backend o
 
 The API Consumer selects the User Identifier. The User is identified by the `sub` claim in the JWT assertion, which must uniquely identify the User in the Operator's system. As per the CAMARA Security and Interoperability Profile, the `sub` claim MUST be either a phone number prefixed by `tel:` or a TS.43 token prefixed by `operatortoken:`.
 
-Unlike the `operatortoken:` prefix for the `sub` claim, which originates from a TS.43 flow and provides a stronger binding to a subscriber context, use of the `tel:` prefix in the JWT Bearer Flow relies on a pre-established trust relationship between the API Consumer and the API Provider. The mechanism by which the API Consumer obtains or verifies the phone number used in the `sub` claim is outside the scope of CAMARA specifications.
+Unlike the `operatortoken:` prefix for the `sub` claim, which originates from a TS.43 flow and provides a stronger binding to a Subscriber context, the use of the `tel:` prefix in the JWT Bearer Flow relies on a pre-established trust relationship between the API Consumer and the API Provider. The mechanism by which the API Consumer obtains or verifies the phone number used in the `sub` claim is outside the scope of CAMARA specifications.
 
 Example JWT assertion, which MUST be signed by the API Consumer and MAY be encrypted:
 
