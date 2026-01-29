@@ -427,6 +427,9 @@ The request SHALL be rejected by the Authorization server if the `exp` claim is 
 
 This document RECOMMENDS that the `aud` (audience) claim in the client assertion SHOULD be the full URL of the specific endpoint at the Authorization Server to which the client is sending the request.
 
+API Consumer private_key_jwt assertions SHOULD be explicitly typed by using the `typ` header parameter value `client-authentication+jwt`.
+API Providers MUST accept private_key_jwt assertions that have the `typ` header parameter value `client-authentication+jwt`.
+
 ## OpenId Foundation Certification
 
 CAMARA recommends that implementations run the OIDF interoperability suite and achieve [OIDF certification](https://openid.net/certification/).
