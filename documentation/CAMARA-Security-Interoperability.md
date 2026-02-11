@@ -288,8 +288,11 @@ The scope parameter MUST NOT be specified for JWT-Bearer Flow, but the scope cla
 The API Consumer SHALL set the claims of the assertion as defined here:
 
 - The mandatory `iss` claim MUST be the client id of the API Consumer.
-- The mandatory `sub` (subject) claim MUST identifies the principal that is the subject of the JWT.
-  -  The value MUST be either a phonenumber prefixed by "tel:" or a TS.43 token prefixed by "operatortoken:".
+- The mandatory `sub` (subject) claim MUST identify the principal that is the subject of the JWT.
+  - The value MUST be either a phonenumber prefixed by "tel:" or a TS.43 token prefixed by "operatortoken:".
+  - The format of the value MUST follow the same formats defined for these identifiers in [Format of `login_hint`](#format-of-login_hint).
+    - For phone numbers, the value MUST be a `tel` URI as defined in [RFC 3966](https://www.rfc-editor.org/info/rfc3966) for global phone numbers without visual separators in [E.164](https://www.itu.int/rec/T-REC-E.164-201011-I/en) format (e.g., `tel:+34666666666`).
+    - For TS.43 tokens as defined by [GSMA TS.43](https://www.gsma.com/newsroom/gsma_resources/ts-43-service-entitlement-configuration/) and [GSMA ASAC](https://www.gsma.com/newsroom/gsma_resources/asac-01-v1-0/) (e.g., `operatortoken:<token>`). TS.43 does not specify the format of the token.
 - The mandatory `aud` claim MUST be the URL of the endpoint this token request is sent to.
 - The mandatory `exp` claim as defined in [RFC7519 section 4.1.4](https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1.4).
 - The mandatory `iat` claim as defined in [RFC7519 section 4.1.6](https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1.6).
