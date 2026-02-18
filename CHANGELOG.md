@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- **[r4.1](#r41)**
 - **[r3.3](#r33)**
 - **[r3.2](#r32)**
 - **[r3.1](#r31)**
@@ -23,11 +24,43 @@ The below sections record the changes in each release as follows:
 * for subsequent release-candidate(s), only the delta to the previous release-candidate
 * for a public release, the consolidated changes since the previous public release
 
-# r3.3
+# r4.1
 
 ## Release Notes
 
 This pre-release contains the definition and documentation of:
+
+* "Identity and Consent Management" 0.5.0-rc.1
+
+The content of the release includes the "Identity And Consent Management" approved deliverables in **[documentation](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r4.1/documentation)** folder.
+
+### Added
+
+* Recommendations to help API Consumers and API Providers select the appropriate authorization flow for their use case @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/320
+* High-level example of the JWT Bearer Flow with an Operator Token by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/334
+* Strengthen DPoP support with additional security measures and claims by @RamTMO in https://github.com/camaraproject/IdentityAndConsentManagement/pull/325
+
+### Changed
+
+* Clarify the trust assumptions when using a phone number as `sub` claim in JWT Bearer Flow by @sfnuser in https://github.com/camaraproject/IdentityAndConsentManagement/pull/343
+
+### Fixed
+
+* Add missing `openid` scope for the OIDC Auth Code Flow and the CIBA Flow to the `CAMARA-API-access-and-user-consent.md` document by @sebdewet in https://github.com/camaraproject/IdentityAndConsentManagement/pull/317
+* Remove `openid` scope typo for JWT Bearer Flow in the `CAMARA-API-access-and-user-consent.md` document by @shilpa-padgaonkar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/333
+* Add missing `offline_access` scope for Refresh Token examples to the `CAMARA-ICM-examples.md` document by @sebdewet in https://github.com/camaraproject/IdentityAndConsentManagement/pull/332
+
+### Removed
+
+* Rich Authorization Request (RAR) references from the "Identity And Consent Management" documentation by @jpengar in https://github.com/camaraproject/IdentityAndConsentManagement/pull/342
+
+**Full Changelog**: https://github.com/camaraproject/IdentityAndConsentManagement/compare/r3.3...r4.1
+
+# r3.3
+
+## Release Notes
+
+This public release contains the definition and documentation of:
 
 * "Identity and Consent Management" 0.4.0
 
