@@ -33,6 +33,7 @@
   * [ID Token](#id-token)
     * [ID Token sub claim](#id-token-sub-claim)
   * [Client Authentication](#client-authentication)
+  * [Security Considerations](#security-considerations)
   * [OpenId Foundation Certification](#openid-foundation-certification)
   * [References](#references)
   * [Appendix A (Normative): Error Responses](#appendix-a-normative-error-responses)
@@ -418,6 +419,15 @@ The API Consumer MUST NOT create client assertions with a lifetime of more than 
 The request SHALL be rejected by the Authorization server if the `exp` claim is more than 300 seconds later than the time of receipt. Additionally, if the `iat` claim is present, the request SHALL be rejected if the difference between the `exp` claim and `iat` claim is more than 300 seconds.
 
 This document RECOMMENDS that the `aud` (audience) claim in the client assertion SHOULD be the full URL of the specific endpoint at the Authorization Server to which the client is sending the request.
+
+## Security Considerations
+
+IETF and [OpenId Foundation](https://openid.net/wp-content/uploads/2025/01/OIDF-Responsible-Disclosure-Notice-on-Security-Vulnerability-for-private_key_jwt.pdf) were made aware of a potential security vulnerability regarding audience values in `private_key_jwt` and client assertions as e.g. used in JWT Bearer Flow.
+
+Analysis done by the ICM working group lead us to the conclusion that CAMARA protocols are not vulnerable because the endpoint URLs used as `audience` values are conveyed to the API consumer using TMForum APIs or out-of-band.
+Therefore audience values are valid and can be trusted.
+
+After IETF and OpenId Foundation have updated their RFCs and specifications ICM will revisit this issue.
 
 ## OpenId Foundation Certification
 
