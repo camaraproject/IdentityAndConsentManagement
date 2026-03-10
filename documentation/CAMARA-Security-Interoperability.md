@@ -424,10 +424,9 @@ This document RECOMMENDS that the `aud` (audience) claim in the client assertion
 
 The IETF and the [OpenID Foundation](https://openid.net/wp-content/uploads/2025/01/OIDF-Responsible-Disclosure-Notice-on-Security-Vulnerability-for-private_key_jwt.pdf) were made aware of a potential security vulnerability regarding audience values in `private_key_jwt` and client assertions as e.g. used in JWT Bearer Flow.
 
-Analysis done by the ICM working group lead us to the conclusion that CAMARA protocols are not vulnerable because the endpoint URLs used as `audience` values are conveyed to the API consumer using TMForum APIs or out-of-band.
-Therefore audience values are valid and can be trusted.
+Analysis done by the ICM working group led us to conclude that CAMARA protocols are not vulnerable because the endpoint URLs used as `audience` values are conveyed to API consumers via TMForum APIs or out-of-band. Therefore, `audience` values are valid and can be trusted.
 
-After IETF and OpenId Foundation have updated their RFCs and specifications ICM will revisit this issue.
+After the IETF and the OpenID Foundation update their RFCs and specifications, the ICM working group will revisit this issue.
 
 ## OpenId Foundation Certification
 
