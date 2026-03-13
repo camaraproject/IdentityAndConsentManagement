@@ -16,7 +16,7 @@ Repository to describe, develop, document and test the Identity And Consent Mana
 
 ## Release Information
 
-* `NEW`: The "Spring26" release of the "Identity and Consent Management" guidelines and documentation for the CAMARA APIs is available under the tag [r4.2](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r4.2). It contains the public [version](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r4.2/VERSION.yaml) of the documents which are relevant for the [Spring26 meta-release](https://lf-camaraproject.atlassian.net/wiki/spaces/CAM/pages/268500993/Spring26+meta-release), including:
+* `NEW`: The "Spring26" release of the "Identity and Consent Management" guidelines and documentation for the CAMARA APIs is available under the tag [r4.2](https://github.com/camaraproject/IdentityAndConsentManagement/tree/r4.2). It contains the public [version](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r4.2/VERSION.yaml) of the documents which are relevant for the [Spring26 meta-release](https://lf-camaraproject.atlassian.net/wiki/spaces/CAM/pages/268500993/Spring26+meta-release) and the [Sync26 meta-release](https://lf-camaraproject.atlassian.net/wiki/spaces/CAM/pages/268533761/Sync26+meta-release+ex-Fall26), including:
   * [CAMARA APIs access and user consent management](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r4.2/documentation/CAMARA-API-access-and-user-consent.md)
   * [CAMARA Security and Interoperability Profile](https://github.com/camaraproject/IdentityAndConsentManagement/blob/r4.2/documentation/CAMARA-Security-Interoperability.md)
 * Previous releases and pre-releases are available [here](https://github.com/camaraproject/IdentityAndConsentManagement/releases).
