@@ -1,6 +1,6 @@
 | Org                    | Name                     | GitHub                    |
 | -----------------------| -------------------------|---------------------------|
-| Deutsche Telekom | Shilpa Padgaonkar | shilpa-padgaonkar |
+| T-Mobile PCS Holdings LLC | Shilpa Padgaonkar | shilpa-padgaonkar |
 | Deutsche Telekom | Axel Nennker | AxelNennker |
 | GSMA | Mark Cornall | MarkCornall |
 | Telefonica | Jesus Peña García-Oliva | jpengar |
