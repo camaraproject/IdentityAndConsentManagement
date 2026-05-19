@@ -74,7 +74,7 @@ The list below introduces several key concepts:
 
 ## Purpose within CAMARA
 
-The Purpose definition (naming + description) and format within CAMARA follows the W3C [Data Privacy Vocabulary](https://w3c.github.io/dpv/)​ (DPV).
+The Purpose definition (naming + description) and format within CAMARA follows the W3C [Data Privacy Vocabulary](https://w3c.github.io/dpv/2.3/dpv/modules/purposes)​ (DPV).
 
 ### Using Purpose within the authorization request
 
